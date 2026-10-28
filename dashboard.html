@@ -64,8 +64,8 @@
                     <button id="tab-members-btn" onclick="switchTab('members')" class="px-4 py-2 rounded-xl text-xs font-bold transition-all bg-white text-indigo-600 shadow-sm">
                         <i class="fa-solid fa-users mr-1.5"></i>멤버 관리
                     </button>
-                    <button id="tab-history-btn" onclick="switchTab('history')" class="px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900">
-                        <i class="fa-solid fa-clock-rotate-left mr-1.5 text-purple-600"></i>주간 기록
+                    <button id="tab-notices-btn" onclick="switchTab('notices')" class="px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900">
+                        <i class="fa-solid fa-bullhorn mr-1.5 text-purple-600"></i>전달사항
                     </button>
                     <button id="tab-warnings-btn" onclick="switchTab('warnings')" class="px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900">
                         <i class="fa-solid fa-shield-halved mr-1.5 text-amber-500"></i>경고 전용 채널
@@ -198,46 +198,105 @@
             </div>
         </div>
 
-        <!-- TAB 2: HISTORY -->
-        <div id="tab-history-section" class="space-y-6 hidden">
+        <!-- TAB 2: NOTICES (전달사항 카테고리) -->
+        <div id="tab-notices-section" class="space-y-6 hidden">
             <div class="glass-panel rounded-2xl p-5">
-                <h2 class="font-bold text-base text-slate-800 flex items-center gap-2 mb-2">
-                    <i class="fa-solid fa-clock-rotate-left text-purple-600 text-lg"></i> 주간 활동 및 승진/강등 기록 히스토리
+                <h2 class="font-bold text-base text-slate-800 flex items-center gap-2 mb-1">
+                    <i class="fa-solid fa-bullhorn text-purple-600 text-lg"></i> 운영진 상호 전달사항 게시판
                 </h2>
-                <div id="history-reports-container" class="space-y-4 mt-4"></div>
+                <p class="text-xs text-slate-500">각 파트별 전달 내용을 실시간으로 등록, 수정, 삭제하여 운영진 간 원활하게 소통하세요.</p>
+            </div>
+
+            <!-- Notices Grid (3 Sections) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- 1. 총괄 찡긋 전달사항 -->
+                <div class="glass-panel rounded-2xl p-5 flex flex-col justify-between space-y-4 border-t-4 border-t-indigo-500">
+                    <div>
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+                            <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-user-tie text-indigo-600"></i> 총괄 찡긋 전달사항
+                            </h3>
+                            <button onclick="requireAuth(() => openNoticeModal('찡긋'))" class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold text-xs shadow-sm flex items-center gap-1">
+                                <i class="fa-solid fa-plus"></i> 작성
+                            </button>
+                        </div>
+                        <div id="notice-list-찡긋" class="space-y-3 mt-4 max-h-[450px] overflow-y-auto pr-1"></div>
+                    </div>
+                </div>
+
+                <!-- 2. 총괄 캐럿 전달사항 -->
+                <div class="glass-panel rounded-2xl p-5 flex flex-col justify-between space-y-4 border-t-4 border-t-purple-500">
+                    <div>
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+                            <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-user-tie text-purple-600"></i> 총괄 캐럿 전달사항
+                            </h3>
+                            <button onclick="requireAuth(() => openNoticeModal('캐럿'))" class="px-3 py-1 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-bold text-xs shadow-sm flex items-center gap-1">
+                                <i class="fa-solid fa-plus"></i> 작성
+                            </button>
+                        </div>
+                        <div id="notice-list-캐럿" class="space-y-3 mt-4 max-h-[450px] overflow-y-auto pr-1"></div>
+                    </div>
+                </div>
+
+                <!-- 3. 감사팀 한나 전달사항 -->
+                <div class="glass-panel rounded-2xl p-5 flex flex-col justify-between space-y-4 border-t-4 border-t-amber-500">
+                    <div>
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+                            <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-shield-halved text-amber-500"></i> 감사팀 한나 전달사항
+                            </h3>
+                            <button onclick="requireAuth(() => openNoticeModal('한나'))" class="px-3 py-1 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-bold text-xs shadow-sm flex items-center gap-1">
+                                <i class="fa-solid fa-plus"></i> 작성
+                            </button>
+                        </div>
+                        <div id="notice-list-한나" class="space-y-3 mt-4 max-h-[450px] overflow-y-auto pr-1"></div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- TAB 3: WARNINGS -->
         <div id="tab-warnings-section" class="space-y-6 hidden">
-            <div class="glass-panel rounded-2xl p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                    <h2 class="font-bold text-base text-slate-800 flex items-center gap-2">
-                        <i class="fa-solid fa-shield-halved text-amber-500 text-lg"></i> 경고 관리 전용 채널
-                    </h2>
-                    <p class="text-xs text-slate-500 mt-0.5">운영진 전용 공간으로, 경고 부여 및 삭감 이력이 기록됩니다.</p>
+            <div class="glass-panel rounded-2xl p-5">
+                <h2 class="font-bold text-base text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-shield-halved text-amber-500 text-lg"></i> 경고 관리 전용 채널
+                </h2>
+                <p class="text-xs text-slate-500 mt-1">운영진 전용 공간입니다. 검색을 통해 멤버별 경고 부여/삭감 및 개별 타임라인 내역을 확인하세요.</p>
+            </div>
+
+            <div class="glass-panel rounded-2xl p-5 space-y-4">
+                <div class="relative max-w-md">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                    <input type="text" id="warning-search-input" oninput="renderWarningMembersTable()" placeholder="경고 관리용 고번(#), 닉네임 검색..." class="w-full pl-9 pr-4 py-2 rounded-xl glass-input text-xs text-slate-800 focus:outline-none">
                 </div>
-                <div class="flex items-center gap-2">
-                    <button onclick="requireAuth(() => openWarningActionModal('add'))" class="px-4 py-2.5 rounded-xl bg-rose-500 hover:bg-rose-600 text-white font-bold text-xs shadow-md flex items-center gap-1.5 transition-all">
-                        <i class="fa-solid fa-circle-plus"></i> 경고 부여 (+1)
-                    </button>
-                    <button onclick="requireAuth(() => openWarningActionModal('subtract'))" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md flex items-center gap-1.5 transition-all">
-                        <i class="fa-solid fa-circle-minus"></i> 경고 삭감 (-1)
-                    </button>
+
+                <div class="overflow-x-auto rounded-xl border border-slate-200/80 bg-white/70">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100/80 border-b border-slate-200 text-slate-600 text-xs font-bold">
+                                <th class="py-3.5 px-4">고번 / 멤버 정보</th>
+                                <th class="py-3.5 px-4">현재 직급</th>
+                                <th class="py-3.5 px-4 text-center">누적 경고 횟수</th>
+                                <th class="py-3.5 px-4 text-center">경고 관리</th>
+                            </tr>
+                        </thead>
+                        <tbody id="warning-members-table-body" class="divide-y divide-slate-100 text-xs"></tbody>
+                    </table>
                 </div>
             </div>
 
             <div class="glass-panel rounded-2xl p-6 space-y-4">
                 <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
-                    <i class="fa-solid fa-clock-rotate-left text-indigo-500"></i> 경고 처리 타임라인 내역 Log
+                    <i class="fa-solid fa-clock-rotate-left text-indigo-500"></i> 전체 경고 처리 타임라인 내역 Log
                 </h3>
-                <div id="warning-logs-container" class="space-y-3 max-h-[500px] overflow-y-auto pr-1"></div>
+                <div id="warning-logs-container" class="space-y-3 max-h-[400px] overflow-y-auto pr-1"></div>
             </div>
         </div>
     </main>
 
     <!-- Modals -->
-    <!-- Member Modal -->
+    <!-- Member Add Modal -->
     <div id="modal-member" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl border w-full max-w-md p-6 space-y-4 text-xs">
             <div class="flex items-center justify-between pb-2 border-b">
@@ -265,7 +324,6 @@
                             <option value="과장">과장</option>
                             <option value="차장">차장</option>
                             <option value="부장">부장</option>
-                            <option value="팀장">팀장</option>
                             <option value="본부장">본부장</option>
                         </select>
                     </div>
@@ -276,7 +334,7 @@
                 </div>
                 <div>
                     <label class="block font-bold text-slate-700 mb-1">이번 주 활동 점수</label>
-                    <input type="number" id="input-weekly-honor" min="0" value="0" class="w-full px-3.5 py-2.5 rounded-xl glass-input">
+                    <input type="number" id="input-weekly-honor" min="0" value="0" class="w-full px-3 py-2.5 rounded-xl glass-input">
                 </div>
                 <div class="flex justify-end gap-2 pt-2 border-t">
                     <button type="button" onclick="closeModal('modal-member')" class="px-4 py-2 bg-slate-100 rounded-xl font-bold">취소</button>
@@ -298,6 +356,36 @@
         </div>
     </div>
 
+    <!-- Notice Add/Edit Modal -->
+    <div id="modal-notice" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl border w-full max-w-md p-6 space-y-4 text-xs">
+            <div class="flex items-center justify-between pb-2 border-b">
+                <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2 text-purple-700">
+                    <i class="fa-solid fa-pen-to-square"></i> <span id="notice-modal-title">전달사항 작성</span>
+                </h3>
+                <button onclick="closeModal('modal-notice')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-base"></i></button>
+            </div>
+
+            <input type="hidden" id="notice-author">
+            <input type="hidden" id="notice-edit-id">
+
+            <div>
+                <label class="block font-bold text-slate-700 mb-1">전달 제목 *</label>
+                <input type="text" id="notice-title" placeholder="제목을 입력하세요" class="w-full px-3.5 py-2.5 rounded-xl glass-input font-bold">
+            </div>
+
+            <div>
+                <label class="block font-bold text-slate-700 mb-1">전달 내용 *</label>
+                <textarea id="notice-content" rows="4" placeholder="상세 전달 내용을 입력하세요..." class="w-full px-3.5 py-2.5 rounded-xl glass-input resize-none"></textarea>
+            </div>
+
+            <div class="flex justify-end gap-2 pt-2 border-t">
+                <button onclick="closeModal('modal-notice')" class="px-4 py-2 bg-slate-100 rounded-xl font-bold">취소</button>
+                <button onclick="saveNotice()" class="px-5 py-2 bg-purple-600 text-white rounded-xl font-bold shadow-md">등록하기</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Vacation & Member Info Edit Modal -->
     <div id="modal-vacation" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl border w-full max-w-md p-6 space-y-4 text-xs">
@@ -308,7 +396,6 @@
             
             <input type="hidden" id="vacation-member-id">
             
-            <!-- Target Member Info Box with Edit Toggle -->
             <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-2">
                 <div class="flex items-center justify-between">
                     <span class="text-slate-500 font-bold">대상 멤버 정보</span>
@@ -317,12 +404,10 @@
                     </button>
                 </div>
                 
-                <!-- Read View -->
                 <div id="member-read-view">
                     <p class="font-bold text-slate-800 text-sm" id="vacation-member-display">-</p>
                 </div>
 
-                <!-- Edit View -->
                 <div id="member-edit-view" class="hidden grid grid-cols-2 gap-2 pt-1">
                     <div>
                         <label class="block text-[11px] font-bold text-slate-600 mb-0.5">고번 (#)</label>
@@ -335,7 +420,6 @@
                 </div>
             </div>
 
-            <!-- Vacation Toggle -->
             <div class="flex items-center justify-between p-3 rounded-xl bg-amber-50/80 border border-amber-200">
                 <div>
                     <span class="font-bold text-amber-900 block">휴가 상태 활성화</span>
@@ -359,14 +443,50 @@
     <!-- Warning Action Modal -->
     <div id="modal-warning-action" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl border w-full max-w-md p-6 space-y-4 text-xs">
-            <h3 class="font-bold text-sm" id="warn-modal-title">경고 처리</h3>
-            <input type="hidden" id="warn-action-type">
-            <select id="warn-select-member" class="w-full px-3 py-2 rounded-xl glass-input"></select>
-            <input type="date" id="warn-date" class="w-full px-3 py-2 rounded-xl glass-input">
-            <input type="text" id="warn-reason" placeholder="처리 사유 입력" class="w-full px-3 py-2 rounded-xl glass-input">
-            <div class="flex justify-end gap-2 pt-2">
+            <div class="flex items-center justify-between pb-2 border-b">
+                <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2 text-rose-600">
+                    <i class="fa-solid fa-triangle-exclamation"></i> 경고 부여 (+1)
+                </h3>
+                <button onclick="closeModal('modal-warning-action')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-base"></i></button>
+            </div>
+
+            <input type="hidden" id="warn-member-id">
+            
+            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 font-bold text-slate-800" id="warn-target-member-name">
+                -
+            </div>
+
+            <div>
+                <label class="block font-bold text-slate-700 mb-1">처리기준 일자</label>
+                <input type="date" id="warn-date" class="w-full px-3.5 py-2 rounded-xl glass-input">
+            </div>
+
+            <div>
+                <label class="block font-bold text-slate-700 mb-1">경고 사유 *</label>
+                <input type="text" id="warn-reason" placeholder="경고 사유 입력 (예: 회의 무단 불참)" class="w-full px-3.5 py-2.5 rounded-xl glass-input">
+            </div>
+
+            <div class="flex justify-end gap-2 pt-2 border-t">
                 <button onclick="closeModal('modal-warning-action')" class="px-4 py-2 bg-slate-100 rounded-xl font-bold">취소</button>
-                <button onclick="executeWarningAction()" id="warn-submit-btn" class="px-5 py-2 text-white rounded-xl font-bold">실행</button>
+                <button onclick="executeWarningAdd()" class="px-5 py-2 bg-rose-500 text-white rounded-xl font-bold shadow-md">경고 부여하기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Individual Member Warning Timeline Modal -->
+    <div id="modal-member-timeline" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl border w-full max-w-lg p-6 space-y-4 text-xs max-h-[85vh] flex flex-col">
+            <div class="flex items-center justify-between pb-2 border-b">
+                <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2 text-indigo-600">
+                    <i class="fa-solid fa-clock-rotate-left"></i> <span id="timeline-modal-title">개별 경고 타임라인</span>
+                </h3>
+                <button onclick="closeModal('modal-member-timeline')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-base"></i></button>
+            </div>
+
+            <div id="individual-timeline-container" class="space-y-2.5 overflow-y-auto flex-1 pr-1"></div>
+
+            <div class="flex justify-end pt-2 border-t">
+                <button onclick="closeModal('modal-member-timeline')" class="px-5 py-2 bg-indigo-600 text-white rounded-xl font-bold">확인 완료</button>
             </div>
         </div>
     </div>
@@ -377,7 +497,6 @@
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // 사용자가 보내주신 실제 Firebase 설정 정보 반영
         const firebaseConfig = {
             apiKey: "AIzaSyB4aPOvTyYqol54X7eMiLBc-zjJZttCkE",
             authDomain: "silvertown-staff.firebaseapp.com",
@@ -391,34 +510,33 @@
         const db = getFirestore(app);
         const auth = getAuth(app);
 
-        // 익명 인증으로 접속 허용
         signInAnonymously(auth).catch((error) => {
             console.error("Firebase Auth Error:", error);
         });
 
         const sharedDocRef = doc(db, 'silvertown_data', 'shared_main_state');
 
-        // 실시간 데이터 수신 리스너 (누가 수정하든 실시간으로 내 화면에 반영됨)
         onSnapshot(sharedDocRef, (docSnap) => {
             if (docSnap.exists()) {
                 const data = docSnap.data();
                 if (data.members) window.members = data.members;
                 if (data.warningLogs) window.warningLogs = data.warningLogs;
-                if (data.weeklyHistories) window.weeklyHistories = data.weeklyHistories;
+                if (data.notices) window.notices = data.notices;
                 
                 renderMembersTable();
+                renderNotices();
+                renderWarningMembersTable();
                 renderWarningLogs();
                 updateStats();
             }
         });
 
-        // 클라우드에 데이터 동기화 함수
         window.syncToCloud = async function() {
             try {
                 await setDoc(sharedDocRef, {
                     members: window.members,
                     warningLogs: window.warningLogs,
-                    weeklyHistories: window.weeklyHistories,
+                    notices: window.notices,
                     lastUpdated: new Date().toISOString()
                 });
             } catch (e) {
@@ -434,7 +552,6 @@
 
         const RANK_CONFIG = [
             { name: '본부장', minHonor: 100000 },
-            { name: '팀장',   minHonor: 88000 },
             { name: '부장',   minHonor: 75000 },
             { name: '차장',   minHonor: 55000 },
             { name: '과장',   minHonor: 38000 },
@@ -445,13 +562,9 @@
             { name: '인턴',   minHonor: 0 }
         ];
 
-        // 초기 기본 데이터 (클라우드에 데이터가 없을 때 사용)
-        window.members = window.members || [
-            { id: 1, gobun: '101', discord: '서윤', rank: '본부장', cumHonor: 105000, weeklyHonor: 1250, warnings: 0, vacation: { active: false, reason: '' } },
-            { id: 2, gobun: '102', discord: '민준', rank: '과장', cumHonor: 42000, weeklyHonor: 850, warnings: 1, vacation: { active: false, reason: '' } }
-        ];
+        window.members = window.members || [];
         window.warningLogs = window.warningLogs || [];
-        window.weeklyHistories = window.weeklyHistories || [];
+        window.notices = window.notices || { 찡긋: [], 캐럿: [], 한나: [] };
 
         function verifyGlobalPassword() {
             const val = document.getElementById('global-pass-input').value;
@@ -460,9 +573,7 @@
                 const badge = document.getElementById('auth-status-badge');
                 badge.textContent = "인증 완료 (전체 기능 활성화)";
                 badge.className = "px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-700 font-bold";
-                
                 document.getElementById('auth-input-container').innerHTML = '<span class="text-emerald-600 font-bold text-xs"><i class="fa-solid fa-circle-check"></i> 보안 인증됨</span>';
-                
                 alert("관리자 인증이 완료되었습니다.");
             } else {
                 alert("비밀번호가 올바르지 않습니다.");
@@ -489,10 +600,11 @@
 
         function saveData() {
             renderMembersTable();
+            renderNotices();
+            renderWarningMembersTable();
             renderWarningLogs();
             updateStats();
 
-            // 파이어베이스 클라우드 동기화 실행
             if (typeof window.syncToCloud === 'function') {
                 window.syncToCloud();
             }
@@ -511,22 +623,24 @@
 
         function switchTab(tab) {
             document.getElementById('tab-members-section').classList.add('hidden');
-            document.getElementById('tab-history-section').classList.add('hidden');
+            document.getElementById('tab-notices-section').classList.add('hidden');
             document.getElementById('tab-warnings-section').classList.add('hidden');
 
             document.getElementById('tab-members-btn').className = "px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900";
-            document.getElementById('tab-history-btn').className = "px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900";
+            document.getElementById('tab-notices-btn').className = "px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900";
             document.getElementById('tab-warnings-btn').className = "px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900";
 
             if (tab === 'members') {
                 document.getElementById('tab-members-section').classList.remove('hidden');
                 document.getElementById('tab-members-btn').className = "px-4 py-2 rounded-xl text-xs font-bold transition-all bg-white text-indigo-600 shadow-sm";
-            } else if (tab === 'history') {
-                document.getElementById('tab-history-section').classList.remove('hidden');
-                document.getElementById('tab-history-btn').className = "px-4 py-2 rounded-xl text-xs font-bold transition-all bg-white text-purple-600 shadow-sm";
+            } else if (tab === 'notices') {
+                document.getElementById('tab-notices-section').classList.remove('hidden');
+                document.getElementById('tab-notices-btn').className = "px-4 py-2 rounded-xl text-xs font-bold transition-all bg-white text-purple-600 shadow-sm";
+                renderNotices();
             } else {
                 document.getElementById('tab-warnings-section').classList.remove('hidden');
                 document.getElementById('tab-warnings-btn').className = "px-4 py-2 rounded-xl text-xs font-bold transition-all bg-white text-amber-600 shadow-sm";
+                renderWarningMembersTable();
             }
         }
 
@@ -605,6 +719,214 @@
                 tbody.appendChild(tr);
             });
             updateStats();
+        }
+
+        /* --- 전달사항 로직 --- */
+        function openNoticeModal(author, editId = null) {
+            document.getElementById('notice-author').value = author;
+            document.getElementById('notice-edit-id').value = editId || '';
+            
+            const titleEl = document.getElementById('notice-modal-title');
+            const titleInput = document.getElementById('notice-title');
+            const contentInput = document.getElementById('notice-content');
+
+            if (editId) {
+                titleEl.textContent = `${author} 전달사항 수정`;
+                const item = (window.notices[author] || []).find(x => x.id === editId);
+                if (item) {
+                    titleInput.value = item.title;
+                    contentInput.value = item.content;
+                }
+            } else {
+                titleEl.textContent = `${author} 전달사항 작성`;
+                titleInput.value = '';
+                contentInput.value = '';
+            }
+            document.getElementById('modal-notice').classList.remove('hidden');
+        }
+
+        function saveNotice() {
+            const author = document.getElementById('notice-author').value;
+            const editId = document.getElementById('notice-edit-id').value;
+            const title = document.getElementById('notice-title').value.trim();
+            const content = document.getElementById('notice-content').value.trim();
+
+            if (!title || !content) {
+                alert("제목과 내용을 모두 입력해주세요.");
+                return;
+            }
+
+            if (!window.notices) window.notices = { 찡긋: [], 캐럿: [], 한나: [] };
+            if (!window.notices[author]) window.notices[author] = [];
+
+            if (editId) {
+                const item = window.notices[author].find(x => x.id == editId);
+                if (item) {
+                    item.title = title;
+                    item.content = content;
+                    item.date = new Date().toISOString().split('T')[0];
+                }
+            } else {
+                window.notices[author].push({
+                    id: Date.now(),
+                    title: title,
+                    content: content,
+                    date: new Date().toISOString().split('T')[0]
+                });
+            }
+
+            saveData();
+            closeModal('modal-notice');
+        }
+
+        function deleteNotice(author, id) {
+            if (!confirm("해당 전달사항을 삭제하시겠습니까?")) return;
+            if (window.notices && window.notices[author]) {
+                window.notices[author] = window.notices[author].filter(x => x.id !== id);
+                saveData();
+            }
+        }
+
+        function renderNotices() {
+            ['찡긋', '캐럿', '한나'].forEach(author => {
+                const container = document.getElementById(`notice-list-${author}`);
+                if (!container) return;
+                
+                const list = (window.notices && window.notices[author]) ? window.notices[author] : [];
+                if (list.length === 0) {
+                    container.innerHTML = '<p class="text-center text-slate-400 text-xs py-6">등록된 전달사항이 없습니다.</p>';
+                    return;
+                }
+
+                container.innerHTML = list.slice().reverse().map(n => `
+                    <div class="p-3.5 rounded-xl bg-white/80 border border-slate-200/80 shadow-sm space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-slate-800 text-xs">${n.title}</span>
+                            <span class="text-[10px] text-slate-400">${n.date}</span>
+                        </div>
+                        <p class="text-slate-600 text-xs whitespace-pre-wrap leading-relaxed">${n.content}</p>
+                        <div class="flex justify-end gap-1.5 pt-1 border-t border-slate-100">
+                            <button onclick="requireAuth(() => openNoticeModal('${author}', ${n.id}))" class="px-2 py-0.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded text-[11px] font-bold">수정</button>
+                            <button onclick="requireAuth(() => deleteNotice('${author}', ${n.id}))" class="px-2 py-0.5 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded text-[11px] font-bold">삭제</button>
+                        </div>
+                    </div>
+                `).join('');
+            });
+        }
+
+        /* --- 경고 관리 채널 로직 --- */
+        function renderWarningMembersTable() {
+            const tbody = document.getElementById('warning-members-table-body');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            
+            const searchInput = document.getElementById('warning-search-input');
+            const search = searchInput ? searchInput.value.toLowerCase() : '';
+
+            window.members.forEach(m => {
+                if (!m.discord.toLowerCase().includes(search) && !m.gobun.toLowerCase().includes(search)) return;
+
+                const tr = document.createElement('tr');
+                tr.className = "border-b border-slate-100 hover:bg-white/50";
+                tr.innerHTML = `
+                    <td class="py-3.5 px-4 font-bold"><span class="text-indigo-600">[#${m.gobun}]</span> ${m.discord}</td>
+                    <td class="py-3.5 px-4 font-bold text-slate-700">${m.rank}</td>
+                    <td class="py-3.5 px-4 text-center font-extrabold ${m.warnings > 0 ? 'text-amber-600' : 'text-slate-400'}">${m.warnings} 회</td>
+                    <td class="py-3.5 px-4 text-center space-x-1.5">
+                        <button onclick="requireAuth(() => openWarningModalForMember(${m.id}))" class="px-2.5 py-1 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 rounded font-bold">경고 (+1)</button>
+                        <button onclick="requireAuth(() => directSubtractWarning(${m.id}))" class="px-2.5 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 border border-emerald-200 rounded font-bold">삭감 (-1)</button>
+                        <button onclick="openMemberWarningTimeline(${m.id})" class="px-2.5 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 border border-indigo-200 rounded font-bold"><i class="fa-solid fa-clock-rotate-left mr-1"></i>내역</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function openWarningModalForMember(memberId) {
+            const m = window.members.find(x => x.id === memberId);
+            if (!m) return;
+            document.getElementById('warn-member-id').value = m.id;
+            document.getElementById('warn-target-member-name').textContent = `[#${m.gobun}] ${m.discord} (현재 경고: ${m.warnings}회)`;
+            document.getElementById('warn-date').value = new Date().toISOString().split('T')[0];
+            document.getElementById('warn-reason').value = '';
+            document.getElementById('modal-warning-action').classList.remove('hidden');
+        }
+
+        function executeWarningAdd() {
+            const mId = parseInt(document.getElementById('warn-member-id').value);
+            const reason = document.getElementById('warn-reason').value.trim();
+            const dateVal = document.getElementById('warn-date').value;
+            const m = window.members.find(x => x.id === mId);
+
+            if (!reason) { alert("경고 사유를 입력하세요."); return; }
+
+            m.warnings++;
+            window.warningLogs.push({
+                id: Date.now(),
+                memberId: m.id,
+                date: dateVal,
+                memberName: m.discord,
+                gobun: m.gobun,
+                type: '부여',
+                reason: reason,
+                total: m.warnings
+            });
+
+            saveData();
+            closeModal('modal-warning-action');
+            alert(`[#${m.gobun}] ${m.discord} 님에게 경고 1회가 부여되었습니다.`);
+        }
+
+        function directSubtractWarning(memberId) {
+            const m = window.members.find(x => x.id === memberId);
+            if (!m) return;
+            if (m.warnings <= 0) {
+                alert("차감할 경고가 없습니다.");
+                return;
+            }
+            const reason = prompt(`[#${m.gobun}] ${m.discord} 님의 경고 1회 삭감 사유를 입력하세요:`);
+            if (!reason) return;
+
+            m.warnings--;
+            window.warningLogs.push({
+                id: Date.now(),
+                memberId: m.id,
+                date: new Date().toISOString().split('T')[0],
+                memberName: m.discord,
+                gobun: m.gobun,
+                type: '삭감',
+                reason: reason,
+                total: m.warnings
+            });
+
+            saveData();
+            alert(`[#${m.gobun}] ${m.discord} 님의 경고가 1회 삭감되었습니다.`);
+        }
+
+        function openMemberWarningTimeline(memberId) {
+            const m = window.members.find(x => x.id === memberId);
+            if (!m) return;
+
+            document.getElementById('timeline-modal-title').textContent = `[#${m.gobun}] ${m.discord} 님의 경고 타임라인 (누적: ${m.warnings}회)`;
+            const container = document.getElementById('individual-timeline-container');
+
+            const userLogs = window.warningLogs.filter(l => l.memberId === m.id || (l.gobun === m.gobun && l.memberName === m.discord));
+
+            if (userLogs.length === 0) {
+                container.innerHTML = '<p class="text-center text-slate-400 py-6">해당 유저의 경고 처리 내역이 없습니다.</p>';
+            } else {
+                container.innerHTML = userLogs.slice().reverse().map(l => `
+                    <div class="p-3 rounded-xl border ${l.type === '부여' ? 'bg-rose-50/80 border-rose-200' : 'bg-emerald-50/80 border-emerald-200'} flex justify-between items-center text-xs">
+                        <div>
+                            <span class="font-bold ${l.type === '부여' ? 'text-rose-700' : 'text-emerald-700'}">경고 ${l.type} (${l.date})</span>
+                            <p class="text-slate-600 mt-1 font-semibold">사유: ${l.reason}</p>
+                        </div>
+                        <span class="font-extrabold text-slate-700 bg-white/80 px-2 py-1 rounded-lg border border-slate-200">당시 총 경고: ${l.total}회</span>
+                    </div>
+                `).join('');
+            }
+
+            document.getElementById('modal-member-timeline').classList.remove('hidden');
         }
 
         function batchApplyAllRankChanges() {
@@ -723,44 +1045,6 @@
             closeModal('modal-vacation');
         }
 
-        function openWarningActionModal(type) {
-            document.getElementById('warn-action-type').value = type;
-            const select = document.getElementById('warn-select-member');
-            select.innerHTML = window.members.map(m => `<option value="${m.id}">[#${m.gobun}] ${m.discord} (경고: ${m.warnings}회)</option>`).join('');
-            document.getElementById('warn-date').value = new Date().toISOString().split('T')[0];
-            document.getElementById('warn-reason').value = '';
-            
-            const title = document.getElementById('warn-modal-title');
-            const btn = document.getElementById('warn-submit-btn');
-            if (type === 'add') {
-                title.textContent = "경고 부여 (+1)";
-                btn.className = "px-5 py-2 bg-rose-500 text-white rounded-xl font-bold";
-            } else {
-                title.textContent = "경고 삭감 (-1)";
-                btn.className = "px-5 py-2 bg-emerald-600 text-white rounded-xl font-bold";
-            }
-            document.getElementById('modal-warning-action').classList.add('hidden'); // Fix toggle
-            document.getElementById('modal-warning-action').classList.remove('hidden');
-        }
-
-        function executeWarningAction() {
-            const type = document.getElementById('warn-action-type').value;
-            const mId = parseInt(document.getElementById('warn-select-member').value);
-            const reason = document.getElementById('warn-reason').value;
-            const m = window.members.find(x => x.id === mId);
-
-            if (!reason) { alert("사유를 입력하세요."); return; }
-            if (type === 'add') {
-                m.warnings++;
-                window.warningLogs.push({ id: Date.now(), date: document.getElementById('warn-date').value, memberName: m.discord, gobun: m.gobun, type: '부여', reason, total: m.warnings });
-            } else {
-                if (m.warnings > 0) m.warnings--;
-                window.warningLogs.push({ id: Date.now(), date: document.getElementById('warn-date').value, memberName: m.discord, gobun: m.gobun, type: '삭감', reason, total: m.warnings });
-            }
-            saveData();
-            closeModal('modal-warning-action');
-        }
-
         function renderWarningLogs() {
             const container = document.getElementById('warning-logs-container');
             if (!container) return;
@@ -774,7 +1058,7 @@
                         <span class="font-bold">[#${l.gobun}] ${l.memberName} 경고 ${l.type} (${l.date})</span>
                         <p class="text-slate-600 mt-0.5">사유: ${l.reason}</p>
                     </div>
-                    <span class="font-bold">총 경고: ${l.total}회</span>
+                    <span class="font-bold">당시 총 경고: ${l.total}회</span>
                 </div>
             `).join('');
         }
