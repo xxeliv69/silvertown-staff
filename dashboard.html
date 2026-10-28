@@ -60,17 +60,20 @@
 
             <!-- Tabs & Quick Actions -->
             <div class="flex items-center gap-2">
-                <div class="flex bg-slate-200/60 p-1 rounded-2xl border border-white/80 mr-2">
-                    <button id="tab-members-btn" onclick="switchTab('members')" class="px-4 py-2 rounded-xl text-xs font-bold transition-all bg-white text-indigo-600 shadow-sm">
+                <div class="flex bg-slate-200/60 p-1 rounded-2xl border border-white/80 mr-2 flex-wrap">
+                    <button id="tab-town-btn" onclick="switchTab('town')" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-white text-indigo-600 shadow-sm">
+                        <i class="fa-solid fa-city mr-1.5"></i>실버타운
+                    </button>
+                    <button id="tab-members-btn" onclick="switchTab('members')" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900">
                         <i class="fa-solid fa-users mr-1.5"></i>멤버 관리
                     </button>
-                    <button id="tab-notices-btn" onclick="switchTab('notices')" class="px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900">
+                    <button id="tab-notices-btn" onclick="switchTab('notices')" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900">
                         <i class="fa-solid fa-bullhorn mr-1.5 text-purple-600"></i>전달사항
                     </button>
-                    <button id="tab-warnings-btn" onclick="switchTab('warnings')" class="px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900">
+                    <button id="tab-warnings-btn" onclick="switchTab('warnings')" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900">
                         <i class="fa-solid fa-shield-halved mr-1.5 text-amber-500"></i>경고 전용 채널
                     </button>
-                    <button id="tab-salary-btn" onclick="switchTab('salary')" class="px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900">
+                    <button id="tab-salary-btn" onclick="switchTab('salary')" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900">
                         <i class="fa-solid fa-sack-dollar mr-1.5 text-emerald-600"></i>주급정산
                     </button>
                 </div>
@@ -109,7 +112,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div class="glass-card rounded-2xl p-4 flex items-center justify-between border-l-4 border-l-indigo-500">
                 <div>
-                    <p class="text-xs font-semibold text-slate-400 uppercase">전체 운영진/멤버</p>
+                    <p class="text-xs font-semibold text-slate-400 uppercase">실버타운 멤버</p>
                     <h3 class="text-2xl font-bold text-slate-800 mt-0.5" id="stat-total-members">0명</h3>
                 </div>
                 <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-lg">
@@ -148,8 +151,28 @@
             </div>
         </div>
 
+        <!-- TAB 0: SILVERTOWN (실버타운 메인 페이지 - 개별 카드 디자인 적용) -->
+        <div id="tab-town-section" class="space-y-6">
+            <div class="glass-panel rounded-2xl p-6 space-y-4 border-t-4 border-t-indigo-500">
+                <div class="pb-3 border-b border-slate-200">
+                    <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-city text-indigo-600 text-lg"></i> 실버타운 직업별 배정 현황
+                    </h2>
+                    <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+                        원활한 회사 분위기와 다양한 교류를 위해 아래 직업은 최대 5명까지만 배정됩니다.<br>
+                        해당 제한은 특정 직업에 인원이 몰려 친목이 형성되는 것을 방지하고, 모든 직원분들이 여러 직군과 두루 어울리며 즐길 수 있는 환경을 만들기 위한 운영 방침입니다.
+                    </p>
+                </div>
+
+                <!-- 직업별 개별 네모박스 카드 리스트 컨테이너 -->
+                <div id="town-jobs-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- 자바스크립트로 동적 렌더링 -->
+                </div>
+            </div>
+        </div>
+
         <!-- TAB 1: MEMBERS -->
-        <div id="tab-members-section" class="space-y-6">
+        <div id="tab-members-section" class="space-y-6 hidden">
             <div class="glass-panel rounded-2xl p-4 flex flex-col md:flex-row items-center justify-between gap-4 border border-indigo-100">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-lg font-bold">
@@ -211,7 +234,6 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- 1. 총괄 찡긋 전달사항 -->
                 <div class="glass-panel rounded-2xl p-5 flex flex-col justify-between space-y-4 border-t-4 border-t-indigo-500">
                     <div>
                         <div class="flex items-center justify-between pb-3 border-b border-slate-200">
@@ -226,7 +248,6 @@
                     </div>
                 </div>
 
-                <!-- 2. 총괄 캐럿 전달사항 -->
                 <div class="glass-panel rounded-2xl p-5 flex flex-col justify-between space-y-4 border-t-4 border-t-purple-500">
                     <div>
                         <div class="flex items-center justify-between pb-3 border-b border-slate-200">
@@ -241,7 +262,6 @@
                     </div>
                 </div>
 
-                <!-- 3. 감사팀 한나 전달사항 -->
                 <div class="glass-panel rounded-2xl p-5 flex flex-col justify-between space-y-4 border-t-4 border-t-amber-500">
                     <div>
                         <div class="flex items-center justify-between pb-3 border-b border-slate-200">
@@ -296,9 +316,8 @@
             </div>
         </div>
 
-        <!-- TAB 4: SALARY (주급정산 채널) -->
+        <!-- TAB 4: SALARY -->
         <div id="tab-salary-section" class="space-y-8 hidden">
-            <!-- 1. 이번 주 활동 정산 (TOP 1~3) -->
             <div class="glass-panel rounded-2xl p-6 space-y-4 border-t-4 border-t-emerald-500">
                 <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-3 border-b border-slate-200">
                     <div>
@@ -319,7 +338,6 @@
                     </div>
                 </div>
 
-                <!-- 현재 불러온 기준 표시 바 -->
                 <div id="active-history-banner" class="hidden px-4 py-2.5 rounded-xl bg-purple-50 border border-purple-200 text-purple-900 text-xs font-bold flex items-center justify-between">
                     <span><i class="fa-solid fa-circle-info mr-1 text-purple-600"></i> 현재 조회 중인 기준: <span id="active-history-title" class="underline">실시간 현재 점수 기준</span></span>
                     <button onclick="clearLoadedHistory()" class="text-rose-600 hover:underline">실시간 기준으로 돌아가기</button>
@@ -342,7 +360,6 @@
                 </div>
             </div>
 
-            <!-- 2. 이번 주 납품 정산 -->
             <div class="glass-panel rounded-2xl p-6 space-y-4 border-t-4 border-t-blue-500">
                 <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-3 border-b border-slate-200">
                     <div>
@@ -397,6 +414,7 @@
                     <div>
                         <label class="block font-bold text-slate-700 mb-1">현재 직급</label>
                         <select id="input-rank" class="w-full px-3 py-2.5 rounded-xl glass-input font-semibold">
+                            <option value="운영진팀">운영진팀</option>
                             <option value="인턴">인턴</option>
                             <option value="수습사원">수습사원</option>
                             <option value="사원">사원</option>
@@ -415,7 +433,7 @@
                 </div>
                 <div>
                     <label class="block font-bold text-slate-700 mb-1">이번 주 활동 점수</label>
-                    <input type="number" id="input-weekly-honor" min="0" value="0" class="w-full px-3 py-2.5 rounded-xl glass-input">
+                    <input type="number" id="input-weekly-honor" min="0" value="0" class="w-full px-3.5 py-2.5 rounded-xl glass-input">
                 </div>
                 <div class="flex justify-end gap-2 pt-2 border-t">
                     <button type="button" onclick="closeModal('modal-member')" class="px-4 py-2 bg-slate-100 rounded-xl font-bold">취소</button>
@@ -437,7 +455,7 @@
         </div>
     </div>
 
-    <!-- Load History Select Modal (토요일 정산 기록 불러오기 모달) -->
+    <!-- Load History Select Modal -->
     <div id="modal-load-history" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl border w-full max-w-md p-6 space-y-4 text-xs">
             <div class="flex items-center justify-between pb-2 border-b">
@@ -484,11 +502,11 @@
         </div>
     </div>
 
-    <!-- Vacation & Member Info & Score Edit Modal -->
+    <!-- Vacation & Member Info & Score Edit & Job Selection Modal -->
     <div id="modal-vacation" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl border w-full max-w-md p-6 space-y-4 text-xs">
+        <div class="bg-white rounded-2xl shadow-2xl border w-full max-w-md p-6 space-y-4 text-xs max-h-[90vh] overflow-y-auto">
             <div class="flex items-center justify-between pb-2 border-b">
-                <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2 text-amber-900"><i class="fa-solid fa-user-gear text-amber-600"></i> 멤버 상세 정보 및 점수/휴가 관리</h3>
+                <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2 text-amber-900"><i class="fa-solid fa-user-gear text-amber-600"></i> 멤버 상세 정보 및 직업/점수 관리</h3>
                 <button onclick="closeModal('modal-vacation')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-base"></i></button>
             </div>
             
@@ -515,6 +533,14 @@
                         <label class="block text-[11px] font-bold text-slate-600 mb-0.5">닉네임</label>
                         <input type="text" id="edit-discord-input" class="w-full px-2.5 py-1.5 rounded-lg glass-input text-xs font-bold text-slate-800">
                     </div>
+                </div>
+            </div>
+
+            <!-- 직업 선택 체크박스 영역 -->
+            <div class="bg-indigo-50/70 p-3.5 rounded-xl border border-indigo-200 space-y-2">
+                <span class="font-bold text-indigo-900 block"><i class="fa-solid fa-briefcase mr-1"></i> 소속 직업 선택 (중복 가능)</span>
+                <div class="grid grid-cols-2 gap-2 pt-1" id="job-checkboxes-container">
+                    <!-- 동적 생성 -->
                 </div>
             </div>
 
@@ -653,6 +679,7 @@
                 if (data.notices) window.notices = data.notices;
                 if (data.weeklyHistories) window.weeklyHistories = data.weeklyHistories;
                 
+                renderSilvertownTown();
                 renderMembersTable();
                 renderNotices();
                 renderWarningMembersTable();
@@ -682,7 +709,7 @@
     <script>
         const ADMIN_PASS = '2580';
         let isAuthenticated = false;
-        window.loadedHistoryData = null; // 불러온 과거 정산 데이터 보관용
+        window.loadedHistoryData = null;
 
         const RANK_CONFIG = [
             { name: '본부장', minHonor: 100000 },
@@ -693,7 +720,21 @@
             { name: '주임',   minHonor: 12000 },
             { name: '사원',   minHonor: 4000 },
             { name: '수습사원', minHonor: 0 },
-            { name: '인턴',   minHonor: 0 }
+            { name: '인턴',   minHonor: 0 },
+            { name: '운영진팀', minHonor: 0 }
+        ];
+
+        const JOB_LIST = [
+            { id: 'staff', name: '스태프', icon: '⭐' },
+            { id: 'police', name: '경찰청', icon: '👮' },
+            { id: 'security', name: '보안국', icon: '🎓' },
+            { id: 'wreck', name: '렉카', icon: '🚧' },
+            { id: 'coupang', name: '쿠팡', icon: '🚀' },
+            { id: 'land', name: '랜드', icon: '🎡' },
+            { id: 'factory', name: '팩토리', icon: '📦' },
+            { id: 'healing', name: '힐링', icon: '💊' },
+            { id: 'gang', name: '조직', icon: '👥' },
+            { id: 'unemployed', name: '백수', icon: '💼' }
         ];
 
         window.members = window.members || [];
@@ -734,6 +775,7 @@
         }
 
         function saveData() {
+            renderSilvertownTown();
             renderMembersTable();
             renderNotices();
             renderWarningMembersTable();
@@ -749,7 +791,7 @@
 
         function getAppropriateRank(totalHonor) {
             for (let r of RANK_CONFIG) {
-                if (r.name !== '인턴' && totalHonor >= r.minHonor) return r.name;
+                if (r.name !== '인턴' && r.name !== '운영진팀' && totalHonor >= r.minHonor) return r.name;
             }
             return '인턴';
         }
@@ -759,30 +801,36 @@
         }
 
         function switchTab(tab) {
+            document.getElementById('tab-town-section').classList.add('hidden');
             document.getElementById('tab-members-section').classList.add('hidden');
             document.getElementById('tab-notices-section').classList.add('hidden');
             document.getElementById('tab-warnings-section').classList.add('hidden');
             document.getElementById('tab-salary-section').classList.add('hidden');
 
-            document.getElementById('tab-members-btn').className = "px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900";
-            document.getElementById('tab-notices-btn').className = "px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900";
-            document.getElementById('tab-warnings-btn').className = "px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900";
-            document.getElementById('tab-salary-btn').className = "px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900";
+            document.getElementById('tab-town-btn').className = "px-3.5 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900";
+            document.getElementById('tab-members-btn').className = "px-3.5 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900";
+            document.getElementById('tab-notices-btn').className = "px-3.5 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900";
+            document.getElementById('tab-warnings-btn').className = "px-3.5 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900";
+            document.getElementById('tab-salary-btn').className = "px-3.5 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900";
 
-            if (tab === 'members') {
+            if (tab === 'town') {
+                document.getElementById('tab-town-section').classList.remove('hidden');
+                document.getElementById('tab-town-btn').className = "px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-white text-indigo-600 shadow-sm";
+                renderSilvertownTown();
+            } else if (tab === 'members') {
                 document.getElementById('tab-members-section').classList.remove('hidden');
-                document.getElementById('tab-members-btn').className = "px-4 py-2 rounded-xl text-xs font-bold transition-all bg-white text-indigo-600 shadow-sm";
+                document.getElementById('tab-members-btn').className = "px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-white text-indigo-600 shadow-sm";
             } else if (tab === 'notices') {
                 document.getElementById('tab-notices-section').classList.remove('hidden');
-                document.getElementById('tab-notices-btn').className = "px-4 py-2 rounded-xl text-xs font-bold transition-all bg-white text-purple-600 shadow-sm";
+                document.getElementById('tab-notices-btn').className = "px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-white text-purple-600 shadow-sm";
                 renderNotices();
             } else if (tab === 'warnings') {
                 document.getElementById('tab-warnings-section').classList.remove('hidden');
-                document.getElementById('tab-warnings-btn').className = "px-4 py-2 rounded-xl text-xs font-bold transition-all bg-white text-amber-600 shadow-sm";
+                document.getElementById('tab-warnings-btn').className = "px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-white text-amber-600 shadow-sm";
                 renderWarningMembersTable();
             } else if (tab === 'salary') {
                 document.getElementById('tab-salary-section').classList.remove('hidden');
-                document.getElementById('tab-salary-btn').className = "px-4 py-2 rounded-xl text-xs font-bold transition-all bg-white text-emerald-600 shadow-sm";
+                document.getElementById('tab-salary-btn').className = "px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-white text-emerald-600 shadow-sm";
                 renderActivitySalaryTable();
                 renderDeliverySalaryTable();
             }
@@ -793,17 +841,52 @@
             let promo = 0, vacation = 0, demotion = 0;
             window.members.forEach(m => {
                 if (m.vacation && m.vacation.active) vacation++;
+                const isTownStaff = m.jobs && m.jobs.includes('town_staff');
                 const expectedTotal = m.cumHonor + m.weeklyHonor;
                 const targetRank = getAppropriateRank(expectedTotal);
-                if (m.weeklyHonor < 1000) {
+                
+                if (!isTownStaff && m.weeklyHonor < 1000) {
                     demotion++;
-                } else if (getRankIndex(targetRank) < getRankIndex(m.rank)) {
+                } else if (!isTownStaff && getRankIndex(targetRank) < getRankIndex(m.rank)) {
                     promo++;
                 }
             });
             document.getElementById('stat-promotion-pending').textContent = `${promo}명`;
             document.getElementById('stat-vacation-count').textContent = `${vacation}명`;
             document.getElementById('stat-demotion-pending').textContent = `${demotion}명`;
+        }
+
+        // 실버타운 메인 탭 렌더링 (각 직업별 개별 카드 박스 디자인 + 오른쪽 상단 인원수 표시)
+        function renderSilvertownTown() {
+            const container = document.getElementById('town-jobs-container');
+            if (!container) return;
+            container.innerHTML = '';
+
+            JOB_LIST.forEach(job => {
+                const matchedMembers = window.members.filter(m => m.jobs && m.jobs.includes(job.id));
+                const count = matchedMembers.length;
+                const membersHTML = matchedMembers.length > 0 
+                    ? matchedMembers.map(m => `<span class="inline-block bg-slate-100 px-2 py-1 rounded-lg font-bold text-slate-700 m-0.5">[#${m.gobun}] ${m.discord}</span>`).join(' ')
+                    : '<span class="text-slate-400 italic">배정된 인원이 없습니다.</span>';
+
+                const card = document.createElement('div');
+                card.className = "glass-card rounded-2xl p-4 relative border border-white/90 shadow-sm flex flex-col justify-between space-y-3";
+                card.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xl">${job.icon}</span>
+                            <span class="font-bold text-slate-800 text-sm">${job.name}</span>
+                        </div>
+                        <span class="px-3 py-1 rounded-xl bg-indigo-50 text-indigo-600 font-extrabold text-xs shadow-inner">
+                            ${count}명
+                        </span>
+                    </div>
+                    <div class="pt-2 border-t border-slate-200/60 text-xs min-h-[36px] flex items-center flex-wrap gap-1">
+                        ${membersHTML}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
         }
 
         function renderMembersTable() {
@@ -816,10 +899,11 @@
             window.members.forEach(m => {
                 if (!m.discord.toLowerCase().includes(search) && !m.gobun.toLowerCase().includes(search)) return;
                 
+                const isTownStaff = m.jobs && m.jobs.includes('town_staff');
                 const expectedTotal = m.cumHonor + m.weeklyHonor;
                 const targetRank = getAppropriateRank(expectedTotal);
-                const isUnder1000 = m.weeklyHonor < 1000;
-                const isPromo = !isUnder1000 && (getRankIndex(targetRank) < getRankIndex(m.rank));
+                const isUnder1000 = !isTownStaff && (m.weeklyHonor < 1000);
+                const isPromo = !isTownStaff && !isUnder1000 && (getRankIndex(targetRank) < getRankIndex(m.rank));
 
                 if (filter === 'PROMOTION' && !isPromo) return;
                 if (filter === 'DEMOTION' && !isUnder1000) return;
@@ -827,7 +911,9 @@
                 if (filter === 'WARNING' && m.warnings <= 0) return;
 
                 let statusHTML = '';
-                if (isUnder1000) {
+                if (isTownStaff) {
+                    statusHTML = `<span class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-700 font-bold">실버타운 운영진</span>`;
+                } else if (isUnder1000) {
                     statusHTML = `<span class="px-2 py-0.5 rounded bg-rose-100 text-rose-700 font-bold">강등대상 (점수미달)</span>`;
                 } else if (isPromo) {
                     statusHTML = `<span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold">승진대상 (${targetRank})</span>`;
@@ -866,7 +952,6 @@
         }
 
         /* --- 주급 정산 로직 --- */
-        // 토요일 정산 기록 불러오기 모달
         function openLoadHistoryModal() {
             const listContainer = document.getElementById('history-select-list');
             if (!window.weeklyHistories || window.weeklyHistories.length === 0) {
@@ -902,7 +987,6 @@
             renderActivitySalaryTable();
         }
 
-        // 1. 이번 주 활동 정산 (TOP 1~3위)
         function renderActivitySalaryTable() {
             const tbody = document.getElementById('activity-salary-table-body');
             if (!tbody) return;
@@ -910,10 +994,8 @@
 
             let targetList = [];
             if (window.loadedHistoryData) {
-                // 불러온 과거 기록 기준으로 정렬
                 targetList = [...window.loadedHistoryData.items].sort((a, b) => b.weeklyHonor - a.weeklyHonor).slice(0, 3);
             } else {
-                // 실시간 멤버 기준 정렬
                 targetList = [...window.members].sort((a, b) => b.weeklyHonor - a.weeklyHonor).slice(0, 3);
             }
             
@@ -964,18 +1046,15 @@
             saveData();
         }
 
-        // 활동 + 납품 정산 전체 초기화 버튼
         function resetActivityAndDeliverySalaryStatus() {
             if (!confirm("이번 주 활동급여 및 납품 정산(입금 상태 및 납품 횟수)을 모두 초기화하시겠습니까?")) return;
             
-            // 실시간 멤버 활동 송금 및 납품 초기화
             window.members.forEach(m => {
                 m.activityPaid = false;
                 m.deliveryCount = 0;
                 m.deliveryPaid = false;
             });
 
-            // 불러온 히스토리 데이터가 있다면 거기도 초기화
             if (window.loadedHistoryData) {
                 window.loadedHistoryData.items.forEach(i => {
                     i.activityPaid = false;
@@ -986,7 +1065,6 @@
             alert("활동급여 송금 상태 및 납품 정산 내역이 모두 초기화되었습니다.");
         }
 
-        // 2. 이번 주 납품 정산
         function renderDeliverySalaryTable() {
             const tbody = document.getElementById('delivery-salary-table-body');
             if (!tbody) return;
@@ -1053,7 +1131,6 @@
             }
         }
 
-        /* --- 토요일 정산 로직 (히스토리 저장 포함) --- */
         function openWeeklySettlementModal() {
             const container = document.getElementById('settlement-items-container');
             container.innerHTML = window.members.map(m => `
@@ -1071,7 +1148,6 @@
                 m.weeklyHonor = val;
             });
 
-            // 토요일 정산 기록 히스토리에 저장
             const historyItem = {
                 id: Date.now(),
                 date: new Date().toISOString().split('T')[0],
@@ -1093,7 +1169,6 @@
             alert("토요일 주간 정산이 완료되고 히스토리에 기록되었습니다.");
         }
 
-        /* --- 전달사항 로직 --- */
         function openNoticeModal(author, editId = null) {
             document.getElementById('notice-author').value = author;
             document.getElementById('notice-edit-id').value = editId || '';
@@ -1186,7 +1261,6 @@
             });
         }
 
-        /* --- 경고 관리 채널 로직 --- */
         function renderWarningMembersTable() {
             const tbody = document.getElementById('warning-members-table-body');
             if (!tbody) return;
@@ -1304,14 +1378,17 @@
         function batchApplyAllRankChanges() {
             if (!confirm("디스코드 직급 변경을 일괄 반영하고 주간 점수를 초기화하시겠습니까?")) return;
             window.members.forEach(m => {
-                const expectedTotal = m.cumHonor + m.weeklyHonor;
-                if (m.weeklyHonor < 1000) {
-                    const idx = getRankIndex(m.rank);
-                    if (idx < RANK_CONFIG.length - 1) m.rank = RANK_CONFIG[idx + 1].name;
-                } else {
-                    m.rank = getAppropriateRank(expectedTotal);
+                const isTownStaff = m.jobs && m.jobs.includes('town_staff');
+                if (!isTownStaff) {
+                    const expectedTotal = m.cumHonor + m.weeklyHonor;
+                    if (m.weeklyHonor < 1000) {
+                        const idx = getRankIndex(m.rank);
+                        if (idx < RANK_CONFIG.length - 1) m.rank = RANK_CONFIG[idx + 1].name;
+                    } else {
+                        m.rank = getAppropriateRank(expectedTotal);
+                    }
+                    m.cumHonor += m.weeklyHonor;
                 }
-                m.cumHonor += m.weeklyHonor;
                 m.weeklyHonor = 0;
             });
             saveData();
@@ -1330,6 +1407,7 @@
                 cumHonor: parseInt(document.getElementById('input-cum-honor').value) || 0,
                 weeklyHonor: parseInt(document.getElementById('input-weekly-honor').value) || 0,
                 warnings: 0,
+                jobs: [],
                 vacation: { active: false, reason: '' }
             });
             saveData();
@@ -1343,7 +1421,6 @@
             }
         }
 
-        /* --- 멤버 정보 및 점수 수정 토글 로직 --- */
         let isEditingInfo = false;
         let isEditingScore = false;
 
@@ -1402,6 +1479,24 @@
             document.getElementById('edit-cum-honor-input').value = m.cumHonor;
             document.getElementById('edit-weekly-honor-input').value = m.weeklyHonor;
 
+            const jobContainer = document.getElementById('job-checkboxes-container');
+            const currentJobs = m.jobs || [];
+            
+            const fullJobList = [
+                { id: 'town_staff', name: '실버타운 운영진', icon: '👑' },
+                ...JOB_LIST
+            ];
+
+            jobContainer.innerHTML = fullJobList.map(j => {
+                const isChecked = currentJobs.includes(j.id);
+                return `
+                    <label class="flex items-center gap-2 p-1.5 bg-white rounded-lg border border-indigo-100 cursor-pointer hover:bg-indigo-50/50">
+                        <input type="checkbox" name="member_job" value="${j.id}" ${isChecked ? 'checked' : ''} class="w-4 h-4 text-indigo-600 rounded">
+                        <span class="font-bold text-slate-700 text-xs">${j.icon} ${j.name}</span>
+                    </label>
+                `;
+            }).join('');
+
             document.getElementById('input-vacation-active').checked = m.vacation.active;
             document.getElementById('input-vacation-reason').value = m.vacation.reason;
             
@@ -1425,6 +1520,12 @@
                 if (!isNaN(newCum)) m.cumHonor = newCum;
                 if (!isNaN(newWeekly)) m.weeklyHonor = newWeekly;
             }
+
+            const checkedJobs = [];
+            document.querySelectorAll('input[name="member_job"]:checked').forEach(cb => {
+                checkedJobs.push(cb.value);
+            });
+            m.jobs = checkedJobs;
 
             m.vacation = {
                 active: document.getElementById('input-vacation-active').checked,
