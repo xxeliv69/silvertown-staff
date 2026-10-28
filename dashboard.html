@@ -198,7 +198,7 @@
             </div>
         </div>
 
-        <!-- TAB 2: NOTICES (전달사항 카테고리) -->
+        <!-- TAB 2: NOTICES -->
         <div id="tab-notices-section" class="space-y-6 hidden">
             <div class="glass-panel rounded-2xl p-5">
                 <h2 class="font-bold text-base text-slate-800 flex items-center gap-2 mb-1">
@@ -207,7 +207,6 @@
                 <p class="text-xs text-slate-500">각 파트별 전달 내용을 실시간으로 등록, 수정, 삭제하여 운영진 간 원활하게 소통하세요.</p>
             </div>
 
-            <!-- Notices Grid (3 Sections) -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- 1. 총괄 찡긋 전달사항 -->
                 <div class="glass-panel rounded-2xl p-5 flex flex-col justify-between space-y-4 border-t-4 border-t-indigo-500">
@@ -386,16 +385,17 @@
         </div>
     </div>
 
-    <!-- Vacation & Member Info Edit Modal -->
+    <!-- Vacation & Member Info & Score Edit Modal -->
     <div id="modal-vacation" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl border w-full max-w-md p-6 space-y-4 text-xs">
             <div class="flex items-center justify-between pb-2 border-b">
-                <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2 text-amber-900"><i class="fa-solid fa-user-gear text-amber-600"></i> 멤버 상세 정보 및 휴가 관리</h3>
+                <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2 text-amber-900"><i class="fa-solid fa-user-gear text-amber-600"></i> 멤버 상세 정보 및 점수/휴가 관리</h3>
                 <button onclick="closeModal('modal-vacation')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-base"></i></button>
             </div>
             
             <input type="hidden" id="vacation-member-id">
             
+            <!-- 대상 멤버 정보 박스 -->
             <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-2">
                 <div class="flex items-center justify-between">
                     <span class="text-slate-500 font-bold">대상 멤버 정보</span>
@@ -420,6 +420,39 @@
                 </div>
             </div>
 
+            <!-- 점수 정보 및 수정 박스 -->
+            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-2">
+                <div class="flex items-center justify-between">
+                    <span class="text-slate-500 font-bold">점수 정보 관리</span>
+                    <button type="button" onclick="toggleEditScoreInfo()" id="btn-score-edit-toggle" class="px-2.5 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 border border-indigo-200 rounded-lg font-bold flex items-center gap-1 transition">
+                        <i class="fa-solid fa-pen-to-square"></i> <span id="score-edit-btn-text">수정</span>
+                    </button>
+                </div>
+                
+                <div id="score-read-view" class="grid grid-cols-2 gap-2 text-xs">
+                    <div class="bg-white p-2 rounded-lg border">
+                        <span class="text-slate-400 block text-[10px]">누적 명예 점수</span>
+                        <span class="font-extrabold text-indigo-600 text-sm" id="display-cum-honor">0 점</span>
+                    </div>
+                    <div class="bg-white p-2 rounded-lg border">
+                        <span class="text-slate-400 block text-[10px]">이번 주 활동 점수</span>
+                        <span class="font-extrabold text-slate-800 text-sm" id="display-weekly-honor">0 점</span>
+                    </div>
+                </div>
+
+                <div id="score-edit-view" class="hidden grid grid-cols-2 gap-2 pt-1">
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 mb-0.5">누적 명예 점수</label>
+                        <input type="number" id="edit-cum-honor-input" min="0" class="w-full px-2.5 py-1.5 rounded-lg glass-input text-xs font-bold text-indigo-600">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 mb-0.5">이번 주 활동 점수</label>
+                        <input type="number" id="edit-weekly-honor-input" min="0" class="w-full px-2.5 py-1.5 rounded-lg glass-input text-xs font-bold text-slate-800">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 휴가 설정 -->
             <div class="flex items-center justify-between p-3 rounded-xl bg-amber-50/80 border border-amber-200">
                 <div>
                     <span class="font-bold text-amber-900 block">휴가 상태 활성화</span>
@@ -992,7 +1025,10 @@
             alert("주간 점수가 정산되었습니다.");
         }
 
+        /* --- 멤버 정보 및 점수 수정 토글 로직 --- */
         let isEditingInfo = false;
+        let isEditingScore = false;
+
         function toggleEditMemberInfo() {
             isEditingInfo = !isEditingInfo;
             const readView = document.getElementById('member-read-view');
@@ -1009,20 +1045,50 @@
             }
         }
 
+        function toggleEditScoreInfo() {
+            isEditingScore = !isEditingScore;
+            const readView = document.getElementById('score-read-view');
+            const editView = document.getElementById('score-edit-view');
+            const btnText = document.getElementById('score-edit-btn-text');
+            if (isEditingScore) {
+                readView.classList.add('hidden');
+                editView.classList.remove('hidden');
+                btnText.textContent = '취소';
+            } else {
+                readView.classList.remove('hidden');
+                editView.classList.add('hidden');
+                btnText.textContent = '수정';
+            }
+        }
+
         function openVacationModal(id) {
             const m = window.members.find(x => x.id === id);
+            
+            // 초기화
             isEditingInfo = false;
+            isEditingScore = false;
             document.getElementById('member-read-view').classList.remove('hidden');
             document.getElementById('member-edit-view').classList.add('hidden');
             document.getElementById('edit-btn-text').textContent = '수정';
 
+            document.getElementById('score-read-view').classList.remove('hidden');
+            document.getElementById('score-edit-view').classList.add('hidden');
+            document.getElementById('score-edit-btn-text').textContent = '수정';
+
+            // 데이터 세팅
             document.getElementById('vacation-member-id').value = m.id;
             document.getElementById('vacation-member-display').textContent = `[#${m.gobun}] ${m.discord}`;
             document.getElementById('edit-gobun-input').value = m.gobun;
             document.getElementById('edit-discord-input').value = m.discord;
 
+            document.getElementById('display-cum-honor').textContent = `${m.cumHonor.toLocaleString()} 점`;
+            document.getElementById('display-weekly-honor').textContent = `${m.weeklyHonor.toLocaleString()} 점`;
+            document.getElementById('edit-cum-honor-input').value = m.cumHonor;
+            document.getElementById('edit-weekly-honor-input').value = m.weeklyHonor;
+
             document.getElementById('input-vacation-active').checked = m.vacation.active;
             document.getElementById('input-vacation-reason').value = m.vacation.reason;
+            
             document.getElementById('modal-vacation').classList.remove('hidden');
         }
 
@@ -1030,6 +1096,7 @@
             const id = parseInt(document.getElementById('vacation-member-id').value);
             const m = window.members.find(x => x.id === id);
             
+            // 멤버 정보 수정 반영
             if (isEditingInfo) {
                 const newGobun = document.getElementById('edit-gobun-input').value.trim();
                 const newDiscord = document.getElementById('edit-discord-input').value.trim();
@@ -1037,10 +1104,20 @@
                 if (newDiscord) m.discord = newDiscord;
             }
 
+            // 점수 수정 반영
+            if (isEditingScore) {
+                const newCum = parseInt(document.getElementById('edit-cum-honor-input').value);
+                const newWeekly = parseInt(document.getElementById('edit-weekly-honor-input').value);
+                if (!isNaN(newCum)) m.cumHonor = newCum;
+                if (!isNaN(newWeekly)) m.weeklyHonor = newWeekly;
+            }
+
+            // 휴가 반영
             m.vacation = {
                 active: document.getElementById('input-vacation-active').checked,
                 reason: document.getElementById('input-vacation-reason').value
             };
+            
             saveData();
             closeModal('modal-vacation');
         }
