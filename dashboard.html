@@ -151,7 +151,7 @@
             </div>
         </div>
 
-        <!-- TAB 0: SILVERTOWN (실버타운 메인 페이지 - 개별 카드 디자인 적용) -->
+        <!-- TAB 0: SILVERTOWN (실버타운 메인 페이지) -->
         <div id="tab-town-section" class="space-y-6">
             <div class="glass-panel rounded-2xl p-6 space-y-4 border-t-4 border-t-indigo-500">
                 <div class="pb-3 border-b border-slate-200">
@@ -164,7 +164,7 @@
                     </p>
                 </div>
 
-                <!-- 직업별 개별 네모박스 카드 리스트 컨테이너 -->
+                <!-- 직업별 개별 카드 리스트 컨테이너 -->
                 <div id="town-jobs-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <!-- 자바스크립트로 동적 렌더링 -->
                 </div>
@@ -433,7 +433,7 @@
                 </div>
                 <div>
                     <label class="block font-bold text-slate-700 mb-1">이번 주 활동 점수</label>
-                    <input type="number" id="input-weekly-honor" min="0" value="0" class="w-full px-3.5 py-2.5 rounded-xl glass-input">
+                    <input type="number" id="input-weekly-honor" min="0" value="0" class="w-full px-3 py-2.5 rounded-xl glass-input">
                 </div>
                 <div class="flex justify-end gap-2 pt-2 border-t">
                     <button type="button" onclick="closeModal('modal-member')" class="px-4 py-2 bg-slate-100 rounded-xl font-bold">취소</button>
@@ -711,6 +711,9 @@
         let isAuthenticated = false;
         window.loadedHistoryData = null;
 
+        // 요청하신 직급 정렬 순서 정의 (운영진팀 > 본부장 > 부장 > 차장 > 과장 > 대리 > 주임 > 사원 > 인턴)
+        const RANK_ORDER = ['운영진팀', '본부장', '부장', '차장', '과장', '대리', '주임', '사원', '인턴'];
+
         const RANK_CONFIG = [
             { name: '본부장', minHonor: 100000 },
             { name: '부장',   minHonor: 75000 },
@@ -856,7 +859,6 @@
             document.getElementById('stat-demotion-pending').textContent = `${demotion}명`;
         }
 
-        // 실버타운 메인 탭 렌더링 (각 직업별 개별 카드 박스 디자인 + 오른쪽 상단 인원수 표시)
         function renderSilvertownTown() {
             const container = document.getElementById('town-jobs-container');
             if (!container) return;
@@ -889,6 +891,7 @@
             });
         }
 
+        // 멤버 관리 테이블 렌더링 (직급순 정렬 + 같은 직급시 고번 오름차순 정렬)
         function renderMembersTable() {
             const tbody = document.getElementById('members-table-body');
             if (!tbody) return;
@@ -896,7 +899,23 @@
             const search = document.getElementById('search-input').value.toLowerCase();
             const filter = document.getElementById('filter-status').value;
 
-            window.members.forEach(m => {
+            // 정렬 적용: 1순위 직급순 (RANK_ORDER 인덱스 기준), 2순위 고번 낮은 순(숫자 변환 비교)
+            const sortedMembers = [...window.members].sort((a, b) => {
+                let rankIdxA = RANK_ORDER.indexOf(a.rank);
+                let rankIdxB = RANK_ORDER.indexOf(b.rank);
+                if (rankIdxA === -1) rankIdxA = 99;
+                if (rankIdxB === -1) rankIdxB = 99;
+
+                if (rankIdxA !== rankIdxB) {
+                    return rankIdxA - rankIdxB;
+                }
+                // 직급이 같으면 고번 오름차순 (낮은 숫자가 위로)
+                let numA = parseInt(a.gobun.replace(/[^0-9]/g, '')) || 0;
+                let numB = parseInt(b.gobun.replace(/[^0-9]/g, '')) || 0;
+                return numA - numB;
+            });
+
+            sortedMembers.forEach(m => {
                 if (!m.discord.toLowerCase().includes(search) && !m.gobun.toLowerCase().includes(search)) return;
                 
                 const isTownStaff = m.jobs && m.jobs.includes('town_staff');
