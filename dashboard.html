@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>실버타운 운영진 센터</title>
+    <title>실버타운 통합 커뮤니티</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome Icons -->
@@ -12,10 +12,30 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <style>
         * { font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif; }
-        body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4eaf5 100%);
-            min-height: 100vh;
+        body { 
+            background: #F8F9FA; 
+            background-image: radial-gradient(#E2E8F0 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+            min-height: 100vh; 
         }
+        .cute-card {
+            background: rgba(255, 255, 255, 0.95);
+            border: 2.5px solid #EEF2F6;
+            border-radius: 24px;
+            box-shadow: 0 10px 25px -5px rgba(148, 163, 184, 0.15);
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .cute-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 30px -5px rgba(99, 102, 241, 0.18);
+        }
+        .cute-btn {
+            border-radius: 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.2s ease;
+        }
+        .cute-btn:active { transform: scale(0.96); }
+
         .glass-panel {
             background: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(16px);
@@ -44,357 +64,527 @@
 <body class="text-slate-800 antialiased pb-12">
 
     <!-- Header Navigation -->
-    <header class="sticky top-0 z-30 glass-panel border-b border-white/60 mb-6">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex flex-col md:flex-row items-center justify-between gap-4 py-2">
+    <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b-2 border-indigo-50 mb-6 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-center relative">
             <div class="flex items-center gap-3">
-                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-md shadow-indigo-200">
-                    <i class="fa-brands fa-discord text-2xl"></i>
+                <div class="relative w-10 h-10 rounded-2xl bg-gradient-to-tr from-sky-200 via-pink-100 to-indigo-100 p-0.5 shadow-md flex items-center justify-center">
+                    <span class="text-2xl">☁️</span>
                 </div>
-                <div>
-                    <h1 class="text-xl font-bold bg-gradient-to-r from-slate-800 to-indigo-900 bg-clip-text text-transparent">
-                        실버타운 운영진 센터
+                <div class="text-center sm:text-left">
+                    <h1 class="text-xl font-black text-slate-800 tracking-tight flex items-center gap-1.5">
+                        <span>실버타운</span>
+                        <span class="text-[10px] px-2 py-0.5 rounded-full bg-pink-100 text-pink-600 font-extrabold">ADMIN PORTAL</span>
                     </h1>
-                    <p class="text-xs text-slate-500 font-medium">실시간 클라우드 공유 시스템</p>
                 </div>
             </div>
+        </div>
 
-            <!-- Tabs & Quick Actions -->
-            <div class="flex items-center gap-2">
-                <div class="flex bg-slate-200/60 p-1 rounded-2xl border border-white/80 mr-2 flex-wrap">
-                    <button id="tab-town-btn" onclick="switchTab('town')" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-white text-indigo-600 shadow-sm">
-                        <i class="fa-solid fa-city mr-1.5"></i>실버타운
-                    </button>
-                    <button id="tab-members-btn" onclick="switchTab('members')" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900">
-                        <i class="fa-solid fa-users mr-1.5"></i>멤버 관리
-                    </button>
-                    <button id="tab-notices-btn" onclick="switchTab('notices')" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900">
-                        <i class="fa-solid fa-bullhorn mr-1.5 text-purple-600"></i>전달사항
-                    </button>
-                    <button id="tab-warnings-btn" onclick="switchTab('warnings')" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900">
-                        <i class="fa-solid fa-shield-halved mr-1.5 text-amber-500"></i>경고 전용 채널
-                    </button>
-                    <button id="tab-salary-btn" onclick="switchTab('salary')" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900">
-                        <i class="fa-solid fa-sack-dollar mr-1.5 text-emerald-600"></i>주급정산
-                    </button>
-                </div>
-                
-                <button onclick="requireAuth(openWeeklySettlementModal)" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold text-xs shadow-md shadow-purple-200 transition-all flex items-center gap-1.5">
-                    <i class="fa-solid fa-calendar-check"></i>
-                    <span>토요일 정산</span>
-                </button>
-                <button onclick="requireAuth(openAddMemberModal)" class="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-md shadow-indigo-200 transition-all flex items-center gap-1.5">
-                    <i class="fa-solid fa-user-plus"></i>
-                    <span>멤버 추가</span>
-                </button>
+        <div class="bg-indigo-50/50 border-t border-indigo-100/60 py-2.5">
+            <div class="max-w-7xl mx-auto px-4 flex flex-wrap justify-center items-center gap-2">
+                <button onclick="switchMainTab('home')" id="mtab-home-btn" class="cute-btn px-4 py-2 text-xs font-black bg-indigo-600 text-white">🏠 메인 홈</button>
+                <button onclick="switchMainTab('rank')" id="mtab-rank-btn" class="cute-btn px-4 py-2 text-xs font-black bg-white text-slate-600 hover:bg-indigo-100">🎖️ 직급채널</button>
+                <button onclick="switchMainTab('salary')" id="mtab-salary-btn" class="cute-btn px-4 py-2 text-xs font-black bg-white text-slate-600 hover:bg-indigo-100">💰 주급채널</button>
+                <button onclick="switchMainTab('admin')" id="mtab-admin-btn" class="cute-btn px-4 py-2 text-xs font-black bg-pink-500 text-white shadow-md">👑 운영진채널</button>
             </div>
         </div>
     </header>
 
-    <!-- Password Authentication Bar -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
-        <div class="glass-panel rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 border border-indigo-100">
-            <div class="flex items-center gap-2 text-xs font-bold text-slate-700">
-                <i class="fa-solid fa-lock text-indigo-600 text-sm"></i>
-                <span>관리자 보안 인증 상태:</span>
-                <span id="auth-status-badge" class="px-2.5 py-1 rounded-lg bg-rose-100 text-rose-700 font-bold">미인증 (작업 제한됨)</span>
-            </div>
-            <div id="auth-input-container" class="flex items-center gap-2">
-                <input type="password" id="global-pass-input" placeholder="비밀번호" class="px-3 py-1.5 rounded-xl glass-input text-xs font-bold focus:outline-none w-36">
-                <button onclick="verifyGlobalPassword()" id="auth-submit-btn" class="px-4 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-md">인증하기</button>
-            </div>
-        </div>
-    </div>
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
-    <!-- Main Container -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-
-        <!-- Stat Cards -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="glass-card rounded-2xl p-4 flex items-center justify-between border-l-4 border-l-indigo-500">
-                <div>
-                    <p class="text-xs font-semibold text-slate-400 uppercase">실버타운 멤버</p>
-                    <h3 class="text-2xl font-bold text-slate-800 mt-0.5" id="stat-total-members">0명</h3>
-                </div>
-                <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-lg">
-                    <i class="fa-solid fa-users"></i>
+        <!-- 1. 메인 홈 (HOME) -->
+        <div id="section-home" class="space-y-8 max-w-6xl mx-auto">
+            <div class="cute-card overflow-hidden relative bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white p-8 sm:p-12 text-center shadow-xl">
+                <div id="carousel-slide" class="transition-all duration-700 ease-in-out transform">
+                    <div class="text-4xl mb-3">☁️✨</div>
+                    <h2 class="text-2xl sm:text-3xl font-black tracking-tight" id="slide-title">실버타운 관리자 시스템</h2>
+                    <p class="text-xs sm:text-sm mt-2 opacity-90 font-medium" id="slide-desc">실시간 직업 배정 및 멤버 활동 통합 관리</p>
                 </div>
             </div>
 
-            <div class="glass-card rounded-2xl p-4 flex items-center justify-between border-l-4 border-l-emerald-500">
-                <div>
-                    <p class="text-xs font-semibold text-slate-400 uppercase">승진/복구 대상자</p>
-                    <h3 class="text-2xl font-bold text-emerald-600 mt-0.5" id="stat-promotion-pending">0명</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
+                <div class="cute-card p-5 flex items-center justify-between border-2 border-indigo-100 bg-white">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-2xl bg-indigo-100 flex items-center justify-center text-2xl">👥</div>
+                        <div>
+                            <p class="text-xs font-extrabold text-slate-400">실버타운 멤버</p>
+                            <h3 class="text-xl font-black text-indigo-600" id="home-member-count">0명</h3>
+                        </div>
+                    </div>
                 </div>
-                <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg">
-                    <i class="fa-solid fa-arrow-up-right-dots"></i>
+
+                <div class="cute-card p-5 flex items-center justify-between border-2 border-pink-100 bg-white">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-2xl bg-pink-100 flex items-center justify-center text-2xl">👑</div>
+                        <div>
+                            <p class="text-xs font-extrabold text-slate-400">실버타운 운영진</p>
+                            <h3 class="text-xl font-black text-pink-600" id="home-admin-count">0명</h3>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="glass-card rounded-2xl p-4 flex items-center justify-between border-l-4 border-l-amber-500">
-                <div>
-                    <p class="text-xs font-semibold text-slate-400 uppercase">휴가 중인 멤버</p>
-                    <h3 class="text-2xl font-bold text-amber-600 mt-0.5" id="stat-vacation-count">0명</h3>
+            <div class="cute-card p-6 sm:p-8 space-y-6 bg-white">
+                <div class="flex items-center justify-between border-b pb-4">
+                    <div>
+                        <h2 class="text-base font-black text-slate-800 flex items-center gap-2">
+                            <span class="text-indigo-600">🏢</span> 실버타운 직업별 배정 현황
+                        </h2>
+                        <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+                            원활한 회사 분위기와 다양한 교류를 위해 아래 직업은 최대 5명까지만 배정됩니다.
+                        </p>
+                    </div>
+                    <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-100 flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        실시간 연동중
+                    </span>
                 </div>
-                <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg">
-                    <i class="fa-solid fa-umbrella-beach"></i>
-                </div>
-            </div>
 
-            <div class="glass-card rounded-2xl p-4 flex items-center justify-between border-l-4 border-l-rose-500">
-                <div>
-                    <p class="text-xs font-semibold text-slate-400 uppercase">강등 검토 대상자</p>
-                    <h3 class="text-2xl font-bold text-rose-600 mt-0.5" id="stat-demotion-pending">0명</h3>
-                </div>
-                <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-lg">
-                    <i class="fa-solid fa-arrow-down-wide-short"></i>
-                </div>
+                <div id="home-job-allocation-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </div>
         </div>
 
-        <!-- TAB 0: SILVERTOWN (실버타운 메인 페이지) -->
-        <div id="tab-town-section" class="space-y-6">
-            <div class="glass-panel rounded-2xl p-6 space-y-4 border-t-4 border-t-indigo-500">
-                <div class="pb-3 border-b border-slate-200">
-                    <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
-                        <i class="fa-solid fa-city text-indigo-600 text-lg"></i> 실버타운 직업별 배정 현황
+        <!-- 2. 직급채널 -->
+        <div id="section-rank" class="cute-card p-6 sm:p-8 space-y-8 hidden bg-white max-w-6xl mx-auto">
+            <div class="border-b pb-4 flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl font-black text-slate-800 flex items-center gap-2">
+                        <span>🎖️ 이번 주 직급 변경 및 상태 현황</span>
                     </h2>
-                    <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-                        원활한 회사 분위기와 다양한 교류를 위해 아래 직업은 최대 5명까지만 배정됩니다.<br>
-                        해당 제한은 특정 직업에 인원이 몰려 친목이 형성되는 것을 방지하고, 모든 직원분들이 여러 직군과 두루 어울리며 즐길 수 있는 환경을 만들기 위한 운영 방침입니다.
-                    </p>
+                    <p class="text-xs text-slate-500 mt-1">운영진 시스템에서 이번 주 정산 처리된 직급 변동 결과입니다.</p>
                 </div>
-
-                <!-- 직업별 개별 카드 리스트 컨테이너 -->
-                <div id="town-jobs-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- 자바스크립트로 동적 렌더링 -->
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 1: MEMBERS -->
-        <div id="tab-members-section" class="space-y-6 hidden">
-            <div class="glass-panel rounded-2xl p-4 flex flex-col md:flex-row items-center justify-between gap-4 border border-indigo-100">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-lg font-bold">
-                        <i class="fa-solid fa-rotate text-indigo-600"></i>
-                    </div>
-                    <div>
-                        <h2 class="text-sm font-bold text-slate-800">토요일 디스코드 직급 변경 일괄 처리</h2>
-                        <p class="text-xs text-slate-500">직급 조정을 마치신 후 아래 버튼을 누르면 승진/강등된 직급이 일괄 반영됩니다.</p>
-                    </div>
-                </div>
-                <button onclick="requireAuth(batchApplyAllRankChanges)" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-lg shadow-indigo-200 transition-all flex items-center justify-center gap-2 whitespace-nowrap">
-                    <i class="fa-solid fa-check-double"></i>
-                    <span>[디스코드 직급 변경 완료] 일괄 반영</span>
-                </button>
+                <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-3 py-1.5 rounded-xl border border-indigo-100">실시간 자동 연동됨</span>
             </div>
 
-            <div class="glass-panel rounded-2xl p-5 space-y-4">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
-                    <div class="relative flex-1 max-w-md">
-                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                        <input type="text" id="search-input" oninput="renderMembersTable()" placeholder="고번(#), 닉네임 검색..." class="w-full pl-9 pr-4 py-2 rounded-xl glass-input text-xs text-slate-800 focus:outline-none">
-                    </div>
-                    <select id="filter-status" onchange="renderMembersTable()" class="px-3 py-2 rounded-xl glass-input text-xs font-semibold text-slate-700 focus:outline-none">
-                        <option value="ALL">전체 상태 보기</option>
-                        <option value="PROMOTION">승진/복구 대상만</option>
-                        <option value="DEMOTION">강등 대상만</option>
-                        <option value="VACATION">휴가 중인 멤버</option>
-                        <option value="WARNING">경고 보유자만</option>
-                    </select>
-                </div>
-
-                <div class="overflow-x-auto rounded-xl border border-slate-200/80 bg-white/70">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-slate-100/80 border-b border-slate-200 text-slate-600 text-xs font-bold">
-                                <th class="py-3.5 px-4">고번 / 멤버 정보</th>
-                                <th class="py-3.5 px-4">현재 직급</th>
-                                <th class="py-3.5 px-4 text-right">누적 명예 점수</th>
-                                <th class="py-3.5 px-4 text-right">이번 주 활동 점수</th>
-                                <th class="py-3.5 px-4">휴가 현황</th>
-                                <th class="py-3.5 px-4 text-center">경고 (회)</th>
-                                <th class="py-3.5 px-4">판정 결과</th>
-                                <th class="py-3.5 px-4 text-center">관리</th>
-                            </tr>
-                        </thead>
-                        <tbody id="members-table-body" class="divide-y divide-slate-100 text-xs"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 2: NOTICES -->
-        <div id="tab-notices-section" class="space-y-6 hidden">
-            <div class="glass-panel rounded-2xl p-5">
-                <h2 class="font-bold text-base text-slate-800 flex items-center gap-2 mb-1">
-                    <i class="fa-solid fa-bullhorn text-purple-600 text-lg"></i> 운영진 상호 전달사항 게시판
-                </h2>
-                <p class="text-xs text-slate-500">각 파트별 전달 내용을 실시간으로 등록, 수정, 삭제하여 운영진 간 원활하게 소통하세요.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="glass-panel rounded-2xl p-5 flex flex-col justify-between space-y-4 border-t-4 border-t-indigo-500">
-                    <div>
-                        <div class="flex items-center justify-between pb-3 border-b border-slate-200">
-                            <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
-                                <i class="fa-solid fa-user-tie text-indigo-600"></i> 총괄 찡긋 전달사항
-                            </h3>
-                            <button onclick="requireAuth(() => openNoticeModal('찡긋'))" class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold text-xs shadow-sm flex items-center gap-1">
-                                <i class="fa-solid fa-plus"></i> 작성
-                            </button>
-                        </div>
-                        <div id="notice-list-찡긋" class="space-y-3 mt-4 max-h-[450px] overflow-y-auto pr-1"></div>
-                    </div>
-                </div>
-
-                <div class="glass-panel rounded-2xl p-5 flex flex-col justify-between space-y-4 border-t-4 border-t-purple-500">
-                    <div>
-                        <div class="flex items-center justify-between pb-3 border-b border-slate-200">
-                            <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
-                                <i class="fa-solid fa-user-tie text-purple-600"></i> 총괄 캐럿 전달사항
-                            </h3>
-                            <button onclick="requireAuth(() => openNoticeModal('캐럿'))" class="px-3 py-1 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-bold text-xs shadow-sm flex items-center gap-1">
-                                <i class="fa-solid fa-plus"></i> 작성
-                            </button>
-                        </div>
-                        <div id="notice-list-캐럿" class="space-y-3 mt-4 max-h-[450px] overflow-y-auto pr-1"></div>
-                    </div>
-                </div>
-
-                <div class="glass-panel rounded-2xl p-5 flex flex-col justify-between space-y-4 border-t-4 border-t-amber-500">
-                    <div>
-                        <div class="flex items-center justify-between pb-3 border-b border-slate-200">
-                            <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
-                                <i class="fa-solid fa-shield-halved text-amber-500"></i> 감사팀 한나 전달사항
-                            </h3>
-                            <button onclick="requireAuth(() => openNoticeModal('한나'))" class="px-3 py-1 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-bold text-xs shadow-sm flex items-center gap-1">
-                                <i class="fa-solid fa-plus"></i> 작성
-                            </button>
-                        </div>
-                        <div id="notice-list-한나" class="space-y-3 mt-4 max-h-[450px] overflow-y-auto pr-1"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 3: WARNINGS -->
-        <div id="tab-warnings-section" class="space-y-6 hidden">
-            <div class="glass-panel rounded-2xl p-5">
-                <h2 class="font-bold text-base text-slate-800 flex items-center gap-2">
-                    <i class="fa-solid fa-shield-halved text-amber-500 text-lg"></i> 경고 관리 전용 채널
-                </h2>
-                <p class="text-xs text-slate-500 mt-1">운영진 전용 공간입니다. 검색을 통해 멤버별 경고 부여/삭감 및 개별 타임라인 내역을 확인하세요.</p>
-            </div>
-
-            <div class="glass-panel rounded-2xl p-5 space-y-4">
-                <div class="relative max-w-md">
-                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                    <input type="text" id="warning-search-input" oninput="renderWarningMembersTable()" placeholder="경고 관리용 고번(#), 닉네임 검색..." class="w-full pl-9 pr-4 py-2 rounded-xl glass-input text-xs text-slate-800 focus:outline-none">
-                </div>
-
-                <div class="overflow-x-auto rounded-xl border border-slate-200/80 bg-white/70">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-slate-100/80 border-b border-slate-200 text-slate-600 text-xs font-bold">
-                                <th class="py-3.5 px-4">고번 / 멤버 정보</th>
-                                <th class="py-3.5 px-4">현재 직급</th>
-                                <th class="py-3.5 px-4 text-center">누적 경고 횟수</th>
-                                <th class="py-3.5 px-4 text-center">경고 관리</th>
-                            </tr>
-                        </thead>
-                        <tbody id="warning-members-table-body" class="divide-y divide-slate-100 text-xs"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="glass-panel rounded-2xl p-6 space-y-4">
-                <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
-                    <i class="fa-solid fa-clock-rotate-left text-indigo-500"></i> 전체 경고 처리 타임라인 내역 Log
+            <div class="space-y-3">
+                <h3 class="text-sm font-black text-emerald-600 flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                    🎉 직급 승진 대상자
                 </h3>
-                <div id="warning-logs-container" class="space-y-3 max-h-[400px] overflow-y-auto pr-1"></div>
+                <div id="rank-promo-container" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+            </div>
+
+            <div class="space-y-3 pt-4 border-t border-slate-100">
+                <h3 class="text-sm font-black text-rose-600 flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+                    🔻 직급 강등 대상자
+                </h3>
+                <div id="rank-demo-container" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+            </div>
+
+            <div class="space-y-3 pt-4 border-t border-slate-100">
+                <h3 class="text-sm font-black text-slate-600 flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-slate-400"></span>
+                    ✨ 직급 유지 현황
+                </h3>
+                <div id="rank-keep-container" class="grid grid-cols-1 md:grid-cols-3 gap-3"></div>
             </div>
         </div>
 
-        <!-- TAB 4: SALARY -->
-        <div id="tab-salary-section" class="space-y-8 hidden">
-            <div class="glass-panel rounded-2xl p-6 space-y-4 border-t-4 border-t-emerald-500">
-                <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-3 border-b border-slate-200">
+        <!-- 3. 주급채널 -->
+        <div id="section-salary" class="cute-card p-6 sm:p-8 space-y-8 hidden bg-white max-w-6xl mx-auto">
+            <div class="space-y-4">
+                <div class="border-b pb-3 flex items-center justify-between">
                     <div>
-                        <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
-                            <i class="fa-solid fa-trophy text-amber-500 text-lg"></i> 이번 주 활동 정산 (TOP 1~3위 수당)
+                        <h2 class="text-lg font-black text-slate-800 flex items-center gap-2">
+                            <span>🏆 이번 주 활동 수당 현황 (TOP 1~3위)</span>
                         </h2>
-                        <p class="text-xs text-slate-500 mt-0.5">활동 점수가 가장 높은 1위(300억), 2위(200억), 3위(100억) 지급 대상자입니다. 토요일 정산 기록을 불러와서 산정할 수 있습니다.</p>
-                    </div>
-                    <div class="flex items-center gap-2 flex-wrap">
-                        <button onclick="requireAuth(openLoadHistoryModal)" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-xs shadow-md transition-all flex items-center gap-1.5">
-                            <i class="fa-solid fa-clock-rotate-left"></i>
-                            <span>토요일 정산 기록 불러오기</span>
-                        </button>
-                        <button onclick="requireAuth(resetActivityAndDeliverySalaryStatus)" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs shadow-md transition-all flex items-center gap-1.5">
-                            <i class="fa-solid fa-rotate-left"></i>
-                            <span>[활동/납품 주급 송금완료] 일괄 초기화</span>
-                        </button>
+                        <p class="text-xs text-slate-500 mt-0.5">활동 점수 상위 달성자 수당 및 운영진 송금 현황입니다.</p>
                     </div>
                 </div>
 
-                <div id="active-history-banner" class="hidden px-4 py-2.5 rounded-xl bg-purple-50 border border-purple-200 text-purple-900 text-xs font-bold flex items-center justify-between">
-                    <span><i class="fa-solid fa-circle-info mr-1 text-purple-600"></i> 현재 조회 중인 기준: <span id="active-history-title" class="underline">실시간 현재 점수 기준</span></span>
-                    <button onclick="clearLoadedHistory()" class="text-rose-600 hover:underline">실시간 기준으로 돌아가기</button>
-                </div>
-
-                <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white/80">
+                <div class="overflow-x-auto rounded-2xl border border-slate-100 bg-slate-50/50 p-2">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="bg-slate-100/80 border-b border-slate-200 text-slate-600 text-xs font-bold">
+                            <tr class="border-b border-slate-200/60 text-slate-500 text-xs font-black">
                                 <th class="py-3 px-4 text-center">순위</th>
-                                <th class="py-3 px-4">고번 / 멤버 정보</th>
+                                <th class="py-3 px-4">고번 / 닉네임</th>
                                 <th class="py-3 px-4">현재 직급</th>
-                                <th class="py-3 px-4 text-right">기준 활동 점수</th>
-                                <th class="py-3 px-4 text-right">지급 주급 수당</th>
-                                <th class="py-3 px-4 text-center">송금 상태 관리</th>
+                                <th class="py-3 px-4 text-right">활동 점수</th>
+                                <th class="py-3 px-4 text-right">지급 수당</th>
+                                <th class="py-3 px-4 text-center">입금 상태</th>
                             </tr>
                         </thead>
-                        <tbody id="activity-salary-table-body" class="divide-y divide-slate-100 text-xs"></tbody>
+                        <tbody id="user-activity-salary-tbody" class="divide-y divide-slate-100 text-xs font-bold"></tbody>
                     </table>
                 </div>
             </div>
 
-            <div class="glass-panel rounded-2xl p-6 space-y-4 border-t-4 border-t-blue-500">
-                <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-3 border-b border-slate-200">
+            <div class="space-y-4 pt-4 border-t border-slate-100">
+                <div class="border-b pb-3 flex items-center justify-between">
                     <div>
-                        <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
-                            <i class="fa-solid fa-box-open text-blue-600 text-lg"></i> 이번 주 납품 정산 현황
+                        <h2 class="text-lg font-black text-slate-800 flex items-center gap-2">
+                            <span>📦 이번 주 개인 납품 수당 현황</span>
                         </h2>
-                        <p class="text-xs text-slate-500 mt-0.5">주간 개인 납품 100회 이상 달성 직원에 한해 1회당 1억 지급 (일의 자리 절사 및 다납품 순 정렬)</p>
-                    </div>
-                    <div class="relative w-full md:w-64">
-                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                        <input type="text" id="salary-search-input" oninput="renderDeliverySalaryTable()" placeholder="납품 관리 고번(#), 닉네임..." class="w-full pl-9 pr-4 py-2 rounded-xl glass-input text-xs focus:outline-none">
+                        <p class="text-xs text-slate-500 mt-0.5">100회 이상 납품 달성 직원의 수당 정산 및 입금 상태입니다.</p>
                     </div>
                 </div>
 
-                <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white/80">
+                <div class="overflow-x-auto rounded-2xl border border-slate-100 bg-slate-50/50 p-2">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="bg-slate-100/80 border-b border-slate-200 text-slate-600 text-xs font-bold">
-                                <th class="py-3 px-4">고번 / 멤버 정보</th>
+                            <tr class="border-b border-slate-200/60 text-slate-500 text-xs font-black">
+                                <th class="py-3 px-4 text-center">납품 순위</th>
+                                <th class="py-3 px-4">고번 / 닉네임</th>
                                 <th class="py-3 px-4">현재 직급</th>
-                                <th class="py-3 px-4 text-center">주간 납품 횟수 (개)</th>
-                                <th class="py-3 px-4 text-right">지급 예정 납품 수당</th>
+                                <th class="py-3 px-4 text-center">주간 납품 횟수</th>
+                                <th class="py-3 px-4 text-right">지급 수당</th>
                                 <th class="py-3 px-4 text-center">입금 상태</th>
-                                <th class="py-3 px-4 text-center">입금 처리</th>
                             </tr>
                         </thead>
-                        <tbody id="delivery-salary-table-body" class="divide-y divide-slate-100 text-xs"></tbody>
+                        <tbody id="user-delivery-salary-tbody" class="divide-y divide-slate-100 text-xs font-bold"></tbody>
                     </table>
                 </div>
             </div>
         </div>
+
+        <!-- 4. 👑 운영진 채널 -->
+        <div id="section-admin" class="space-y-6 hidden max-w-6xl mx-auto">
+            
+            <!-- 비밀번호 미인증 시 중앙 로그인 화면 -->
+            <div id="admin-auth-gateway" class="cute-card p-8 sm:p-12 max-w-md mx-auto my-12 text-center space-y-6 bg-white shadow-2xl border-2 border-indigo-100">
+                <div class="w-16 h-16 bg-gradient-to-tr from-indigo-500 to-purple-600 rounded-3xl mx-auto flex items-center justify-center text-white text-3xl shadow-lg shadow-indigo-200">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl font-black text-slate-800">운영진 보안 인증</h2>
+                    <p class="text-xs text-slate-500 mt-1">접근 권한이 있는 비밀번호를 입력해주세요.</p>
+                </div>
+
+                <form onsubmit="verifyAdminAccess(event)" class="space-y-4">
+                    <div>
+                        <input type="password" id="admin-gateway-pass" placeholder="비밀번호 입력" required class="w-full px-4 py-3 rounded-2xl cute-input font-black text-center text-indigo-600 text-base focus:outline-none">
+                    </div>
+                    <button type="submit" class="cute-btn w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-black text-sm shadow-md">
+                        비밀번호 인증하기
+                    </button>
+                </form>
+                <p id="auth-error-msg" class="text-xs font-bold text-rose-500 hidden"></p>
+            </div>
+
+            <!-- 인증 성공 시 대시보드 -->
+            <div id="admin-dashboard-content" class="space-y-6 hidden">
+                <div class="glass-panel rounded-2xl p-4 flex flex-col md:flex-row items-center justify-between gap-4 border-2 border-indigo-100">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-md">
+                            <i class="fa-solid fa-crown text-xl"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-lg font-bold text-slate-800">실버타운 운영진 센터</h2>
+                            <p class="text-xs font-bold text-indigo-600" id="current-user-badge">인증됨</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2 flex-wrap justify-center">
+                        <div class="flex bg-slate-200/60 p-1 rounded-2xl border border-white/80 flex-wrap">
+                            <button id="tab-town-btn" onclick="switchTab('town')" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-white text-indigo-600 shadow-sm">
+                                <i class="fa-solid fa-city mr-1.5"></i>실버타운
+                            </button>
+                            <button id="tab-members-btn" onclick="switchTab('members')" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900">
+                                <i class="fa-solid fa-users mr-1.5"></i>멤버 관리
+                            </button>
+                            <button id="tab-notices-btn" onclick="switchTab('notices')" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900">
+                                <i class="fa-solid fa-bullhorn mr-1.5 text-purple-600"></i>전달사항
+                            </button>
+                            <button id="tab-warnings-btn" onclick="switchTab('warnings')" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900">
+                                <i class="fa-solid fa-shield-halved mr-1.5 text-amber-500"></i>경고 전용 채널
+                            </button>
+                            <button id="tab-salary-btn" onclick="switchTab('salary')" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900">
+                                <i class="fa-solid fa-sack-dollar mr-1.5 text-emerald-600"></i>주급정산
+                            </button>
+                        </div>
+                        
+                        <!-- 쓰기 권한자 전용 버튼 -->
+                        <button id="btn-saturday-settle" onclick="openWeeklySettlementModal()" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold text-xs shadow-md shadow-purple-200 transition-all flex items-center gap-1.5">
+                            <i class="fa-solid fa-calendar-check"></i>
+                            <span>토요일 정산</span>
+                        </button>
+                        <button id="btn-add-member" onclick="openAddMemberModal()" class="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-md shadow-indigo-200 transition-all flex items-center gap-1.5">
+                            <i class="fa-solid fa-user-plus"></i>
+                            <span>멤버 추가</span>
+                        </button>
+                        <button onclick="logoutAdmin()" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs transition-all">
+                            로그아웃
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="glass-card rounded-2xl p-4 flex items-center justify-between border-l-4 border-l-indigo-500">
+                        <div>
+                            <p class="text-xs font-semibold text-slate-400 uppercase">실버타운 멤버</p>
+                            <h3 class="text-2xl font-bold text-slate-800 mt-0.5" id="stat-total-members">0명</h3>
+                        </div>
+                        <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-4 flex items-center justify-between border-l-4 border-l-emerald-500">
+                        <div>
+                            <p class="text-xs font-semibold text-slate-400 uppercase">승진/복구 대상자</p>
+                            <h3 class="text-2xl font-bold text-emerald-600 mt-0.5" id="stat-promotion-pending">0명</h3>
+                        </div>
+                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-arrow-up-right-dots"></i>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-4 flex items-center justify-between border-l-4 border-l-amber-500">
+                        <div>
+                            <p class="text-xs font-semibold text-slate-400 uppercase">휴가 중인 멤버</p>
+                            <h3 class="text-2xl font-bold text-amber-600 mt-0.5" id="stat-vacation-count">0명</h3>
+                        </div>
+                        <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-umbrella-beach"></i>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-4 flex items-center justify-between border-l-4 border-l-rose-500">
+                        <div>
+                            <p class="text-xs font-semibold text-slate-400 uppercase">강등 검토 대상자</p>
+                            <h3 class="text-2xl font-bold text-rose-600 mt-0.5" id="stat-demotion-pending">0명</h3>
+                        </div>
+                        <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-arrow-down-wide-short"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 0: SILVERTOWN -->
+                <div id="tab-town-section" class="space-y-6">
+                    <div class="glass-panel rounded-2xl p-6 space-y-4 border-t-4 border-t-indigo-500">
+                        <div class="pb-3 border-b border-slate-200">
+                            <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-city text-indigo-600 text-lg"></i> 실버타운 직업별 배정 현황
+                            </h2>
+                            <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+                                원활한 회사 분위기와 다양한 교류를 위해 아래 직업은 최대 5명까지만 배정됩니다.
+                            </p>
+                        </div>
+                        <div id="town-jobs-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                    </div>
+                </div>
+
+                <!-- TAB 1: MEMBERS -->
+                <div id="tab-members-section" class="space-y-6 hidden">
+                    <div id="batch-apply-container" class="glass-panel rounded-2xl p-4 flex flex-col md:flex-row items-center justify-between gap-4 border border-indigo-100">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-lg font-bold">
+                                <i class="fa-solid fa-rotate text-indigo-600"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-sm font-bold text-slate-800">토요일 디스코드 직급 변경 일괄 처리</h2>
+                                <p class="text-xs text-slate-500">직급 조정을 마치신 후 아래 버튼을 누르면 승진/강등된 직급이 일괄 반영됩니다.</p>
+                            </div>
+                        </div>
+                        <button onclick="batchApplyAllRankChanges()" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-lg shadow-indigo-200 transition-all flex items-center justify-center gap-2 whitespace-nowrap">
+                            <i class="fa-solid fa-check-double"></i>
+                            <span>[디스코드 직급 변경 완료] 일괄 반영</span>
+                        </button>
+                    </div>
+
+                    <div class="glass-panel rounded-2xl p-5 space-y-4">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                            <div class="relative flex-1 max-w-md">
+                                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                                <input type="text" id="search-input" oninput="renderMembersTable()" placeholder="고번(#), 닉네임 검색..." class="w-full pl-9 pr-4 py-2 rounded-xl glass-input text-xs text-slate-800 focus:outline-none">
+                            </div>
+                            <select id="filter-status" onchange="renderMembersTable()" class="px-3 py-2 rounded-xl glass-input text-xs font-semibold text-slate-700 focus:outline-none">
+                                <option value="ALL">전체 상태 보기</option>
+                                <option value="PROMOTION">승진/복구 대상만</option>
+                                <option value="DEMOTION">강등 대상만</option>
+                                <option value="VACATION">휴가 중인 멤버</option>
+                                <option value="WARNING">경고 보유자만</option>
+                            </select>
+                        </div>
+
+                        <div class="overflow-x-auto rounded-xl border border-slate-200/80 bg-white/70">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-100/80 border-b border-slate-200 text-slate-600 text-xs font-bold">
+                                        <th class="py-3.5 px-4">고번 / 멤버 정보</th>
+                                        <th class="py-3.5 px-4">현재 직급</th>
+                                        <th class="py-3.5 px-4 text-right">누적 명예 점수</th>
+                                        <th class="py-3.5 px-4 text-right">이번 주 활동 점수</th>
+                                        <th class="py-3.5 px-4">휴가 현황</th>
+                                        <th class="py-3.5 px-4 text-center">경고 (회)</th>
+                                        <th class="py-3.5 px-4">판정 결과</th>
+                                        <th class="py-3.5 px-4 text-center">관리</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="members-table-body" class="divide-y divide-slate-100 text-xs"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 2: NOTICES -->
+                <div id="tab-notices-section" class="space-y-6 hidden">
+                    <div class="glass-panel rounded-2xl p-5">
+                        <h2 class="font-bold text-base text-slate-800 flex items-center gap-2 mb-1">
+                            <i class="fa-solid fa-bullhorn text-purple-600 text-lg"></i> 운영진 상호 전달사항 게시판
+                        </h2>
+                        <p class="text-xs text-slate-500">각 파트별 전달 내용을 실시간으로 등록, 수정, 삭제하여 소통하세요.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="glass-panel rounded-2xl p-5 flex flex-col justify-between space-y-4 border-t-4 border-t-indigo-500">
+                            <div>
+                                <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+                                    <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                                        <i class="fa-solid fa-user-tie text-indigo-600"></i> 총괄 찡긋 전달사항
+                                    </h3>
+                                    <button onclick="openAdminNoticeModal('찡긋')" class="btn-write-notice px-3 py-1 bg-indigo-600 text-white rounded-lg font-bold text-xs shadow-sm">+ 작성</button>
+                                </div>
+                                <div id="notice-list-찡긋" class="space-y-3 mt-4 max-h-[450px] overflow-y-auto pr-1"></div>
+                            </div>
+                        </div>
+
+                        <div class="glass-panel rounded-2xl p-5 flex flex-col justify-between space-y-4 border-t-4 border-t-purple-500">
+                            <div>
+                                <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+                                    <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                                        <i class="fa-solid fa-user-tie text-purple-600"></i> 총괄 캐럿 전달사항
+                                    </h3>
+                                    <button onclick="openAdminNoticeModal('캐럿')" class="btn-write-notice px-3 py-1 bg-purple-600 text-white rounded-lg font-bold text-xs shadow-sm">+ 작성</button>
+                                </div>
+                                <div id="notice-list-캐럿" class="space-y-3 mt-4 max-h-[450px] overflow-y-auto pr-1"></div>
+                            </div>
+                        </div>
+
+                        <div class="glass-panel rounded-2xl p-5 flex flex-col justify-between space-y-4 border-t-4 border-t-amber-500">
+                            <div>
+                                <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+                                    <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                                        <i class="fa-solid fa-shield-halved text-amber-500"></i> 감사팀 한나 전달사항
+                                    </h3>
+                                    <button onclick="openAdminNoticeModal('한나')" class="btn-write-notice px-3 py-1 bg-amber-600 text-white rounded-lg font-bold text-xs shadow-sm">+ 작성</button>
+                                </div>
+                                <div id="notice-list-한나" class="space-y-3 mt-4 max-h-[450px] overflow-y-auto pr-1"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 3: WARNINGS -->
+                <div id="tab-warnings-section" class="space-y-6 hidden">
+                    <div class="glass-panel rounded-2xl p-5">
+                        <h2 class="font-bold text-base text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-shield-halved text-amber-500 text-lg"></i> 경고 관리 전용 채널
+                        </h2>
+                        <p class="text-xs text-slate-500 mt-1">운영진 전용 공간입니다.</p>
+                    </div>
+
+                    <div class="glass-panel rounded-2xl p-5 space-y-4">
+                        <div class="relative max-w-md">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                            <input type="text" id="warning-search-input" oninput="renderWarningMembersTable()" placeholder="고번(#), 닉네임 검색..." class="w-full pl-9 pr-4 py-2 rounded-xl glass-input text-xs text-slate-800 focus:outline-none">
+                        </div>
+
+                        <div class="overflow-x-auto rounded-xl border border-slate-200/80 bg-white/70">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-100/80 border-b border-slate-200 text-slate-600 text-xs font-bold">
+                                        <th class="py-3.5 px-4">고번 / 멤버 정보</th>
+                                        <th class="py-3.5 px-4">현재 직급</th>
+                                        <th class="py-3.5 px-4 text-center">누적 경고 횟수</th>
+                                        <th class="py-3.5 px-4 text-center">경고 관리</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="warning-members-table-body" class="divide-y divide-slate-100 text-xs"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel rounded-2xl p-6 space-y-4">
+                        <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-clock-rotate-left text-indigo-500"></i> 전체 경고 처리 타임라인 내역 Log
+                        </h3>
+                        <div id="warning-logs-container" class="space-y-3 max-h-[400px] overflow-y-auto pr-1"></div>
+                    </div>
+                </div>
+
+                <!-- TAB 4: SALARY -->
+                <div id="tab-salary-section" class="space-y-8 hidden">
+                    <div class="glass-panel rounded-2xl p-6 space-y-4 border-t-4 border-t-emerald-500">
+                        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-3 border-b border-slate-200">
+                            <div>
+                                <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                                    <i class="fa-solid fa-trophy text-amber-500 text-lg"></i> 이번 주 활동 정산 (TOP 1~3위 수당)
+                                </h2>
+                                <p class="text-xs text-slate-500 mt-0.5">활동 점수가 가장 높은 1위(300억), 2위(200억), 3위(100억) 지급 대상자입니다.</p>
+                            </div>
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <button onclick="openLoadHistoryModal()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-xs shadow-md transition-all flex items-center gap-1.5">
+                                    <i class="fa-solid fa-clock-rotate-left"></i>
+                                    <span>토요일 정산 기록 불러오기</span>
+                                </button>
+                                <button id="btn-reset-salary" onclick="resetActivityAndDeliverySalaryStatus()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs shadow-md transition-all flex items-center gap-1.5">
+                                    <i class="fa-solid fa-rotate-left"></i>
+                                    <span>[활동/납품 주급 송금완료] 일괄 초기화</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="active-history-banner" class="hidden px-4 py-2.5 rounded-xl bg-purple-50 border border-purple-200 text-purple-900 text-xs font-bold flex items-center justify-between">
+                            <span><i class="fa-solid fa-circle-info mr-1 text-purple-600"></i> 현재 조회 중인 기준: <span id="active-history-title" class="underline">실시간 현재 점수 기준</span></span>
+                            <button onclick="clearLoadedHistory()" class="text-rose-600 hover:underline">실시간 기준으로 돌아가기</button>
+                        </div>
+
+                        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white/80">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-100/80 border-b border-slate-200 text-slate-600 text-xs font-bold">
+                                        <th class="py-3 px-4 text-center">순위</th>
+                                        <th class="py-3 px-4">고번 / 멤버 정보</th>
+                                        <th class="py-3 px-4">현재 직급</th>
+                                        <th class="py-3 px-4 text-right">기준 활동 점수</th>
+                                        <th class="py-3 px-4 text-right">지급 주급 수당</th>
+                                        <th class="py-3 px-4 text-center">송금 상태 관리</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="activity-salary-table-body" class="divide-y divide-slate-100 text-xs"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel rounded-2xl p-6 space-y-4 border-t-4 border-t-blue-500">
+                        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-3 border-b border-slate-200">
+                            <div>
+                                <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                                    <i class="fa-solid fa-box-open text-blue-600 text-lg"></i> 이번 주 납품 정산 현황
+                                </h2>
+                                <p class="text-xs text-slate-500 mt-0.5">주간 개인 납품 100회 이상 달성 직원에 한해 1회당 1억 지급</p>
+                            </div>
+                            <div class="relative w-full md:w-64">
+                                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                                <input type="text" id="salary-search-input" oninput="renderDeliverySalaryTable()" placeholder="납품 관리 고번(#), 닉네임..." class="w-full pl-9 pr-4 py-2 rounded-xl glass-input text-xs focus:outline-none">
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white/80">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-100/80 border-b border-slate-200 text-slate-600 text-xs font-bold">
+                                        <th class="py-3 px-4">고번 / 멤버 정보</th>
+                                        <th class="py-3 px-4">현재 직급</th>
+                                        <th class="py-3 px-4 text-center">주간 납품 횟수 (개)</th>
+                                        <th class="py-3 px-4 text-right">지급 예정 납품 수당</th>
+                                        <th class="py-3 px-4 text-center">입금 상태</th>
+                                        <th class="py-3 px-4 text-center">입금 처리</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="delivery-salary-table-body" class="divide-y divide-slate-100 text-xs"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <!-- Modals -->
-    <!-- Member Add Modal -->
     <div id="modal-member" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl border w-full max-w-md p-6 space-y-4 text-xs">
             <div class="flex items-center justify-between pb-2 border-b">
@@ -428,7 +618,7 @@
                     </div>
                     <div>
                         <label class="block font-bold text-slate-700 mb-1">초기 누적 명예 점수</label>
-                        <input type="number" id="input-cum-honor" min="0" value="0" class="w-full px-3 py-2.5 rounded-xl glass-input">
+                        <input type="number" id="input-cum-honor" min="0" value="0" class="w-full px-3.5 py-2.5 rounded-xl glass-input">
                     </div>
                 </div>
                 <div>
@@ -443,7 +633,6 @@
         </div>
     </div>
 
-    <!-- Settlement Modal -->
     <div id="modal-settlement" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl border w-full max-w-lg p-6 space-y-4 text-xs max-h-[85vh] flex flex-col">
             <h3 class="font-bold text-slate-800 text-sm">토요일 주간 업무 정산</h3>
@@ -455,7 +644,6 @@
         </div>
     </div>
 
-    <!-- Load History Select Modal -->
     <div id="modal-load-history" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl border w-full max-w-md p-6 space-y-4 text-xs">
             <div class="flex items-center justify-between pb-2 border-b">
@@ -472,7 +660,6 @@
         </div>
     </div>
 
-    <!-- Notice Add/Edit Modal -->
     <div id="modal-notice" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl border w-full max-w-md p-6 space-y-4 text-xs">
             <div class="flex items-center justify-between pb-2 border-b">
@@ -481,20 +668,16 @@
                 </h3>
                 <button onclick="closeModal('modal-notice')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-base"></i></button>
             </div>
-
             <input type="hidden" id="notice-author">
             <input type="hidden" id="notice-edit-id">
-
             <div>
                 <label class="block font-bold text-slate-700 mb-1">전달 제목 *</label>
                 <input type="text" id="notice-title" placeholder="제목을 입력하세요" class="w-full px-3.5 py-2.5 rounded-xl glass-input font-bold">
             </div>
-
             <div>
                 <label class="block font-bold text-slate-700 mb-1">전달 내용 *</label>
                 <textarea id="notice-content" rows="4" placeholder="상세 전달 내용을 입력하세요..." class="w-full px-3.5 py-2.5 rounded-xl glass-input resize-none"></textarea>
             </div>
-
             <div class="flex justify-end gap-2 pt-2 border-t">
                 <button onclick="closeModal('modal-notice')" class="px-4 py-2 bg-slate-100 rounded-xl font-bold">취소</button>
                 <button onclick="saveNotice()" class="px-5 py-2 bg-purple-600 text-white rounded-xl font-bold shadow-md">등록하기</button>
@@ -502,29 +685,21 @@
         </div>
     </div>
 
-    <!-- Vacation & Member Info & Score Edit & Job Selection Modal -->
     <div id="modal-vacation" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl border w-full max-w-md p-6 space-y-4 text-xs max-h-[90vh] overflow-y-auto">
             <div class="flex items-center justify-between pb-2 border-b">
                 <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2 text-amber-900"><i class="fa-solid fa-user-gear text-amber-600"></i> 멤버 상세 정보 및 직업/점수 관리</h3>
                 <button onclick="closeModal('modal-vacation')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-base"></i></button>
             </div>
-            
             <input type="hidden" id="vacation-member-id">
-            
             <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-2">
                 <div class="flex items-center justify-between">
                     <span class="text-slate-500 font-bold">대상 멤버 정보</span>
-                    <button type="button" onclick="toggleEditMemberInfo()" id="btn-edit-toggle" class="px-2.5 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 border border-indigo-200 rounded-lg font-bold flex items-center gap-1 transition">
-                        <i class="fa-solid fa-pen-to-square"></i> <span id="edit-btn-text">수정</span>
-                    </button>
                 </div>
-                
                 <div id="member-read-view">
                     <p class="font-bold text-slate-800 text-sm" id="vacation-member-display">-</p>
                 </div>
-
-                <div id="member-edit-view" class="hidden grid grid-cols-2 gap-2 pt-1">
+                <div id="member-edit-view" class="grid grid-cols-2 gap-2 pt-1">
                     <div>
                         <label class="block text-[11px] font-bold text-slate-600 mb-0.5">고번 (#)</label>
                         <input type="text" id="edit-gobun-input" class="w-full px-2.5 py-1.5 rounded-lg glass-input text-xs font-bold text-indigo-600">
@@ -536,34 +711,16 @@
                 </div>
             </div>
 
-            <!-- 직업 선택 체크박스 영역 -->
             <div class="bg-indigo-50/70 p-3.5 rounded-xl border border-indigo-200 space-y-2">
                 <span class="font-bold text-indigo-900 block"><i class="fa-solid fa-briefcase mr-1"></i> 소속 직업 선택 (중복 가능)</span>
-                <div class="grid grid-cols-2 gap-2 pt-1" id="job-checkboxes-container">
-                    <!-- 동적 생성 -->
-                </div>
+                <div class="grid grid-cols-2 gap-2 pt-1" id="job-checkboxes-container"></div>
             </div>
 
             <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-2">
                 <div class="flex items-center justify-between">
                     <span class="text-slate-500 font-bold">점수 정보 관리</span>
-                    <button type="button" onclick="toggleEditScoreInfo()" id="btn-score-edit-toggle" class="px-2.5 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 border border-indigo-200 rounded-lg font-bold flex items-center gap-1 transition">
-                        <i class="fa-solid fa-pen-to-square"></i> <span id="score-edit-btn-text">수정</span>
-                    </button>
                 </div>
-                
-                <div id="score-read-view" class="grid grid-cols-2 gap-2 text-xs">
-                    <div class="bg-white p-2 rounded-lg border">
-                        <span class="text-slate-400 block text-[10px]">누적 명예 점수</span>
-                        <span class="font-extrabold text-indigo-600 text-sm" id="display-cum-honor">0 점</span>
-                    </div>
-                    <div class="bg-white p-2 rounded-lg border">
-                        <span class="text-slate-400 block text-[10px]">이번 주 활동 점수</span>
-                        <span class="font-extrabold text-slate-800 text-sm" id="display-weekly-honor">0 점</span>
-                    </div>
-                </div>
-
-                <div id="score-edit-view" class="hidden grid grid-cols-2 gap-2 pt-1">
+                <div id="score-edit-view" class="grid grid-cols-2 gap-2 pt-1">
                     <div>
                         <label class="block text-[11px] font-bold text-slate-600 mb-0.5">누적 명예 점수</label>
                         <input type="number" id="edit-cum-honor-input" min="0" class="w-full px-2.5 py-1.5 rounded-lg glass-input text-xs font-bold text-indigo-600">
@@ -578,7 +735,6 @@
             <div class="flex items-center justify-between p-3 rounded-xl bg-amber-50/80 border border-amber-200">
                 <div>
                     <span class="font-bold text-amber-900 block">휴가 상태 활성화</span>
-                    <span class="text-[11px] text-amber-700">활성화 시 주간 미달 업무 경고 대상에서 제외됩니다.</span>
                 </div>
                 <input type="checkbox" id="input-vacation-active" class="w-5 h-5 text-amber-600 rounded">
             </div>
@@ -590,12 +746,11 @@
 
             <div class="flex justify-end gap-2 pt-2 border-t">
                 <button onclick="closeModal('modal-vacation')" class="px-4 py-2 bg-slate-100 rounded-xl font-bold">취소</button>
-                <button onclick="saveVacationSettings()" class="px-5 py-2 bg-amber-600 text-white rounded-xl font-bold shadow-md">저장하기</button>
+                <button id="btn-save-vacation" onclick="saveVacationSettings()" class="px-5 py-2 bg-amber-600 text-white rounded-xl font-bold shadow-md">저장하기</button>
             </div>
         </div>
     </div>
 
-    <!-- Warning Action Modal -->
     <div id="modal-warning-action" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl border w-full max-w-md p-6 space-y-4 text-xs">
             <div class="flex items-center justify-between pb-2 border-b">
@@ -604,44 +759,19 @@
                 </h3>
                 <button onclick="closeModal('modal-warning-action')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-base"></i></button>
             </div>
-
             <input type="hidden" id="warn-member-id">
-            
-            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 font-bold text-slate-800" id="warn-target-member-name">
-                -
-            </div>
-
+            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 font-bold text-slate-800" id="warn-target-member-name">-</div>
             <div>
                 <label class="block font-bold text-slate-700 mb-1">처리기준 일자</label>
                 <input type="date" id="warn-date" class="w-full px-3.5 py-2 rounded-xl glass-input">
             </div>
-
             <div>
                 <label class="block font-bold text-slate-700 mb-1">경고 사유 *</label>
-                <input type="text" id="warn-reason" placeholder="경고 사유 입력 (예: 회의 무단 불참)" class="w-full px-3.5 py-2.5 rounded-xl glass-input">
+                <input type="text" id="warn-reason" placeholder="경고 사유 입력" class="w-full px-3.5 py-2.5 rounded-xl glass-input">
             </div>
-
             <div class="flex justify-end gap-2 pt-2 border-t">
                 <button onclick="closeModal('modal-warning-action')" class="px-4 py-2 bg-slate-100 rounded-xl font-bold">취소</button>
                 <button onclick="executeWarningAdd()" class="px-5 py-2 bg-rose-500 text-white rounded-xl font-bold shadow-md">경고 부여하기</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Individual Member Warning Timeline Modal -->
-    <div id="modal-member-timeline" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl border w-full max-w-lg p-6 space-y-4 text-xs max-h-[85vh] flex flex-col">
-            <div class="flex items-center justify-between pb-2 border-b">
-                <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2 text-indigo-600">
-                    <i class="fa-solid fa-clock-rotate-left"></i> <span id="timeline-modal-title">개별 경고 타임라인</span>
-                </h3>
-                <button onclick="closeModal('modal-member-timeline')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-base"></i></button>
-            </div>
-
-            <div id="individual-timeline-container" class="space-y-2.5 overflow-y-auto flex-1 pr-1"></div>
-
-            <div class="flex justify-end pt-2 border-t">
-                <button onclick="closeModal('modal-member-timeline')" class="px-5 py-2 bg-indigo-600 text-white rounded-xl font-bold">확인 완료</button>
             </div>
         </div>
     </div>
@@ -665,9 +795,7 @@
         const db = getFirestore(app);
         const auth = getAuth(app);
 
-        signInAnonymously(auth).catch((error) => {
-            console.error("Firebase Auth Error:", error);
-        });
+        signInAnonymously(auth).catch((e) => console.error(e));
 
         const sharedDocRef = doc(db, 'silvertown_data', 'shared_main_state');
 
@@ -679,6 +807,7 @@
                 if (data.notices) window.notices = data.notices;
                 if (data.weeklyHistories) window.weeklyHistories = data.weeklyHistories;
                 
+                renderHomeJobAllocation();
                 renderSilvertownTown();
                 renderMembersTable();
                 renderNotices();
@@ -686,6 +815,8 @@
                 renderWarningLogs();
                 renderActivitySalaryTable();
                 renderDeliverySalaryTable();
+                renderUserRankChannel();
+                renderUserSalaryChannel();
                 updateStats();
             }
         });
@@ -707,11 +838,10 @@
 
     <!-- JavaScript Application Logic -->
     <script>
-        const ADMIN_PASS = '2580';
-        let isAuthenticated = false;
+        let currentUserPermission = null; // null | 'admin' | 'readonly'
         window.loadedHistoryData = null;
 
-        const RANK_ORDER = ['운영진팀', '본부장', '부장', '차장', '과장', '대리', '주임', '사원', '인턴'];
+        const RANK_ORDER = ['운영진팀', '본부장', '부장', '차장', '과장', '대리', '주임', '사원', '수습사원', '인턴'];
 
         const RANK_CONFIG = [
             { name: '본부장', minHonor: 100000 },
@@ -738,44 +868,273 @@
             { id: 'gang', name: '조직', icon: '👥' }
         ];
 
-        window.members = window.members || [];
+        window.members = window.members || [
+            { id: 1, gobun: '1001', discord: '찡긋', rank: '운영진팀', cumHonor: 125000, weeklyHonor: 3500, warnings: 0, jobs: ['staff'], vacation: { active: false } },
+            { id: 2, gobun: '1002', discord: '캐럿', rank: '운영진팀', cumHonor: 110000, weeklyHonor: 2800, warnings: 0, jobs: ['staff'], vacation: { active: false } },
+            { id: 3, gobun: '1003', discord: '한나', rank: '부장', cumHonor: 82000, weeklyHonor: 4200, warnings: 0, jobs: ['police'], vacation: { active: false } },
+            { id: 4, gobun: '1004', discord: '서유', rank: '과장', cumHonor: 45000, weeklyHonor: 1500, warnings: 0, jobs: ['factory'], vacation: { active: false } }
+        ];
+
         window.warningLogs = window.warningLogs || [];
         window.notices = window.notices || { 찡긋: [], 캐럿: [], 한나: [] };
         window.weeklyHistories = window.weeklyHistories || [];
 
-        function verifyGlobalPassword() {
-            const val = document.getElementById('global-pass-input').value;
-            if (val === ADMIN_PASS) {
-                isAuthenticated = true;
-                const badge = document.getElementById('auth-status-badge');
-                badge.textContent = "인증 완료 (전체 기능 활성화)";
-                badge.className = "px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-700 font-bold";
-                document.getElementById('auth-input-container').innerHTML = '<span class="text-emerald-600 font-bold text-xs"><i class="fa-solid fa-circle-check"></i> 보안 인증됨</span>';
-                alert("관리자 인증이 완료되었습니다.");
+        /* 평문 비밀번호 비교 인증 시스템 */
+        function verifyAdminAccess(e) {
+            e.preventDefault();
+            const inputPass = document.getElementById('admin-gateway-pass').value.trim();
+            const errEl = document.getElementById('auth-error-msg');
+
+            let userMatch = null;
+            if (inputPass === '2580') {
+                userMatch = { name: '캐럿', role: 'admin', label: '👑 캐럿님이 로그인하였습니다.' };
+            } else if (inputPass === '1470') {
+                userMatch = { name: '찡긋', role: 'admin', label: '👑 찡긋님이 로그인하였습니다.' };
+            } else if (inputPass === '3690') {
+                userMatch = { name: '한나', role: 'admin', label: '👑 한나님이 로그인하였습니다.' };
+            } else if (inputPass === '1804') {
+                userMatch = { name: '운영진', role: 'readonly', label: '👀 운영진님이 로그인하였습니다. (조회 전용)' };
+            }
+
+            if (userMatch) {
+                currentUserPermission = userMatch.role;
+                document.getElementById('admin-auth-gateway').classList.add('hidden');
+                document.getElementById('admin-dashboard-content').classList.remove('hidden');
+                
+                const badge = document.getElementById('current-user-badge');
+                badge.textContent = userMatch.label;
+                badge.className = userMatch.role === 'readonly' 
+                    ? "text-xs font-black text-amber-600 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200 inline-block"
+                    : "text-xs font-black text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200 inline-block";
+
+                applyPermissionRestrictions();
+                renderSilvertownTown();
+                alert(userMatch.label);
+                document.getElementById('admin-gateway-pass').value = '';
+                errEl.classList.add('hidden');
             } else {
-                alert("비밀번호가 올바르지 않습니다.");
+                errEl.textContent = "비밀번호가 올바르지 않습니다.";
+                errEl.classList.remove('hidden');
             }
         }
 
-        function requireAuth(callback) {
-            if (!isAuthenticated) {
-                const pass = prompt("관리자 비밀번호를 입력해주세요:");
-                if (pass === ADMIN_PASS) {
-                    isAuthenticated = true;
-                    const badge = document.getElementById('auth-status-badge');
-                    badge.textContent = "인증 완료 (전체 기능 활성화)";
-                    badge.className = "px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-700 font-bold";
-                    document.getElementById('auth-input-container').innerHTML = '<span class="text-emerald-600 font-bold text-xs"><i class="fa-solid fa-circle-check"></i> 보안 인증됨</span>';
-                    callback();
-                } else {
-                    alert("인증에 실패했습니다. 비밀번호를 확인해주세요.");
+        function logoutAdmin() {
+            currentUserPermission = null;
+            document.getElementById('admin-dashboard-content').classList.add('hidden');
+            document.getElementById('admin-auth-gateway').classList.remove('hidden');
+            alert("로그아웃 되었습니다.");
+        }
+
+        /* 1804 로그인 시 수정/작동권한 일체 차단 함수 */
+        function applyPermissionRestrictions() {
+            const isReadOnly = (currentUserPermission === 'readonly');
+
+            const btnSettle = document.getElementById('btn-saturday-settle');
+            const btnAddMem = document.getElementById('btn-add-member');
+            const batchContainer = document.getElementById('batch-apply-container');
+            const btnResetSal = document.getElementById('btn-reset-salary');
+
+            if (btnSettle) btnSettle.style.display = isReadOnly ? 'none' : 'flex';
+            if (btnAddMem) btnAddMem.style.display = isReadOnly ? 'none' : 'flex';
+            if (batchContainer) batchContainer.style.display = isReadOnly ? 'none' : 'flex';
+            if (btnResetSal) btnResetSal.style.display = isReadOnly ? 'none' : 'flex';
+
+            document.querySelectorAll('.btn-write-notice').forEach(b => {
+                b.style.display = isReadOnly ? 'none' : 'inline-block';
+            });
+
+            renderMembersTable();
+            renderNotices();
+            renderWarningMembersTable();
+            renderActivitySalaryTable();
+            renderDeliverySalaryTable();
+        }
+
+        function renderHomeJobAllocation() {
+            const container = document.getElementById('home-job-allocation-container');
+            if (!container) return;
+
+            container.innerHTML = JOB_LIST.map(job => {
+                const matchedMembers = window.members.filter(m => m.jobs && m.jobs.includes(job.id)).sort((a, b) => (parseInt(a.gobun.replace(/[^0-9]/g, '')) || 0) - (parseInt(b.gobun.replace(/[^0-9]/g, '')) || 0));
+                const count = matchedMembers.length;
+                const membersHTML = matchedMembers.length > 0 
+                    ? matchedMembers.map(m => `<span class="bg-white border px-2 py-1 rounded-lg text-xs font-bold text-slate-700">[#${m.gobun}] ${m.discord}</span>`).join(' ') 
+                    : '<div class="text-xs text-slate-400 italic">배정된 인원이 없습니다.</div>';
+
+                return `
+                    <div class="cute-card p-4 bg-slate-50/50 border-slate-200/80 flex flex-col justify-between space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="font-extrabold text-xs text-slate-800">${job.icon} ${job.name}</span>
+                            <span class="px-2.5 py-0.5 rounded-full bg-indigo-100 text-indigo-700 font-black text-[11px]">${count}명</span>
+                        </div>
+                        <div class="flex flex-wrap gap-1">${membersHTML}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderUserRankChannel() {
+            const promoContainer = document.getElementById('rank-promo-container');
+            const demoContainer = document.getElementById('rank-demo-container');
+            const keepContainer = document.getElementById('rank-keep-container');
+
+            if (!promoContainer || !demoContainer || !keepContainer) return;
+
+            let promoMembers = [];
+            let demoMembers = [];
+            let keepMembers = [];
+
+            window.members.forEach(m => {
+                const isTownStaff = m.jobs && m.jobs.includes('town_staff');
+                if (isTownStaff) {
+                    keepMembers.push({ ...m, reason: '운영진팀' });
+                    return;
                 }
-            } else {
-                callback();
+
+                const expectedTotal = m.cumHonor + m.weeklyHonor;
+                const targetRank = getAppropriateRank(expectedTotal);
+                const isUnder1000 = (m.weeklyHonor < 1000);
+                const isPromo = !isUnder1000 && (getRankIndex(targetRank) < getRankIndex(m.rank));
+
+                if (isUnder1000) {
+                    const currentIdx = getRankIndex(m.rank);
+                    const nextRank = (currentIdx < RANK_CONFIG.length - 1) ? RANK_CONFIG[currentIdx + 1].name : m.rank;
+                    demoMembers.push({ ...m, fromRank: m.rank, toRank: nextRank });
+                } else if (isPromo) {
+                    promoMembers.push({ ...m, fromRank: m.rank, toRank: targetRank });
+                } else {
+                    keepMembers.push({ ...m, currentRank: m.rank });
+                }
+            });
+
+            promoContainer.innerHTML = promoMembers.length === 0 
+                ? `<div class="col-span-full py-4 text-center text-xs text-slate-400 bg-slate-50 rounded-xl border border-dashed">이번 주 승진 대상자가 없습니다.</div>`
+                : promoMembers.map(m => `
+                    <div class="p-4 rounded-2xl bg-emerald-50/70 border-2 border-emerald-100 flex items-center justify-between shadow-sm">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-black text-lg"><i class="fa-solid fa-arrow-up"></i></div>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <span class="font-black text-slate-800 text-sm"><span class="text-indigo-600">[#${m.gobun}]</span> ${m.discord}</span>
+                                    <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-black">🎉 승진</span>
+                                </div>
+                                <div class="text-xs font-bold text-slate-600 mt-1 flex items-center gap-1.5">
+                                    <span class="bg-white px-2 py-0.5 rounded border border-emerald-200">${m.fromRank}</span>
+                                    <i class="fa-solid fa-right-long text-emerald-500 text-[10px]"></i>
+                                    <span class="bg-emerald-600 text-white px-2 py-0.5 rounded shadow-sm">${m.toRank}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+            demoContainer.innerHTML = demoMembers.length === 0 
+                ? `<div class="col-span-full py-4 text-center text-xs text-slate-400 bg-slate-50 rounded-xl border border-dashed">이번 주 강등 대상자가 없습니다.</div>`
+                : demoMembers.map(m => `
+                    <div class="p-4 rounded-2xl bg-rose-50/70 border-2 border-rose-100 flex items-center justify-between shadow-sm">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-rose-500 text-white flex items-center justify-center font-black text-lg"><i class="fa-solid fa-arrow-down"></i></div>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <span class="font-black text-slate-800 text-sm"><span class="text-indigo-600">[#${m.gobun}]</span> ${m.discord}</span>
+                                    <span class="px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 text-[10px] font-black">🔻 강등</span>
+                                </div>
+                                <div class="text-xs font-bold text-slate-600 mt-1 flex items-center gap-1.5">
+                                    <span class="bg-white px-2 py-0.5 rounded border border-rose-200">${m.fromRank}</span>
+                                    <i class="fa-solid fa-right-long text-rose-500 text-[10px]"></i>
+                                    <span class="bg-rose-600 text-white px-2 py-0.5 rounded shadow-sm">${m.toRank}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+            keepContainer.innerHTML = keepMembers.length === 0 
+                ? `<div class="col-span-full py-4 text-center text-xs text-slate-400 bg-slate-50 rounded-xl border border-dashed">유지 인원이 없습니다.</div>`
+                : keepMembers.map(m => `
+                    <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between">
+                        <span class="font-bold text-xs text-slate-800"><span class="text-indigo-600">[#${m.gobun}]</span> ${m.discord}</span>
+                        <span class="px-2.5 py-1 bg-white border rounded-lg text-xs font-extrabold text-slate-600 shadow-xs">${m.rank}</span>
+                    </div>
+                `).join('');
+        }
+
+        function switchMainTab(tab) {
+            ['home', 'rank', 'salary', 'admin'].forEach(t => {
+                const sec = document.getElementById(`section-${t}`);
+                if(sec) sec.classList.add('hidden');
+                const btn = document.getElementById(`mtab-${t}-btn`);
+                if(btn) btn.className = "cute-btn px-4 py-2 text-xs font-black bg-white text-slate-600 hover:bg-indigo-100";
+            });
+
+            document.getElementById(`section-${tab}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`mtab-${tab}-btn`);
+            if(activeBtn) activeBtn.className = "cute-btn px-4 py-2 text-xs font-black bg-indigo-600 text-white";
+
+            if(tab === 'home') renderHomeJobAllocation();
+            if(tab === 'rank') renderUserRankChannel();
+            if(tab === 'salary') renderUserSalaryChannel();
+            if(tab === 'admin') {
+                if (currentUserPermission) {
+                    document.getElementById('admin-auth-gateway').classList.add('hidden');
+                    document.getElementById('admin-dashboard-content').classList.remove('hidden');
+                    renderSilvertownTown();
+                } else {
+                    document.getElementById('admin-auth-gateway').classList.remove('hidden');
+                    document.getElementById('admin-dashboard-content').classList.add('hidden');
+                }
             }
+        }
+
+        function renderUserSalaryChannel() {
+            const actTbody = document.getElementById('user-activity-salary-tbody');
+            if(actTbody) {
+                let targetList = window.loadedHistoryData ? [...window.loadedHistoryData.items].sort((a, b) => b.weeklyHonor - a.weeklyHonor).slice(0, 3) : [...window.members].sort((a, b) => b.weeklyHonor - a.weeklyHonor).slice(0, 3);
+                const rewards = ['300억', '200억', '100억'];
+                const rankBadges = ['<span class="px-2.5 py-1 rounded-lg bg-amber-100 text-amber-800 font-extrabold"><i class="fa-solid fa-crown text-amber-500 mr-1"></i>1등</span>', '<span class="px-2.5 py-1 rounded-lg bg-slate-200 text-slate-700 font-bold">2등</span>', '<span class="px-2.5 py-1 rounded-lg bg-amber-50 text-amber-700 font-bold">3등</span>'];
+
+                actTbody.innerHTML = targetList.length === 0 ? '<tr><td colspan="6" class="py-6 text-center text-slate-400">정산 내역이 없습니다.</td></tr>' : targetList.map((m, idx) => `
+                    <tr class="hover:bg-white/80">
+                        <td class="py-3 px-4 text-center">${rankBadges[idx]}</td>
+                        <td class="py-3 px-4"><span class="text-indigo-600">[#${m.gobun}]</span> ${m.discord}</td>
+                        <td class="py-3 px-4 text-slate-700">${m.rank}</td>
+                        <td class="py-3 px-4 text-right text-indigo-600 font-black">${(m.weeklyHonor || 0).toLocaleString()} 점</td>
+                        <td class="py-3 px-4 text-right text-emerald-600 font-black">${rewards[idx]}</td>
+                        <td class="py-3 px-4 text-center">${m.activityPaid ? '<span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 font-black text-xs inline-flex items-center gap-1"><i class="fa-solid fa-circle-check"></i> 입금완료</span>' : '<span class="px-3 py-1 rounded-full bg-amber-100 text-amber-700 font-black text-xs inline-flex items-center gap-1"><i class="fa-solid fa-clock"></i> 송금준비중</span>'}</td>
+                    </tr>
+                `).join('');
+            }
+
+            const delTbody = document.getElementById('user-delivery-salary-tbody');
+            if(delTbody) {
+                const sorted = [...window.members].sort((a, b) => (b.deliveryCount || 0) - (a.deliveryCount || 0));
+                delTbody.innerHTML = sorted.length === 0 ? '<tr><td colspan="6" class="py-6 text-center text-slate-400">납품 내역이 없습니다.</td></tr>' : sorted.map((m, idx) => {
+                    const count = m.deliveryCount || 0;
+                    const rewardText = count >= 100 ? `${Math.floor(count / 10) * 10}억` : `<span class="text-slate-400 font-normal">조건 미달</span>`;
+                    return `
+                        <tr class="hover:bg-white/80">
+                            <td class="py-3 px-4 text-center text-slate-500">${idx + 1}위</td>
+                            <td class="py-3 px-4"><span class="text-indigo-600">[#${m.gobun}]</span> ${m.discord}</td>
+                            <td class="py-3 px-4 text-slate-700">${m.rank}</td>
+                            <td class="py-3 px-4 text-center text-indigo-600 font-black">${count.toLocaleString()} 개</td>
+                            <td class="py-3 px-4 text-right text-blue-600 font-black">${rewardText}</td>
+                            <td class="py-3 px-4 text-center">${m.deliveryPaid ? '<span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 font-black text-xs inline-flex items-center gap-1"><i class="fa-solid fa-circle-check"></i> 입금완료</span>' : '<span class="px-3 py-1 rounded-full bg-slate-200 text-slate-600 font-black text-xs inline-flex items-center gap-1"><i class="fa-solid fa-clock"></i> 송금준비중</span>'}</td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+        }
+
+        function checkWritePermission() {
+            if (currentUserPermission === 'readonly') {
+                alert("조회 전용 계정(1804)은 수정 권한이 없습니다.");
+                return false;
+            }
+            return true;
         }
 
         function saveData() {
+            renderHomeJobAllocation();
             renderSilvertownTown();
             renderMembersTable();
             renderNotices();
@@ -783,6 +1142,8 @@
             renderWarningLogs();
             renderActivitySalaryTable();
             renderDeliverySalaryTable();
+            renderUserRankChannel();
+            renderUserSalaryChannel();
             updateStats();
 
             if (typeof window.syncToCloud === 'function') {
@@ -792,57 +1153,44 @@
 
         function getAppropriateRank(totalHonor) {
             for (let r of RANK_CONFIG) {
-                if (r.name !== '인턴' && r.name !== '운영진팀' && totalHonor >= r.minHonor) return r.name;
+                if (r.name !== '인턴' && r.name !== '수습사원' && r.name !== '운영진팀' && totalHonor >= r.minHonor) return r.name;
             }
             return '인턴';
         }
 
         function getRankIndex(rankName) {
-            return RANK_CONFIG.findIndex(r => r.name === rankName);
+            const idx = RANK_ORDER.indexOf(rankName);
+            return idx !== -1 ? idx : 99;
         }
 
         function switchTab(tab) {
-            document.getElementById('tab-town-section').classList.add('hidden');
-            document.getElementById('tab-members-section').classList.add('hidden');
-            document.getElementById('tab-notices-section').classList.add('hidden');
-            document.getElementById('tab-warnings-section').classList.add('hidden');
-            document.getElementById('tab-salary-section').classList.add('hidden');
+            ['town', 'members', 'notices', 'warnings', 'salary'].forEach(t => {
+                const sec = document.getElementById(`tab-${t}-section`);
+                if (sec) sec.classList.add('hidden');
+                const btn = document.getElementById(`tab-${t}-btn`);
+                if (btn) btn.className = "px-3.5 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900";
+            });
 
-            document.getElementById('tab-town-btn').className = "px-3.5 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900";
-            document.getElementById('tab-members-btn').className = "px-3.5 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900";
-            document.getElementById('tab-notices-btn').className = "px-3.5 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900";
-            document.getElementById('tab-warnings-btn').className = "px-3.5 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900";
-            document.getElementById('tab-salary-btn').className = "px-3.5 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900";
+            document.getElementById(`tab-${tab}-section`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-${tab}-btn`);
+            if (activeBtn) activeBtn.className = "px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-white text-indigo-600 shadow-sm";
 
-            if (tab === 'town') {
-                document.getElementById('tab-town-section').classList.remove('hidden');
-                document.getElementById('tab-town-btn').className = "px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-white text-indigo-600 shadow-sm";
-                renderSilvertownTown();
-            } else if (tab === 'members') {
-                document.getElementById('tab-members-section').classList.remove('hidden');
-                document.getElementById('tab-members-btn').className = "px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-white text-indigo-600 shadow-sm";
-            } else if (tab === 'notices') {
-                document.getElementById('tab-notices-section').classList.remove('hidden');
-                document.getElementById('tab-notices-btn').className = "px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-white text-purple-600 shadow-sm";
-                renderNotices();
-            } else if (tab === 'warnings') {
-                document.getElementById('tab-warnings-section').classList.remove('hidden');
-                document.getElementById('tab-warnings-btn').className = "px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-white text-amber-600 shadow-sm";
-                renderWarningMembersTable();
-            } else if (tab === 'salary') {
-                document.getElementById('tab-salary-section').classList.remove('hidden');
-                document.getElementById('tab-salary-btn').className = "px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-white text-emerald-600 shadow-sm";
-                renderActivitySalaryTable();
-                renderDeliverySalaryTable();
-            }
+            if (tab === 'town') renderSilvertownTown();
+            if (tab === 'notices') renderNotices();
+            if (tab === 'warnings') renderWarningMembersTable();
+            if (tab === 'salary') { renderActivitySalaryTable(); renderDeliverySalaryTable(); }
         }
 
         function updateStats() {
-            document.getElementById('stat-total-members').textContent = `${window.members.length}명`;
-            let promo = 0, vacation = 0, demotion = 0;
+            const totalEl = document.getElementById('stat-total-members');
+            if(totalEl) totalEl.textContent = `${window.members.length}명`;
+            
+            let promo = 0, vacation = 0, demotion = 0, adminCount = 0;
             window.members.forEach(m => {
-                if (m.vacation && m.vacation.active) vacation++;
                 const isTownStaff = m.jobs && m.jobs.includes('town_staff');
+                if (isTownStaff) adminCount++;
+
+                if (m.vacation && m.vacation.active) vacation++;
                 const expectedTotal = m.cumHonor + m.weeklyHonor;
                 const targetRank = getAppropriateRank(expectedTotal);
                 
@@ -852,48 +1200,32 @@
                     promo++;
                 }
             });
-            document.getElementById('stat-promotion-pending').textContent = `${promo}명`;
-            document.getElementById('stat-vacation-count').textContent = `${vacation}명`;
-            document.getElementById('stat-demotion-pending').textContent = `${demotion}명`;
+
+            const promoEl = document.getElementById('stat-promotion-pending');
+            const vacEl = document.getElementById('stat-vacation-count');
+            const demoEl = document.getElementById('stat-demotion-pending');
+            const homeMemCount = document.getElementById('home-member-count');
+            const homeAdminCount = document.getElementById('home-admin-count');
+
+            if(promoEl) promoEl.textContent = `${promo}명`;
+            if(vacEl) vacEl.textContent = `${vacation}명`;
+            if(demoEl) demoEl.textContent = `${demotion}명`;
+            if(homeMemCount) homeMemCount.textContent = `${window.members.length}명`;
+            if(homeAdminCount) homeAdminCount.textContent = `${adminCount}명`;
         }
 
-        // 직업별 배정 현황 렌더링 (각 직업 카드 내부 유저 목록 고번 오름차순 정렬)
         function renderSilvertownTown() {
             const container = document.getElementById('town-jobs-container');
             if (!container) return;
             container.innerHTML = '';
-
             JOB_LIST.forEach(job => {
-                // 해당 직업 소속 유저 추출 후 고번(숫자) 오름차순 정렬
-                const matchedMembers = window.members
-                    .filter(m => m.jobs && m.jobs.includes(job.id))
-                    .sort((a, b) => {
-                        let numA = parseInt(a.gobun.replace(/[^0-9]/g, '')) || 0;
-                        let numB = parseInt(b.gobun.replace(/[^0-9]/g, '')) || 0;
-                        return numA - numB;
-                    });
-
+                const matchedMembers = window.members.filter(m => m.jobs && m.jobs.includes(job.id)).sort((a, b) => (parseInt(a.gobun.replace(/[^0-9]/g, '')) || 0) - (parseInt(b.gobun.replace(/[^0-9]/g, '')) || 0));
                 const count = matchedMembers.length;
-                const membersHTML = matchedMembers.length > 0 
-                    ? matchedMembers.map(m => `<span class="inline-block bg-slate-100 px-2 py-1 rounded-lg font-bold text-slate-700 m-0.5">[#${m.gobun}] ${m.discord}</span>`).join(' ')
-                    : '<span class="text-slate-400 italic">배정된 인원이 없습니다.</span>';
+                const membersHTML = matchedMembers.length > 0 ? matchedMembers.map(m => `<span class="inline-block bg-slate-100 px-2 py-1 rounded-lg font-bold text-slate-700 m-0.5">[#${m.gobun}] ${m.discord}</span>`).join(' ') : '<span class="text-slate-400 italic">배정된 인원이 없습니다.</span>';
 
                 const card = document.createElement('div');
                 card.className = "glass-card rounded-2xl p-4 relative border border-white/90 shadow-sm flex flex-col justify-between space-y-3";
-                card.innerHTML = `
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                            <span class="text-xl">${job.icon}</span>
-                            <span class="font-bold text-slate-800 text-sm">${job.name}</span>
-                        </div>
-                        <span class="px-3 py-1 rounded-xl bg-indigo-50 text-indigo-600 font-extrabold text-xs shadow-inner">
-                            ${count}명
-                        </span>
-                    </div>
-                    <div class="pt-2 border-t border-slate-200/60 text-xs min-h-[36px] flex items-center flex-wrap gap-1">
-                        ${membersHTML}
-                    </div>
-                `;
+                card.innerHTML = `<div class="flex items-center justify-between"><div class="flex items-center gap-2"><span class="text-xl">${job.icon}</span><span class="font-bold text-slate-800 text-sm">${job.name}</span></div><span class="px-3 py-1 rounded-xl bg-indigo-50 text-indigo-600 font-extrabold text-xs shadow-inner">${count}명</span></div><div class="pt-2 border-t border-slate-200/60 text-xs min-h-[36px] flex items-center flex-wrap gap-1">${membersHTML}</div>`;
                 container.appendChild(card);
             });
         }
@@ -904,24 +1236,17 @@
             tbody.innerHTML = '';
             const search = document.getElementById('search-input').value.toLowerCase();
             const filter = document.getElementById('filter-status').value;
+            const isReadOnly = (currentUserPermission === 'readonly');
 
             const sortedMembers = [...window.members].sort((a, b) => {
-                let rankIdxA = RANK_ORDER.indexOf(a.rank);
-                let rankIdxB = RANK_ORDER.indexOf(b.rank);
-                if (rankIdxA === -1) rankIdxA = 99;
-                if (rankIdxB === -1) rankIdxB = 99;
-
-                if (rankIdxA !== rankIdxB) {
-                    return rankIdxA - rankIdxB;
-                }
-                let numA = parseInt(a.gobun.replace(/[^0-9]/g, '')) || 0;
-                let numB = parseInt(b.gobun.replace(/[^0-9]/g, '')) || 0;
-                return numA - numB;
+                let rankIdxA = getRankIndex(a.rank);
+                let rankIdxB = getRankIndex(b.rank);
+                if (rankIdxA !== rankIdxB) return rankIdxA - rankIdxB;
+                return (parseInt(a.gobun.replace(/[^0-9]/g, '')) || 0) - (parseInt(b.gobun.replace(/[^0-9]/g, '')) || 0);
             });
 
             sortedMembers.forEach(m => {
                 if (!m.discord.toLowerCase().includes(search) && !m.gobun.toLowerCase().includes(search)) return;
-                
                 const isTownStaff = m.jobs && m.jobs.includes('town_staff');
                 const expectedTotal = m.cumHonor + m.weeklyHonor;
                 const targetRank = getAppropriateRank(expectedTotal);
@@ -933,62 +1258,28 @@
                 if (filter === 'VACATION' && (!m.vacation || !m.vacation.active)) return;
                 if (filter === 'WARNING' && m.warnings <= 0) return;
 
-                let statusHTML = '';
-                if (isTownStaff) {
-                    statusHTML = `<span class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-700 font-bold">실버타운 운영진</span>`;
-                } else if (isUnder1000) {
-                    statusHTML = `<span class="px-2 py-0.5 rounded bg-rose-100 text-rose-700 font-bold">강등대상 (점수미달)</span>`;
-                } else if (isPromo) {
-                    statusHTML = `<span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold">승진대상 (${targetRank})</span>`;
-                } else {
-                    statusHTML = `<span class="text-slate-400">유지 중</span>`;
-                }
-
-                let vacationHTML = '정상';
-                if (m.vacation && m.vacation.active) {
-                    vacationHTML = `
-                        <div class="flex flex-col">
-                            <span class="text-amber-600 font-bold">🏖️ 휴가중</span>
-                            ${m.vacation.reason ? `<span class="text-[11px] text-slate-400 mt-0.5">${m.vacation.reason}</span>` : ''}
-                        </div>
-                    `;
-                }
+                let statusHTML = isTownStaff ? `<span class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-700 font-bold">운영진</span>` : isUnder1000 ? `<span class="px-2 py-0.5 rounded bg-rose-100 text-rose-700 font-bold">강등대상</span>` : isPromo ? `<span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold">승진대상</span>` : `<span class="text-slate-400">유지 중</span>`;
+                let vacationHTML = (m.vacation && m.vacation.active) ? `<span class="text-amber-600 font-bold">🏖️ 휴가중</span>` : '정상';
 
                 const tr = document.createElement('tr');
                 tr.className = "border-b border-slate-100 hover:bg-white/50";
-                tr.innerHTML = `
-                    <td class="py-3.5 px-4 font-bold"><span class="text-indigo-600">[#${m.gobun}]</span> ${m.discord}</td>
-                    <td class="py-3.5 px-4 font-bold text-slate-700">${m.rank}</td>
-                    <td class="py-3.5 px-4 text-right font-extrabold text-indigo-600">${m.cumHonor.toLocaleString()} 점</td>
-                    <td class="py-3.5 px-4 text-right font-bold ${isUnder1000 ? 'text-rose-600' : ''}">${m.weeklyHonor.toLocaleString()} 점</td>
-                    <td class="py-3.5 px-4">${vacationHTML}</td>
-                    <td class="py-3.5 px-4 text-center font-bold text-amber-600">${m.warnings} 회</td>
-                    <td class="py-3.5 px-4">${statusHTML}</td>
-                    <td class="py-3.5 px-4 text-center space-x-1">
-                        <button onclick="requireAuth(() => openVacationModal(${m.id}))" class="px-2 py-1 bg-slate-100 rounded font-bold">관리</button>
-                        <button onclick="requireAuth(() => deleteMember(${m.id}))" class="px-2 py-1 bg-rose-50 text-rose-600 rounded font-bold">삭제</button>
-                    </td>
-                `;
+                
+                const actionBtns = isReadOnly 
+                    ? `<span class="text-slate-400 font-normal">조회 전용</span>`
+                    : `<button onclick="openVacationModal(${m.id})" class="px-2 py-1 bg-slate-100 rounded font-bold">관리</button><button onclick="deleteMember(${m.id})" class="px-2 py-1 bg-rose-50 text-rose-600 rounded font-bold">삭제</button>`;
+
+                tr.innerHTML = `<td class="py-3.5 px-4 font-bold"><span class="text-indigo-600">[#${m.gobun}]</span> ${m.discord}</td><td class="py-3.5 px-4 font-bold text-slate-700">${m.rank}</td><td class="py-3.5 px-4 text-right font-extrabold text-indigo-600">${m.cumHonor.toLocaleString()} 점</td><td class="py-3.5 px-4 text-right font-bold ${isUnder1000 ? 'text-rose-600' : ''}">${m.weeklyHonor.toLocaleString()} 점</td><td class="py-3.5 px-4">${vacationHTML}</td><td class="py-3.5 px-4 text-center font-bold text-amber-600">${m.warnings} 회</td><td class="py-3.5 px-4">${statusHTML}</td><td class="py-3.5 px-4 text-center space-x-1">${actionBtns}</td>`;
                 tbody.appendChild(tr);
             });
             updateStats();
         }
 
-        /* --- 주급 정산 로직 --- */
         function openLoadHistoryModal() {
             const listContainer = document.getElementById('history-select-list');
             if (!window.weeklyHistories || window.weeklyHistories.length === 0) {
-                listContainer.innerHTML = '<p class="text-center text-slate-400 py-4">저장된 토요일 정산 기록이 없습니다.<br>(토요일 정산 버튼을 통해 정산을 먼저 진행해주세요)</p>';
+                listContainer.innerHTML = '<p class="text-center text-slate-400 py-4">저장된 정산 기록이 없습니다.</p>';
             } else {
-                listContainer.innerHTML = window.weeklyHistories.slice().reverse().map(h => `
-                    <div class="p-3 rounded-xl bg-slate-50 border hover:bg-slate-100 flex items-center justify-between">
-                        <div>
-                            <span class="font-bold text-slate-800">${h.date} 정산 기록</span>
-                            <span class="text-[11px] text-slate-500 block">총 인원: ${h.items.length}명</span>
-                        </div>
-                        <button onclick="loadHistoryData(${h.id})" class="px-3 py-1.5 bg-indigo-600 text-white rounded-lg font-bold text-xs shadow-sm">불러오기</button>
-                    </div>
-                `).join('');
+                listContainer.innerHTML = window.weeklyHistories.slice().reverse().map(h => `<div class="p-3 rounded-xl bg-slate-50 border hover:bg-slate-100 flex items-center justify-between"><div><span class="font-bold text-slate-800">${h.date} 정산 기록</span></div><button onclick="loadHistoryData(${h.id})" class="px-3 py-1.5 bg-indigo-600 text-white rounded-lg font-bold text-xs">불러오기</button></div>`).join('');
             }
             document.getElementById('modal-load-history').classList.remove('hidden');
         }
@@ -1001,33 +1292,24 @@
             document.getElementById('active-history-title').textContent = `${h.date} 정산 기록 기준`;
             closeModal('modal-load-history');
             renderActivitySalaryTable();
-            alert(`${h.date} 정산 기록을 불러왔습니다.`);
+            renderUserSalaryChannel();
         }
 
         function clearLoadedHistory() {
             window.loadedHistoryData = null;
             document.getElementById('active-history-banner').classList.add('hidden');
             renderActivitySalaryTable();
+            renderUserSalaryChannel();
         }
 
         function renderActivitySalaryTable() {
             const tbody = document.getElementById('activity-salary-table-body');
             if (!tbody) return;
             tbody.innerHTML = '';
-
-            let targetList = [];
-            if (window.loadedHistoryData) {
-                targetList = [...window.loadedHistoryData.items].sort((a, b) => b.weeklyHonor - a.weeklyHonor).slice(0, 3);
-            } else {
-                targetList = [...window.members].sort((a, b) => b.weeklyHonor - a.weeklyHonor).slice(0, 3);
-            }
-            
+            let targetList = window.loadedHistoryData ? [...window.loadedHistoryData.items].sort((a, b) => b.weeklyHonor - a.weeklyHonor).slice(0, 3) : [...window.members].sort((a, b) => b.weeklyHonor - a.weeklyHonor).slice(0, 3);
             const rewards = ['300억', '200억', '100억'];
-            const rankBadges = [
-                '<span class="px-2.5 py-1 rounded-lg bg-amber-100 text-amber-800 font-extrabold"><i class="fa-solid fa-crown text-amber-500 mr-1"></i>1등</span>',
-                '<span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 font-bold">2등</span>',
-                '<span class="px-2.5 py-1 rounded-lg bg-amber-50 text-amber-700 font-bold">3등</span>'
-            ];
+            const rankBadges = ['1등', '2등', '3등'];
+            const isReadOnly = (currentUserPermission === 'readonly');
 
             if (targetList.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="6" class="py-6 text-center text-slate-400">등록된 멤버가 없습니다.</td></tr>';
@@ -1037,165 +1319,100 @@
             targetList.forEach((m, idx) => {
                 const tr = document.createElement('tr');
                 tr.className = "border-b border-slate-100 hover:bg-white/50";
-
                 const isPaid = m.activityPaid || false;
                 const memberIdKey = m.id || m.memberId;
 
-                tr.innerHTML = `
-                    <td class="py-3 px-4 text-center">${rankBadges[idx]}</td>
-                    <td class="py-3 px-4 font-bold"><span class="text-indigo-600">[#${m.gobun}]</span> ${m.discord}</td>
-                    <td class="py-3 px-4 font-bold text-slate-700">${m.rank}</td>
-                    <td class="py-3 px-4 text-right font-extrabold text-indigo-600">${(m.weeklyHonor || 0).toLocaleString()} 점</td>
-                    <td class="py-3 px-4 text-right font-extrabold text-emerald-600">${rewards[idx]}</td>
-                    <td class="py-3 px-4 text-center">
-                        ${isPaid 
-                            ? '<span class="px-3 py-1 rounded-lg bg-emerald-100 text-emerald-700 font-extrabold">송금완료</span>' 
-                            : `<button onclick="requireAuth(() => toggleActivitySalaryPaid(${memberIdKey}))" class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold shadow-sm">입금</button>`
-                        }
-                    </td>
-                `;
+                let actionBtn = isReadOnly 
+                    ? `<span class="text-slate-400 font-normal">조회 전용</span>` 
+                    : (isPaid ? `<button onclick="toggleActivitySalaryPaid(${memberIdKey})" class="px-3 py-1 rounded-lg bg-emerald-100 text-emerald-700 font-extrabold">송금완료 (취소)</button>` : `<button onclick="toggleActivitySalaryPaid(${memberIdKey})" class="px-3 py-1 bg-indigo-600 text-white rounded-lg font-bold">입금</button>`);
+
+                tr.innerHTML = `<td class="py-3 px-4 text-center font-bold">${rankBadges[idx]}</td><td class="py-3 px-4 font-bold"><span class="text-indigo-600">[#${m.gobun}]</span> ${m.discord}</td><td class="py-3 px-4 font-bold text-slate-700">${m.rank}</td><td class="py-3 px-4 text-right font-extrabold text-indigo-600">${(m.weeklyHonor || 0).toLocaleString()} 점</td><td class="py-3 px-4 text-right font-extrabold text-emerald-600">${rewards[idx]}</td><td class="py-3 px-4 text-center">${actionBtn}</td>`;
                 tbody.appendChild(tr);
             });
         }
 
         function toggleActivitySalaryPaid(memberId) {
+            if (!checkWritePermission()) return;
             if (window.loadedHistoryData) {
                 const item = window.loadedHistoryData.items.find(x => (x.id === memberId || x.memberId === memberId));
                 if (item) item.activityPaid = !item.activityPaid;
             } else {
                 const m = window.members.find(x => x.id === memberId);
-                if (m) m.activityPaid = true;
+                if (m) m.activityPaid = !m.activityPaid;
             }
             saveData();
         }
 
         function resetActivityAndDeliverySalaryStatus() {
-            if (!confirm("이번 주 활동급여 및 납품 정산(입금 상태 및 납품 횟수)을 모두 초기화하시겠습니까?")) return;
-            
-            window.members.forEach(m => {
-                m.activityPaid = false;
-                m.deliveryCount = 0;
-                m.deliveryPaid = false;
-            });
-
-            if (window.loadedHistoryData) {
-                window.loadedHistoryData.items.forEach(i => {
-                    i.activityPaid = false;
-                });
-            }
-
+            if (!checkWritePermission()) return;
+            if (!confirm("정산 내역을 모두 초기화하시겠습니까?")) return;
+            window.members.forEach(m => { m.activityPaid = false; m.deliveryCount = 0; m.deliveryPaid = false; });
+            if (window.loadedHistoryData) window.loadedHistoryData.items.forEach(i => i.activityPaid = false);
             saveData();
-            alert("활동급여 송금 상태 및 납품 정산 내역이 모두 초기화되었습니다.");
         }
 
         function renderDeliverySalaryTable() {
             const tbody = document.getElementById('delivery-salary-table-body');
             if (!tbody) return;
             tbody.innerHTML = '';
-
             const search = (document.getElementById('salary-search-input')?.value || '').toLowerCase();
             const sorted = [...window.members].sort((a, b) => (b.deliveryCount || 0) - (a.deliveryCount || 0));
+            const isReadOnly = (currentUserPermission === 'readonly');
 
             sorted.forEach(m => {
                 if (!m.discord.toLowerCase().includes(search) && !m.gobun.toLowerCase().includes(search)) return;
-
                 const count = m.deliveryCount || 0;
-                let rewardText = '';
-                let rewardNum = 0;
-
-                if (count >= 100) {
-                    rewardNum = Math.floor(count / 10) * 10;
-                    rewardText = `${rewardNum}억`;
-                } else {
-                    rewardText = `<span class="text-slate-400 text-[11px]">조건 미달 (100개 이상 지급)</span>`;
-                }
-
+                let rewardText = count >= 100 ? `${Math.floor(count / 10) * 10}억` : `<span class="text-slate-400 text-[11px]">조건 미달</span>`;
                 const isPaid = m.deliveryPaid || false;
+
+                const inputCountHTML = isReadOnly 
+                    ? `<span class="font-bold text-indigo-600">${count}</span>`
+                    : `<input type="number" min="0" value="${count}" onchange="updateDeliveryCount(${m.id}, this.value)" class="w-20 px-2 py-1 text-center font-bold rounded glass-input text-indigo-600">`;
+
+                const actionBtnHTML = isReadOnly 
+                    ? `<span class="text-slate-400 font-normal">조회 전용</span>`
+                    : (isPaid ? `<button onclick="toggleDeliveryPaid(${m.id}, false)" class="px-2.5 py-1 bg-slate-100 text-slate-600 rounded font-bold">취소</button>` : `<button onclick="toggleDeliveryPaid(${m.id}, true)" class="px-3 py-1 bg-blue-600 text-white rounded font-bold">입금</button>`);
 
                 const tr = document.createElement('tr');
                 tr.className = "border-b border-slate-100 hover:bg-white/50";
-                tr.innerHTML = `
-                    <td class="py-3 px-4 font-bold"><span class="text-indigo-600">[#${m.gobun}]</span> ${m.discord}</td>
-                    <td class="py-3 px-4 font-bold text-slate-700">${m.rank}</td>
-                    <td class="py-3 px-4 text-center">
-                        <input type="number" min="0" value="${count}" onchange="requireAuth(() => updateDeliveryCount(${m.id}, this.value))" class="w-20 px-2 py-1 text-center font-bold rounded glass-input text-indigo-600 focus:outline-none"> 개
-                    </td>
-                    <td class="py-3 px-4 text-right font-extrabold text-blue-600">${rewardText}</td>
-                    <td class="py-3 px-4 text-center">
-                        ${isPaid 
-                            ? '<span class="px-2.5 py-1 rounded-lg bg-blue-100 text-blue-700 font-extrabold">입금완료</span>' 
-                            : '<span class="text-slate-400">미입금</span>'
-                        }
-                    </td>
-                    <td class="py-3 px-4 text-center">
-                        ${isPaid 
-                            ? `<button onclick="requireAuth(() => toggleDeliveryPaid(${m.id}, false))" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg font-bold text-[11px]">취소</button>`
-                            : `<button onclick="requireAuth(() => toggleDeliveryPaid(${m.id}, true))" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold shadow-sm">입금</button>`
-                        }
-                    </td>
-                `;
+                tr.innerHTML = `<td class="py-3 px-4 font-bold"><span class="text-indigo-600">[#${m.gobun}]</span> ${m.discord}</td><td class="py-3 px-4 font-bold text-slate-700">${m.rank}</td><td class="py-3 px-4 text-center">${inputCountHTML} 개</td><td class="py-3 px-4 text-right font-extrabold text-blue-600">${rewardText}</td><td class="py-3 px-4 text-center">${isPaid ? '<span class="px-2.5 py-1 rounded bg-blue-100 text-blue-700 font-extrabold">입금완료</span>' : '<span class="text-slate-400">미입금</span>'}</td><td class="py-3 px-4 text-center">${actionBtnHTML}</td>`;
                 tbody.appendChild(tr);
             });
         }
 
         function updateDeliveryCount(memberId, val) {
+            if (!checkWritePermission()) return;
             const m = window.members.find(x => x.id === memberId);
-            if (m) {
-                m.deliveryCount = parseInt(val) || 0;
-                saveData();
-            }
+            if (m) { m.deliveryCount = parseInt(val) || 0; saveData(); }
         }
 
         function toggleDeliveryPaid(memberId, status) {
+            if (!checkWritePermission()) return;
             const m = window.members.find(x => x.id === memberId);
-            if (m) {
-                m.deliveryPaid = status;
-                saveData();
-            }
+            if (m) { m.deliveryPaid = status; saveData(); }
         }
 
         function openWeeklySettlementModal() {
+            if (!checkWritePermission()) return;
             const container = document.getElementById('settlement-items-container');
-            container.innerHTML = window.members.map(m => `
-                <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border">
-                    <span class="font-bold">[#${m.gobun}] ${m.discord}</span>
-                    <input type="number" id="settle_${m.id}" value="${m.weeklyHonor}" class="w-28 px-2 py-1 rounded glass-input text-right font-bold">
-                </div>
-            `).join('');
+            container.innerHTML = window.members.map(m => `<div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border"><span class="font-bold">[#${m.gobun}] ${m.discord}</span><input type="number" id="settle_${m.id}" value="${m.weeklyHonor}" class="w-28 px-2 py-1 rounded glass-input text-right font-bold"></div>`).join('');
             document.getElementById('modal-settlement').classList.remove('hidden');
         }
 
         function applyWeeklySettlement() {
-            window.members.forEach(m => {
-                const val = parseInt(document.getElementById(`settle_${m.id}`).value) || 0;
-                m.weeklyHonor = val;
-            });
-
-            const historyItem = {
-                id: Date.now(),
-                date: new Date().toISOString().split('T')[0],
-                items: window.members.map(m => ({
-                    id: m.id,
-                    gobun: m.gobun,
-                    discord: m.discord,
-                    rank: m.rank,
-                    weeklyHonor: m.weeklyHonor,
-                    activityPaid: false
-                }))
-            };
-
+            if (!checkWritePermission()) return;
+            window.members.forEach(m => { m.weeklyHonor = parseInt(document.getElementById(`settle_${m.id}`).value) || 0; });
+            const historyItem = { id: Date.now(), date: new Date().toISOString().split('T')[0], items: window.members.map(m => ({ id: m.id, gobun: m.gobun, discord: m.discord, rank: m.rank, weeklyHonor: m.weeklyHonor, activityPaid: false })) };
             if (!window.weeklyHistories) window.weeklyHistories = [];
             window.weeklyHistories.push(historyItem);
-
             saveData();
             closeModal('modal-settlement');
-            alert("토요일 주간 정산이 완료되고 히스토리에 기록되었습니다.");
         }
 
-        function openNoticeModal(author, editId = null) {
+        function openAdminNoticeModal(author, editId = null) {
+            if (!checkWritePermission()) return;
             document.getElementById('notice-author').value = author;
             document.getElementById('notice-edit-id').value = editId || '';
-            
             const titleEl = document.getElementById('notice-modal-title');
             const titleInput = document.getElementById('notice-title');
             const contentInput = document.getElementById('notice-content');
@@ -1203,54 +1420,38 @@
             if (editId) {
                 titleEl.textContent = `${author} 전달사항 수정`;
                 const item = (window.notices[author] || []).find(x => x.id === editId);
-                if (item) {
-                    titleInput.value = item.title;
-                    contentInput.value = item.content;
-                }
+                if (item) { titleInput.value = item.title; contentInput.value = item.content; }
             } else {
                 titleEl.textContent = `${author} 전달사항 작성`;
-                titleInput.value = '';
-                contentInput.value = '';
+                titleInput.value = ''; contentInput.value = '';
             }
             document.getElementById('modal-notice').classList.remove('hidden');
         }
 
         function saveNotice() {
+            if (!checkWritePermission()) return;
             const author = document.getElementById('notice-author').value;
             const editId = document.getElementById('notice-edit-id').value;
             const title = document.getElementById('notice-title').value.trim();
             const content = document.getElementById('notice-content').value.trim();
-
-            if (!title || !content) {
-                alert("제목과 내용을 모두 입력해주세요.");
-                return;
-            }
+            if (!title || !content) return;
 
             if (!window.notices) window.notices = { 찡긋: [], 캐럿: [], 한나: [] };
             if (!window.notices[author]) window.notices[author] = [];
 
             if (editId) {
                 const item = window.notices[author].find(x => x.id == editId);
-                if (item) {
-                    item.title = title;
-                    item.content = content;
-                    item.date = new Date().toISOString().split('T')[0];
-                }
+                if (item) { item.title = title; item.content = content; }
             } else {
-                window.notices[author].push({
-                    id: Date.now(),
-                    title: title,
-                    content: content,
-                    date: new Date().toISOString().split('T')[0]
-                });
+                window.notices[author].push({ id: Date.now(), title, content, date: new Date().toISOString().split('T')[0] });
             }
-
             saveData();
             closeModal('modal-notice');
         }
 
         function deleteNotice(author, id) {
-            if (!confirm("해당 전달사항을 삭제하시겠습니까?")) return;
+            if (!checkWritePermission()) return;
+            if (!confirm("삭제하시겠습니까?")) return;
             if (window.notices && window.notices[author]) {
                 window.notices[author] = window.notices[author].filter(x => x.id !== id);
                 saveData();
@@ -1258,27 +1459,16 @@
         }
 
         function renderNotices() {
+            const isReadOnly = (currentUserPermission === 'readonly');
             ['찡긋', '캐럿', '한나'].forEach(author => {
                 const container = document.getElementById(`notice-list-${author}`);
                 if (!container) return;
-                
                 const list = (window.notices && window.notices[author]) ? window.notices[author] : [];
-                if (list.length === 0) {
-                    container.innerHTML = '<p class="text-center text-slate-400 text-xs py-6">등록된 전달사항이 없습니다.</p>';
-                    return;
-                }
-
-                container.innerHTML = list.slice().reverse().map(n => `
-                    <div class="p-3.5 rounded-xl bg-white/80 border border-slate-200/80 shadow-sm space-y-2">
-                        <div class="flex items-center justify-between">
-                            <span class="font-bold text-slate-800 text-xs">${n.title}</span>
-                            <span class="text-[10px] text-slate-400">${n.date}</span>
-                        </div>
-                        <p class="text-slate-600 text-xs whitespace-pre-wrap leading-relaxed">${n.content}</p>
-                        <div class="flex justify-end gap-1.5 pt-1 border-t border-slate-100">
-                            <button onclick="requireAuth(() => openNoticeModal('${author}', ${n.id}))" class="px-2 py-0.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded text-[11px] font-bold">수정</button>
-                            <button onclick="requireAuth(() => deleteNotice('${author}', ${n.id}))" class="px-2 py-0.5 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded text-[11px] font-bold">삭제</button>
-                        </div>
+                container.innerHTML = list.length === 0 ? '<p class="text-center text-slate-400 text-xs py-6">전달사항이 없습니다.</p>' : list.slice().reverse().map(n => `
+                    <div class="p-3.5 rounded-xl bg-white/80 border space-y-2">
+                        <div class="flex items-center justify-between"><span class="font-bold text-xs">${n.title}</span><span class="text-[10px] text-slate-400">${n.date}</span></div>
+                        <p class="text-slate-600 text-xs">${n.content}</p>
+                        ${!isReadOnly ? `<div class="flex justify-end gap-1"><button onclick="openAdminNoticeModal('${author}', ${n.id})" class="px-2 py-0.5 bg-slate-100 rounded text-[11px] font-bold">수정</button><button onclick="deleteNotice('${author}', ${n.id})" class="px-2 py-0.5 bg-rose-50 text-rose-600 rounded text-[11px] font-bold">삭제</button></div>` : ''}
                     </div>
                 `).join('');
             });
@@ -1288,121 +1478,62 @@
             const tbody = document.getElementById('warning-members-table-body');
             if (!tbody) return;
             tbody.innerHTML = '';
-            
-            const searchInput = document.getElementById('warning-search-input');
-            const search = searchInput ? searchInput.value.toLowerCase() : '';
+            const search = (document.getElementById('warning-search-input')?.value || '').toLowerCase();
+            const isReadOnly = (currentUserPermission === 'readonly');
 
             window.members.forEach(m => {
                 if (!m.discord.toLowerCase().includes(search) && !m.gobun.toLowerCase().includes(search)) return;
-
                 const tr = document.createElement('tr');
                 tr.className = "border-b border-slate-100 hover:bg-white/50";
-                tr.innerHTML = `
-                    <td class="py-3.5 px-4 font-bold"><span class="text-indigo-600">[#${m.gobun}]</span> ${m.discord}</td>
-                    <td class="py-3.5 px-4 font-bold text-slate-700">${m.rank}</td>
-                    <td class="py-3.5 px-4 text-center font-extrabold ${m.warnings > 0 ? 'text-amber-600' : 'text-slate-400'}">${m.warnings} 회</td>
-                    <td class="py-3.5 px-4 text-center space-x-1.5">
-                        <button onclick="requireAuth(() => openWarningModalForMember(${m.id}))" class="px-2.5 py-1 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 rounded font-bold">경고 (+1)</button>
-                        <button onclick="requireAuth(() => directSubtractWarning(${m.id}))" class="px-2.5 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 border border-emerald-200 rounded font-bold">삭감 (-1)</button>
-                        <button onclick="openMemberWarningTimeline(${m.id})" class="px-2.5 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 border border-indigo-200 rounded font-bold"><i class="fa-solid fa-clock-rotate-left mr-1"></i>내역</button>
-                    </td>
-                `;
+                
+                const actionBtns = isReadOnly 
+                    ? `<span class="text-slate-400 font-normal">조회 전용</span>`
+                    : `<button onclick="openWarningModalForMember(${m.id})" class="px-2.5 py-1 bg-rose-50 text-rose-600 border rounded font-bold">경고 (+1)</button><button onclick="directSubtractWarning(${m.id})" class="px-2.5 py-1 bg-emerald-50 text-emerald-600 border rounded font-bold">삭감 (-1)</button>`;
+
+                tr.innerHTML = `<td class="py-3.5 px-4 font-bold"><span class="text-indigo-600">[#${m.gobun}]</span> ${m.discord}</td><td class="py-3.5 px-4 font-bold text-slate-700">${m.rank}</td><td class="py-3.5 px-4 text-center font-extrabold ${m.warnings > 0 ? 'text-amber-600' : 'text-slate-400'}">${m.warnings} 회</td><td class="py-3.5 px-4 text-center space-x-1.5">${actionBtns}</td>`;
                 tbody.appendChild(tr);
             });
         }
 
         function openWarningModalForMember(memberId) {
+            if (!checkWritePermission()) return;
             const m = window.members.find(x => x.id === memberId);
             if (!m) return;
             document.getElementById('warn-member-id').value = m.id;
-            document.getElementById('warn-target-member-name').textContent = `[#${m.gobun}] ${m.discord} (현재 경고: ${m.warnings}회)`;
+            document.getElementById('warn-target-member-name').textContent = `[#${m.gobun}] ${m.discord}`;
             document.getElementById('warn-date').value = new Date().toISOString().split('T')[0];
             document.getElementById('warn-reason').value = '';
             document.getElementById('modal-warning-action').classList.remove('hidden');
         }
 
         function executeWarningAdd() {
+            if (!checkWritePermission()) return;
             const mId = parseInt(document.getElementById('warn-member-id').value);
             const reason = document.getElementById('warn-reason').value.trim();
-            const dateVal = document.getElementById('warn-date').value;
             const m = window.members.find(x => x.id === mId);
-
-            if (!reason) { alert("경고 사유를 입력하세요."); return; }
-
+            if (!reason) return;
             m.warnings++;
-            window.warningLogs.push({
-                id: Date.now(),
-                memberId: m.id,
-                date: dateVal,
-                memberName: m.discord,
-                gobun: m.gobun,
-                type: '부여',
-                reason: reason,
-                total: m.warnings
-            });
-
+            window.warningLogs.push({ id: Date.now(), memberId: m.id, date: document.getElementById('warn-date').value, memberName: m.discord, gobun: m.gobun, type: '부여', reason, total: m.warnings });
             saveData();
             closeModal('modal-warning-action');
-            alert(`[#${m.gobun}] ${m.discord} 님에게 경고 1회가 부여되었습니다.`);
         }
 
         function directSubtractWarning(memberId) {
+            if (!checkWritePermission()) return;
             const m = window.members.find(x => x.id === memberId);
-            if (!m) return;
-            if (m.warnings <= 0) {
-                alert("차감할 경고가 없습니다.");
-                return;
-            }
-            const reason = prompt(`[#${m.gobun}] ${m.discord} 님의 경고 1회 삭감 사유를 입력하세요:`);
+            if (!m || m.warnings <= 0) return;
+            const reason = prompt("경고 삭감 사유를 입력하세요:");
             if (!reason) return;
-
             m.warnings--;
-            window.warningLogs.push({
-                id: Date.now(),
-                memberId: m.id,
-                date: new Date().toISOString().split('T')[0],
-                memberName: m.discord,
-                gobun: m.gobun,
-                type: '삭감',
-                reason: reason,
-                total: m.warnings
-            });
-
+            window.warningLogs.push({ id: Date.now(), memberId: m.id, date: new Date().toISOString().split('T')[0], memberName: m.discord, gobun: m.gobun, type: '삭감', reason, total: m.warnings });
             saveData();
-            alert(`[#${m.gobun}] ${m.discord} 님의 경고가 1회 삭감되었습니다.`);
-        }
-
-        function openMemberWarningTimeline(memberId) {
-            const m = window.members.find(x => x.id === memberId);
-            if (!m) return;
-
-            document.getElementById('timeline-modal-title').textContent = `[#${m.gobun}] ${m.discord} 님의 경고 타임라인 (누적: ${m.warnings}회)`;
-            const container = document.getElementById('individual-timeline-container');
-
-            const userLogs = window.warningLogs.filter(l => l.memberId === m.id || (l.gobun === m.gobun && l.memberName === m.discord));
-
-            if (userLogs.length === 0) {
-                container.innerHTML = '<p class="text-center text-slate-400 py-6">해당 유저의 경고 처리 내역이 없습니다.</p>';
-            } else {
-                container.innerHTML = userLogs.slice().reverse().map(l => `
-                    <div class="p-3 rounded-xl border ${l.type === '부여' ? 'bg-rose-50/80 border-rose-200' : 'bg-emerald-50/80 border-emerald-200'} flex justify-between items-center text-xs">
-                        <div>
-                            <span class="font-bold ${l.type === '부여' ? 'text-rose-700' : 'text-emerald-700'}">경고 ${l.type} (${l.date})</span>
-                            <p class="text-slate-600 mt-1 font-semibold">사유: ${l.reason}</p>
-                        </div>
-                        <span class="font-extrabold text-slate-700 bg-white/80 px-2 py-1 rounded-lg border border-slate-200">당시 총 경고: ${l.total}회</span>
-                    </div>
-                `).join('');
-            }
-
-            document.getElementById('modal-member-timeline').classList.remove('hidden');
         }
 
         function batchApplyAllRankChanges() {
-            if (!confirm("디스코드 직급 변경을 일괄 반영하고 주간 점수를 초기화하시겠습니까?")) return;
+            if (!checkWritePermission()) return;
+            if (!confirm("직급 변경을 일괄 반영하시겠습니까?")) return;
             window.members.forEach(m => {
-                const isTownStaff = m.jobs && m.jobs.includes('town_staff');
-                if (!isTownStaff) {
+                if (!m.jobs || !m.jobs.includes('town_staff')) {
                     const expectedTotal = m.cumHonor + m.weeklyHonor;
                     if (m.weeklyHonor < 1000) {
                         const idx = getRankIndex(m.rank);
@@ -1415,13 +1546,16 @@
                 m.weeklyHonor = 0;
             });
             saveData();
-            alert("직급 반영 및 누적 점수 합산, 주간 점수 초기화가 완료되었습니다.");
         }
 
-        function openAddMemberModal() { document.getElementById('modal-member').classList.remove('hidden'); }
+        function openAddMemberModal() { 
+            if (!checkWritePermission()) return;
+            document.getElementById('modal-member').classList.remove('hidden'); 
+        }
         
         function saveMember(e) {
             e.preventDefault();
+            if (!checkWritePermission()) return;
             window.members.push({
                 id: Date.now(),
                 gobun: document.getElementById('input-gobun').value,
@@ -1429,132 +1563,49 @@
                 rank: document.getElementById('input-rank').value,
                 cumHonor: parseInt(document.getElementById('input-cum-honor').value) || 0,
                 weeklyHonor: parseInt(document.getElementById('input-weekly-honor').value) || 0,
-                warnings: 0,
-                jobs: [],
-                vacation: { active: false, reason: '' }
+                warnings: 0, jobs: [], vacation: { active: false, reason: '' }
             });
             saveData();
             closeModal('modal-member');
         }
 
         function deleteMember(id) {
-            if (confirm("정말 삭제하시겠습니까?")) {
-                window.members = window.members.filter(m => m.id !== id);
-                saveData();
-            }
-        }
-
-        let isEditingInfo = false;
-        let isEditingScore = false;
-
-        function toggleEditMemberInfo() {
-            isEditingInfo = !isEditingInfo;
-            const readView = document.getElementById('member-read-view');
-            const editView = document.getElementById('member-edit-view');
-            const btnText = document.getElementById('edit-btn-text');
-            if (isEditingInfo) {
-                readView.classList.add('hidden');
-                editView.classList.remove('hidden');
-                btnText.textContent = '취소';
-            } else {
-                readView.classList.remove('hidden');
-                editView.classList.add('hidden');
-                btnText.textContent = '수정';
-            }
-        }
-
-        function toggleEditScoreInfo() {
-            isEditingScore = !isEditingScore;
-            const readView = document.getElementById('score-read-view');
-            const editView = document.getElementById('score-edit-view');
-            const btnText = document.getElementById('score-edit-btn-text');
-            if (isEditingScore) {
-                readView.classList.add('hidden');
-                editView.classList.remove('hidden');
-                btnText.textContent = '취소';
-            } else {
-                readView.classList.remove('hidden');
-                editView.classList.add('hidden');
-                btnText.textContent = '수정';
-            }
+            if (!checkWritePermission()) return;
+            if (confirm("정말 삭제하시겠습니까?")) { window.members = window.members.filter(m => m.id !== id); saveData(); }
         }
 
         function openVacationModal(id) {
+            if (!checkWritePermission()) return;
             const m = window.members.find(x => x.id === id);
-            
-            isEditingInfo = false;
-            isEditingScore = false;
-            document.getElementById('member-read-view').classList.remove('hidden');
-            document.getElementById('member-edit-view').classList.add('hidden');
-            document.getElementById('edit-btn-text').textContent = '수정';
-
-            document.getElementById('score-read-view').classList.remove('hidden');
-            document.getElementById('score-edit-view').classList.add('hidden');
-            document.getElementById('score-edit-btn-text').textContent = '수정';
-
             document.getElementById('vacation-member-id').value = m.id;
             document.getElementById('vacation-member-display').textContent = `[#${m.gobun}] ${m.discord}`;
             document.getElementById('edit-gobun-input').value = m.gobun;
             document.getElementById('edit-discord-input').value = m.discord;
-
-            document.getElementById('display-cum-honor').textContent = `${m.cumHonor.toLocaleString()} 점`;
-            document.getElementById('display-weekly-honor').textContent = `${m.weeklyHonor.toLocaleString()} 점`;
             document.getElementById('edit-cum-honor-input').value = m.cumHonor;
             document.getElementById('edit-weekly-honor-input').value = m.weeklyHonor;
 
             const jobContainer = document.getElementById('job-checkboxes-container');
             const currentJobs = m.jobs || [];
-            
-            const fullJobList = [
-                { id: 'town_staff', name: '실버타운 운영진', icon: '👑' },
-                ...JOB_LIST
-            ];
-
-            jobContainer.innerHTML = fullJobList.map(j => {
-                const isChecked = currentJobs.includes(j.id);
-                return `
-                    <label class="flex items-center gap-2 p-1.5 bg-white rounded-lg border border-indigo-100 cursor-pointer hover:bg-indigo-50/50">
-                        <input type="checkbox" name="member_job" value="${j.id}" ${isChecked ? 'checked' : ''} class="w-4 h-4 text-indigo-600 rounded">
-                        <span class="font-bold text-slate-700 text-xs">${j.icon} ${j.name}</span>
-                    </label>
-                `;
-            }).join('');
+            const fullJobList = [{ id: 'town_staff', name: '실버타운 운영진', icon: '👑' }, ...JOB_LIST];
+            jobContainer.innerHTML = fullJobList.map(j => `<label class="flex items-center gap-2 p-1.5 bg-white rounded border"><input type="checkbox" name="member_job" value="${j.id}" ${currentJobs.includes(j.id) ? 'checked' : ''} class="w-4 h-4 text-indigo-600 rounded"><span class="font-bold text-xs">${j.icon} ${j.name}</span></label>`).join('');
 
             document.getElementById('input-vacation-active').checked = m.vacation.active;
             document.getElementById('input-vacation-reason').value = m.vacation.reason;
-            
             document.getElementById('modal-vacation').classList.remove('hidden');
         }
 
         function saveVacationSettings() {
-            const id = parseInt(document.getElementById('vacation-member-id').value);
-            const m = window.members.find(x => x.id === id);
-            
-            if (isEditingInfo) {
-                const newGobun = document.getElementById('edit-gobun-input').value.trim();
-                const newDiscord = document.getElementById('edit-discord-input').value.trim();
-                if (newGobun) m.gobun = newGobun;
-                if (newDiscord) m.discord = newDiscord;
-            }
-
-            if (isEditingScore) {
-                const newCum = parseInt(document.getElementById('edit-cum-honor-input').value);
-                const newWeekly = parseInt(document.getElementById('edit-weekly-honor-input').value);
-                if (!isNaN(newCum)) m.cumHonor = newCum;
-                if (!isNaN(newWeekly)) m.weeklyHonor = newWeekly;
-            }
+            if (!checkWritePermission()) return;
+            const m = window.members.find(x => x.id === parseInt(document.getElementById('vacation-member-id').value));
+            m.gobun = document.getElementById('edit-gobun-input').value.trim() || m.gobun;
+            m.discord = document.getElementById('edit-discord-input').value.trim() || m.discord;
+            m.cumHonor = parseInt(document.getElementById('edit-cum-honor-input').value) || m.cumHonor;
+            m.weeklyHonor = parseInt(document.getElementById('edit-weekly-honor-input').value) || m.weeklyHonor;
 
             const checkedJobs = [];
-            document.querySelectorAll('input[name="member_job"]:checked').forEach(cb => {
-                checkedJobs.push(cb.value);
-            });
+            document.querySelectorAll('input[name="member_job"]:checked').forEach(cb => checkedJobs.push(cb.value));
             m.jobs = checkedJobs;
-
-            m.vacation = {
-                active: document.getElementById('input-vacation-active').checked,
-                reason: document.getElementById('input-vacation-reason').value
-            };
-            
+            m.vacation = { active: document.getElementById('input-vacation-active').checked, reason: document.getElementById('input-vacation-reason').value };
             saveData();
             closeModal('modal-vacation');
         }
@@ -1562,22 +1613,13 @@
         function renderWarningLogs() {
             const container = document.getElementById('warning-logs-container');
             if (!container) return;
-            if (window.warningLogs.length === 0) {
-                container.innerHTML = '<p class="text-center text-slate-400 text-xs py-4">등록된 경고 내역이 없습니다.</p>';
-                return;
-            }
-            container.innerHTML = window.warningLogs.slice().reverse().map(l => `
-                <div class="p-3 rounded-xl border ${l.type === '부여' ? 'bg-rose-50/70 border-rose-200' : 'bg-emerald-50/70 border-emerald-200'} flex justify-between items-center text-xs">
-                    <div>
-                        <span class="font-bold">[#${l.gobun}] ${l.memberName} 경고 ${l.type} (${l.date})</span>
-                        <p class="text-slate-600 mt-0.5">사유: ${l.reason}</p>
-                    </div>
-                    <span class="font-bold">당시 총 경고: ${l.total}회</span>
-                </div>
-            `).join('');
+            container.innerHTML = window.warningLogs.length === 0 ? '<p class="text-center text-slate-400 text-xs py-4">경고 내역이 없습니다.</p>' : window.warningLogs.slice().reverse().map(l => `<div class="p-3 rounded-xl border ${l.type === '부여' ? 'bg-rose-50/70 border-rose-200' : 'bg-emerald-50/70 border-emerald-200'} flex justify-between items-center text-xs"><div><span class="font-bold">[#${l.gobun}] ${l.memberName} 경고 ${l.type} (${l.date})</span><p class="text-slate-600 mt-0.5">사유: ${l.reason}</p></div><span class="font-bold">총 경고: ${l.total}회</span></div>`).join('');
         }
 
         function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+        // 초기 실행
+        renderHomeJobAllocation();
     </script>
 </body>
 </html>
