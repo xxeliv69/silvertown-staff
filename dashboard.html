@@ -113,8 +113,8 @@
             <!-- 상단 주간 아카이브 상태 인디케이터 -->
             <div class="flex items-center gap-2">
                 <div id="archive-status-badge" class="text-xs font-bold bg-white/80 px-3.5 py-1.5 rounded-xl border border-slate-300 shadow-xs flex items-center gap-2 text-slate-700">
-                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span id="archive-status-text">실시간 최신 상태</span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse"></span>
+                    <span id="archive-status-text">서버 연결 중...</span>
                 </div>
                 <button onclick="openWeeklyArchivesModal()" class="silver-btn px-3 py-1.5 text-xs font-bold text-slate-700 flex items-center gap-1.5">
                     <i class="fa-solid fa-clock-rotate-left text-indigo-600"></i>
@@ -159,7 +159,7 @@
 
         <!-- ================= 1. 메인 홈 (HOME) ================= -->
         <div id="section-home" class="space-y-8 max-w-6xl mx-auto">
-            <!-- 현황 요약 카드 (전체 멤버 수 및 통계 정확도 연동) -->
+            <!-- 현황 요약 카드 -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div class="silver-card p-4 flex items-center justify-between border-l-4 border-l-slate-700">
                     <div>
@@ -202,7 +202,7 @@
                 </div>
             </div>
 
-            <!-- 직업별 배정 현황 (메인 홈에 온전히 유지) -->
+            <!-- 직업별 배정 현황 -->
             <div class="silver-card p-6 sm:p-8 space-y-6">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200/90 pb-4">
                     <div>
@@ -224,7 +224,6 @@
 
         <!-- ================= 2. 직급채널 (RANK) ================= -->
         <div id="section-rank" class="silver-card p-6 sm:p-8 space-y-8 hidden max-w-6xl mx-auto">
-            <!-- 규정 안내 헤더 -->
             <div class="border-b border-slate-200 pb-5">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div>
@@ -240,7 +239,6 @@
                     </span>
                 </div>
 
-                <!-- 직급 규정 안내 카드 -->
                 <div class="mt-4 p-4 rounded-xl bg-slate-50/80 border border-slate-200 grid grid-cols-1 md:grid-cols-2 gap-3 text-xs leading-relaxed">
                     <div class="p-3 bg-white rounded-lg border border-slate-200 space-y-1">
                         <div class="font-extrabold text-rose-600 flex items-center gap-1.5">
@@ -288,7 +286,7 @@
                 <div id="rank-demo-container" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
             </div>
 
-            <!-- 3. 주간 필수참여 미달 경고 대상자 (500점 미만 & 휴가여부 체크) -->
+            <!-- 3. 주간 필수참여 미달 경고 대상자 -->
             <div class="space-y-3 pt-6 border-t border-slate-200">
                 <div class="flex items-center justify-between">
                     <h3 class="text-sm font-black text-amber-600 flex items-center gap-2">
@@ -312,7 +310,6 @@
 
         <!-- ================= 3. 주급채널 (SALARY) ================= -->
         <div id="section-salary" class="silver-card p-6 sm:p-8 space-y-8 hidden max-w-6xl mx-auto">
-            <!-- 활동 수당 (TOP 1~3위) -->
             <div class="space-y-4">
                 <div class="border-b border-slate-200 pb-3 flex items-center justify-between">
                     <div>
@@ -340,7 +337,6 @@
                 </div>
             </div>
 
-            <!-- 납품 수당 -->
             <div class="space-y-4 pt-6 border-t border-slate-200">
                 <div class="border-b border-slate-200 pb-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                     <div>
@@ -349,7 +345,6 @@
                         </h2>
                         <p class="text-xs text-slate-500 mt-0.5">주간 100회 이상 납품 달성 직원(지급 대상)만 표시됩니다.</p>
                     </div>
-                    <!-- 단가 선택 뱃지 -->
                     <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-bold">
                         <span class="text-[11px] text-slate-500 px-1.5">단가 적용:</span>
                         <button onclick="setDeliveryRate(1)" id="btn-rate-1" class="px-2.5 py-1 rounded-lg transition-all text-xs font-extrabold bg-slate-800 text-white shadow-xs">개당 1억</button>
@@ -402,7 +397,6 @@
 
             <!-- 인증 성공 시 대시보드 -->
             <div id="admin-dashboard-content" class="space-y-6 hidden">
-                <!-- 상단 프로필 및 탭 네비게이션 (직업배정 제거 완료) -->
                 <div class="silver-glass rounded-2xl p-4 flex flex-col lg:flex-row items-center justify-between gap-4">
                     <div class="flex items-center gap-3">
                         <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-slate-800 to-slate-600 flex items-center justify-center text-amber-400 shadow-md border border-slate-500">
@@ -447,7 +441,7 @@
                     </div>
                 </div>
 
-                <!-- 통계 지표 카드 (정확한 인원수 반영) -->
+                <!-- 통계 지표 카드 -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div class="silver-card p-4 flex items-center justify-between border-l-4 border-l-slate-600">
                         <div>
@@ -492,7 +486,6 @@
 
                 <!-- TAB 1: MEMBERS -->
                 <div id="tab-members-section" class="space-y-6">
-                    <!-- 토요일 디스코드 직급 일괄 처리 배너 -->
                     <div id="batch-apply-container" class="silver-card p-4.5 flex flex-col md:flex-row items-center justify-between gap-4 border border-slate-300">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-xl bg-slate-800 text-white flex items-center justify-center text-lg font-bold shadow-sm">
@@ -725,7 +718,6 @@
                                 <p class="text-xs text-slate-500 mt-0.5">전체 멤버의 주간 납품 횟수를 기입 및 확인하고 입금 상태를 처리합니다. (100개 이상 시 수당 발생)</p>
                             </div>
                             <div class="flex items-center gap-3 flex-wrap">
-                                <!-- 단가 설정 버튼 그룹 -->
                                 <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-bold">
                                     <span class="text-[11px] text-slate-500 px-1">적용 단가:</span>
                                     <button onclick="setDeliveryRate(1)" id="admin-rate-1" class="px-2.5 py-1 rounded-lg text-xs font-extrabold bg-slate-800 text-white shadow-xs">1억</button>
@@ -763,7 +755,7 @@
 
     <!-- ================= MODALS ================= -->
 
-    <!-- 주간 기록 보관소 모달 (주간별 기록 열람 기능) -->
+    <!-- 주간 기록 보관소 모달 -->
     <div id="modal-weekly-archives" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="silver-card bg-white rounded-2xl border w-full max-w-xl p-6 space-y-4 text-xs shadow-2xl flex flex-col max-h-[85vh]">
             <div class="flex items-center justify-between pb-3 border-b border-slate-200">
@@ -913,7 +905,7 @@
                 <input type="checkbox" id="input-vacation-active" class="w-5 h-5 text-amber-600 rounded">
             </div>
 
-            <!-- 운영진 판단 직급 변동/경고 면제(직급 유지) 권한 체크박스 신설 -->
+            <!-- 운영진 판단 직급 변동/경고 면제(직급 유지) 권한 체크박스 -->
             <div class="flex items-center justify-between p-3.5 rounded-xl bg-indigo-50/90 border border-indigo-200">
                 <div>
                     <span class="font-extrabold text-indigo-900 block flex items-center gap-1.5">
@@ -953,7 +945,7 @@
         </div>
     </div>
 
-    <!-- 경고 부여 모달 (수동 경고) -->
+    <!-- 경고 부여 모달 -->
     <div id="modal-warning-action" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="silver-card bg-white rounded-2xl border w-full max-w-md p-6 space-y-4 text-xs shadow-2xl">
             <div class="flex items-center justify-between pb-2 border-b border-slate-200">
@@ -1061,37 +1053,48 @@
         </div>
     </div>
 
-    <!-- Firebase Real-time Multi-User Sync Module -->
+    <!-- 휴가 이력 상세 모달 -->
+    <div id="modal-vacation-history" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="silver-card bg-white rounded-2xl border w-full max-w-md p-6 space-y-4 text-xs shadow-2xl">
+            <div class="flex items-center justify-between pb-2 border-b border-slate-200">
+                <h3 class="font-black text-slate-800 text-sm flex items-center gap-2 text-amber-600">
+                    <i class="fa-solid fa-umbrella-beach"></i> 휴가 전체 이력
+                </h3>
+                <button onclick="closeModal('modal-vacation-history')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-base"></i></button>
+            </div>
+            <div id="vac-history-target-info" class="font-black text-slate-800 text-sm bg-slate-50 p-3 rounded-xl border border-slate-200">-</div>
+            <div id="vac-history-list-container" class="space-y-2.5 max-h-60 overflow-y-auto pr-1"></div>
+            <div class="flex justify-end pt-3 border-t border-slate-200">
+                <button onclick="closeModal('modal-vacation-history')" class="silver-btn px-4 py-2 font-bold">닫기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= Firebase Real-time Multi-User Sync Module ================= -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, onSnapshot, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // 환경 변수 설정 감지 및 안정적인 기본 구성
-        const firebaseConfig = typeof __firebase_config !== 'undefined' 
-            ? JSON.parse(__firebase_config) 
-            : {
-                apiKey: "AIzaSyB4aPOvTyYqol54X7eMiLBc-zjJZttCkE",
-                authDomain: "silvertown-staff.firebaseapp.com",
-                projectId: "silvertown-staff",
-                storageBucket: "silvertown-staff.firebasestorage.app",
-                messagingSenderId: "1082861297946",
-                appId: "1:1082861297946:web:a0191ae4c9e0c1ac46cca3"
-            };
-
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'silvertown-portal-main';
+        const firebaseConfig = {
+            apiKey: "AIzaSyB4aPOvTyYqol54X7eMiLBc-zjJZttCkE",
+            authDomain: "silvertown-staff.firebaseapp.com",
+            projectId: "silvertown-staff",
+            storageBucket: "silvertown-staff.firebasestorage.app",
+            messagingSenderId: "1082861297946",
+            appId: "1:1082861297946:web:a0191ae4c9e0c1ac46cca3"
+        };
 
         let db = null;
         let auth = null;
         let sharedDocRef = null;
+        let isWritingToCloud = false;
 
-        // 클라우드 동기화 상태 표시 인디케이터 갱신 함수
         function updateSyncStatusIndicator(isOnline, message) {
             const badge = document.getElementById('archive-status-badge');
             const text = document.getElementById('archive-status-text');
             if (!badge || !text) return;
-
-            if (window.activeArchiveView) return; // 과거 기록 조회 중일 땐 별도 표시 유지
+            if (window.activeArchiveView) return;
 
             if (isOnline) {
                 badge.className = "text-xs font-bold bg-white/90 px-3.5 py-1.5 rounded-xl border border-emerald-300 shadow-xs flex items-center gap-2 text-slate-800";
@@ -1102,20 +1105,38 @@
             }
         }
 
-        try {
-            const app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-            auth = getAuth(app);
+        async function initFirebaseSync() {
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
 
-            // 익명 인증 후 공용 데이터 문서 구독 (실시간 웹소켓 연결)
-            signInAnonymously(auth).then(() => {
-                sharedDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'shared_state');
+                // 익명 인증 로그인
+                await signInAnonymously(auth);
 
-                // 원격 데이터가 변경될 때마다 캐럿, 찡긋, 한나 모든 화면에 자동 반영
+                // Firestore 표준 2단 경로(컬렉션: silvertown, 문서: portal_state)
+                sharedDocRef = doc(db, 'silvertown', 'portal_state');
+
+                // 초기 데이터 확인: 데이터가 없으면 기본 멤버 데이터 업로드
+                const initialSnap = await getDoc(sharedDocRef);
+                if (!initialSnap.exists()) {
+                    await setDoc(sharedDocRef, {
+                        members: window.members,
+                        warningLogs: window.warningLogs || [],
+                        notices: window.notices || { 찡긋: [], 캐럿: [], 한나: [] },
+                        weeklyHistories: window.weeklyHistories || [],
+                        deliveryRatePerUnit: window.deliveryRatePerUnit || 1,
+                        updatedAt: new Date().toISOString()
+                    });
+                }
+
+                // 실시간 동기화 리스너 등록
                 onSnapshot(sharedDocRef, (docSnap) => {
+                    if (isWritingToCloud) return; // 내가 전송한 직후의 에코 무시
+
                     if (docSnap.exists()) {
                         const data = docSnap.data();
-                        if (Array.isArray(data.members) && data.members.length > 0) {
+                        if (Array.isArray(data.members)) {
                             window.members = data.members;
                         }
                         if (Array.isArray(data.warningLogs)) {
@@ -1131,7 +1152,7 @@
                             window.deliveryRatePerUnit = data.deliveryRatePerUnit;
                         }
 
-                        // 로컬 캐시 동기화 백업
+                        // 로컬 캐시 동기화
                         try {
                             localStorage.setItem('silvertown_local_state_v2', JSON.stringify({
                                 members: window.members,
@@ -1143,64 +1164,52 @@
                             }));
                         } catch (e) {}
 
-                        // 화면 즉시 자동 리렌더링
+                        // 전원 화면 즉각 재렌더링
                         renderAll();
                         updateSyncStatusIndicator(true);
-                    } else {
-                        // 최초 문서 생성 시 현재 기본 멤버 데이터로 원격 초기화
-                        window.syncToCloud();
                     }
                 }, (error) => {
-                    console.warn("실시간 리스너 오류 (로컬 모드로 전환):", error);
-                    updateSyncStatusIndicator(false, "동기화 재시도 중");
+                    console.warn("실시간 리스너 오류:", error);
+                    updateSyncStatusIndicator(false, "연결 재시도 중");
                 });
-            }).catch((err) => {
-                console.warn("인증 실패 (로컬 모드 유지):", err);
+
+                updateSyncStatusIndicator(true);
+
+            } catch (err) {
+                console.error("Firebase 초기화 에러:", err);
                 updateSyncStatusIndicator(false, "오프라인 모드");
-            });
-        } catch (e) {
-            console.warn("Firebase 초기화 에러:", e);
-            updateSyncStatusIndicator(false, "오프라인 로컬");
+            }
         }
 
-        // 운영진이 저장/수정/삭제/정산할 때마다 클라우드로 즉시 브로드캐스트
+        // 운영진(캐럿, 찡긋, 한나)이 수정 시 Firestore에 즉각 브로드캐스팅
         window.syncToCloud = async function() {
-            // 로컬스토리지 즉각 백업
+            if (!sharedDocRef || !db) return;
+
             try {
-                const payload = {
+                isWritingToCloud = true;
+                await setDoc(sharedDocRef, {
                     members: window.members,
                     warningLogs: window.warningLogs,
                     notices: window.notices,
                     weeklyHistories: window.weeklyHistories,
                     deliveryRatePerUnit: window.deliveryRatePerUnit,
-                    lastUpdated: new Date().toISOString()
-                };
-                localStorage.setItem('silvertown_local_state_v2', JSON.stringify(payload));
-            } catch (e) {}
-
-            // Firebase 클라우드로 전송 -> 구독 중인 다른 모든 운영진 화면이 실시간 갱신됨
-            if (sharedDocRef && db && auth?.currentUser) {
-                try {
-                    await setDoc(sharedDocRef, {
-                        members: window.members,
-                        warningLogs: window.warningLogs,
-                        notices: window.notices,
-                        weeklyHistories: window.weeklyHistories,
-                        deliveryRatePerUnit: window.deliveryRatePerUnit,
-                        lastUpdated: new Date().toISOString()
-                    });
-                } catch (err) {
-                    console.error("클라우드 전송 실패:", err);
-                }
+                    updatedAt: new Date().toISOString()
+                });
+            } catch (err) {
+                console.error("클라우드 전송 실패:", err);
+            } finally {
+                setTimeout(() => { isWritingToCloud = false; }, 300);
             }
         };
+
+        initFirebaseSync();
     </script>
 
     <!-- Application Script -->
     <script>
         let currentUserPermission = null;
-        window.activeArchiveView = null; // null일 경우 실시간 최신 상태, 스냅샷 객체일 경우 과거 주차 조회 모드
-        window.deliveryRatePerUnit = 1; // 기본 개당 1억 (1.5억, 2억 변경 가능)
+        window.activeArchiveView = null;
+        window.deliveryRatePerUnit = 1;
 
         const RANK_ORDER = ['운영진팀', '본부장', '부장', '차장', '과장', '대리', '주임', '사원', '인턴'];
 
@@ -1300,7 +1309,7 @@
             { id: 68108, gobun: '68108', discord: '김마리', rank: '인턴', cumHonor: 0, weeklyHonor: 0, warnings: 0, jobs: [], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] }
         ];
 
-        // 캐시 복원 및 50명 전원 보존 검증
+        // 캐시 복원
         try {
             const cached = localStorage.getItem('silvertown_local_state_v2');
             if (cached) {
@@ -1322,7 +1331,6 @@
             window.weeklyHistories = [];
         }
 
-        // 한국 서울 시간(KST) 기준 현재 YYYY-MM-DD 문자열 반환
         function getKoreaTodayDateString() {
             const formatter = new Intl.DateTimeFormat('en-CA', {
                 timeZone: 'Asia/Seoul',
@@ -1330,17 +1338,15 @@
                 month: '2-digit',
                 day: '2-digit'
             });
-            return formatter.format(new Date()); // 'YYYY-MM-DD' 반환
+            return formatter.format(new Date());
         }
 
-        // 한국 서울 시간 기준 휴가 기간 만료 여부 확인 및 자동 상태 갱신
         function checkAndExpireVacations() {
             const koreaToday = getKoreaTodayDateString();
             let changed = false;
 
             window.members.forEach(m => {
                 if (m.vacation && m.vacation.endDate) {
-                    // 종료일(endDate)이 오늘 날짜보다 이전이면 휴가 종료 -> 정상 활동으로 자동 전환
                     if (koreaToday > m.vacation.endDate) {
                         if (m.vacation.active) {
                             m.vacation.active = false;
@@ -1357,42 +1363,37 @@
 
             if (changed) {
                 try {
-                    const localData = {
+                    localStorage.setItem('silvertown_local_state_v2', JSON.stringify({
                         members: window.members,
                         warningLogs: window.warningLogs,
                         notices: window.notices,
                         weeklyHistories: window.weeklyHistories,
                         lastUpdated: new Date().toISOString()
-                    };
-                    localStorage.setItem('silvertown_local_state_v2', JSON.stringify(localData));
-                } catch (e) {
-                    console.error("Auto expire vacation save error:", e);
-                }
+                    }));
+                } catch (e) {}
             }
         }
 
         function saveData() {
             try {
-                const localData = {
+                localStorage.setItem('silvertown_local_state_v2', JSON.stringify({
                     members: window.members,
                     warningLogs: window.warningLogs,
                     notices: window.notices,
                     weeklyHistories: window.weeklyHistories,
+                    deliveryRatePerUnit: window.deliveryRatePerUnit,
                     lastUpdated: new Date().toISOString()
-                };
-                localStorage.setItem('silvertown_local_state_v2', JSON.stringify(localData));
-            } catch (e) {
-                console.error("Local save error:", e);
-            }
+                }));
+            } catch (e) {}
+
             renderAll();
 
-            // 클라우드 실시간 전송 트리거 호출 (다른 운영진 화면에 즉시 브로드캐스팅)
+            // 다른 운영진 화면으로 즉각 실시간 전송
             if (typeof window.syncToCloud === 'function') {
                 window.syncToCloud();
             }
         }
 
-        // 현재 조회 대상 데이터 소스 (실시간 or 주간 보관소 스냅샷)
         function getWorkingMembers() {
             return window.activeArchiveView ? window.activeArchiveView.members : window.members;
         }
@@ -1416,24 +1417,17 @@
             return idx !== -1 ? idx : 99;
         }
 
-        // 주간 중 단 1일이라도 휴가 상태인지 검증 (한국 서울 시간 주간 날짜 범위 체크)
         function hasVacationInCurrentWeek(m, weekRefDate = null) {
             if (!m) return false;
-
             const koreaToday = getKoreaTodayDateString();
             
-            // 기간(startDate/endDate)이 명시되어 있는 경우: 오늘이 종료일을 넘겼으면 상시 active 플래그가 남아있어도 휴가 완료로 판정
             if (m.vacation && m.vacation.startDate && m.vacation.endDate) {
-                if (koreaToday > m.vacation.endDate) {
-                    // 기간 만료
-                    return false;
-                }
+                if (koreaToday > m.vacation.endDate) return false;
             }
 
             if (m.vacation && m.vacation.active) return true;
 
             const baseDate = weekRefDate ? new Date(weekRefDate) : new Date(koreaToday);
-            // 해당 주의 시작(월)과 끝(일)
             const day = baseDate.getDay();
             const diffToMon = baseDate.getDate() - day + (day === 0 ? -6 : 1);
             const mon = new Date(baseDate.setDate(diffToMon));
@@ -1443,14 +1437,12 @@
             const monStr = mon.toISOString().split('T')[0];
             const sunStr = sun.toISOString().split('T')[0];
 
-            // 1. 현재 휴가 기간 체크
             if (m.vacation && m.vacation.startDate && m.vacation.endDate) {
                 if (m.vacation.startDate <= sunStr && m.vacation.endDate >= monStr) {
                     return true;
                 }
             }
 
-            // 2. 과거 휴가 기록 내역 중 주간 중복 체크
             if (Array.isArray(m.vacationRecords)) {
                 for (let rec of m.vacationRecords) {
                     if (rec.startDate && rec.endDate) {
@@ -1464,7 +1456,6 @@
             return false;
         }
 
-        // 직급채널 렌더링
         function renderUserRankChannel() {
             const promoContainer = document.getElementById('rank-promo-container');
             const demoContainer = document.getElementById('rank-demo-container');
@@ -1486,7 +1477,6 @@
                     return;
                 }
 
-                // [신규] 운영진 직급 유지 권한이 활성화된 경우: 승진/강등/경고 대상에서 전면 제외 후 '유지'로 분류
                 if (m.overrideKeepRank) {
                     keepMembers.push({ ...m, currentRank: m.rank, reason: '운영진 재량 유지' });
                     return;
@@ -1514,7 +1504,6 @@
                     });
                 }
 
-                // 500점 미만: 휴가 여부 체크하여 면제 여부 명시
                 if (isUnder500) {
                     warningTargetMembers.push({
                         ...m,
@@ -1533,7 +1522,6 @@
             document.getElementById('rank-demo-badge-count').textContent = `${demoMembers.length}명`;
             document.getElementById('rank-keep-badge-count').textContent = `${keepMembers.length}명`;
 
-            // 승진 렌더
             promoContainer.innerHTML = promoMembers.length === 0 
                 ? `<div class="col-span-full py-4 text-center text-xs text-slate-400 bg-white/60 rounded-xl border border-dashed border-slate-300">승진 대상자가 없습니다.</div>`
                 : promoMembers.map(m => `
@@ -1555,7 +1543,6 @@
                     </div>
                 `).join('');
 
-            // 강등 렌더 (1,000점 미만)
             demoContainer.innerHTML = demoMembers.length === 0 
                 ? `<div class="col-span-full py-4 text-center text-xs text-slate-400 bg-white/60 rounded-xl border border-dashed border-slate-300">강등 대상자가 없습니다.</div>`
                 : demoMembers.map(m => `
@@ -1579,7 +1566,6 @@
                     </div>
                 `).join('');
 
-            // 경고 대상 렌더 (500점 미달 / 휴가자 면제)
             warningTargetContainer.innerHTML = warningTargetMembers.length === 0
                 ? `<div class="col-span-full py-4 text-center text-xs text-slate-400 bg-white/60 rounded-xl border border-dashed border-slate-300">이번 주 500점 미달자가 없습니다. (전원 달성)</div>`
                 : warningTargetMembers.map(m => `
@@ -1604,7 +1590,6 @@
                     </div>
                 `).join('');
 
-            // 유지 렌더
             keepContainer.innerHTML = keepMembers.length === 0 
                 ? `<div class="col-span-full py-4 text-center text-xs text-slate-400 bg-white/60 rounded-xl border border-dashed border-slate-300">유지 인원이 없습니다.</div>`
                 : keepMembers.map(m => `
@@ -1618,7 +1603,6 @@
                 `).join('');
         }
 
-        // 납품 단가 변경 함수 (1억, 1.5억, 2억)
         function setDeliveryRate(rate) {
             window.deliveryRatePerUnit = rate;
             [1, 1.5, 2].forEach(r => {
@@ -1629,32 +1613,23 @@
                 const inactiveClasses = "text-slate-600 hover:text-slate-900";
                 
                 if (uBtn) {
-                    if (r === rate) {
-                        uBtn.className = `px-2.5 py-1 rounded-lg transition-all text-xs font-extrabold ${activeClasses}`;
-                    } else {
-                        uBtn.className = `px-2.5 py-1 rounded-lg transition-all text-xs font-extrabold ${inactiveClasses}`;
-                    }
+                    uBtn.className = `px-2.5 py-1 rounded-lg transition-all text-xs font-extrabold ${r === rate ? activeClasses : inactiveClasses}`;
                 }
                 if (aBtn) {
-                    if (r === rate) {
-                        aBtn.className = `px-2.5 py-1 rounded-lg text-xs font-extrabold ${activeClasses}`;
-                    } else {
-                        aBtn.className = `px-2.5 py-1 rounded-lg text-xs font-extrabold ${inactiveClasses}`;
-                    }
+                    aBtn.className = `px-2.5 py-1 rounded-lg text-xs font-extrabold ${r === rate ? activeClasses : inactiveClasses}`;
                 }
             });
             renderDeliverySalaryTable();
             renderUserSalaryChannel();
+            if (typeof window.syncToCloud === 'function') window.syncToCloud();
         }
 
-        // 수당 계산 헬퍼 함수
         function calculateDeliveryReward(count, rate) {
             if (count < 100) return 0;
             const unitsOfTen = Math.floor(count / 10);
             return unitsOfTen * 10 * rate;
         }
 
-        // 주급 채널 유저 뷰 (100개 이상만 노출)
         function renderUserSalaryChannel() {
             const actTbody = document.getElementById('user-activity-salary-tbody');
             const targetList = getWorkingMembers();
@@ -1684,7 +1659,6 @@
 
             const delTbody = document.getElementById('user-delivery-salary-tbody');
             if (delTbody) {
-                // [신규 필터링] 납품 수량이 100개 이상인 '지급 대상자'만 테이블에 표시
                 const eligibleMembers = targetList
                     .filter(m => (m.deliveryCount || 0) >= 100)
                     .sort((a, b) => (b.deliveryCount || 0) - (a.deliveryCount || 0));
@@ -1709,7 +1683,6 @@
             }
         }
 
-        // 운영진 로그인 인증
         function verifyAdminAccess(e) {
             e.preventDefault();
             const inputPass = document.getElementById('admin-gateway-pass').value.trim();
@@ -1749,12 +1722,8 @@
         }
 
         function checkWritePermission() {
-            if (window.activeArchiveView) {
-                return false;
-            }
-            if (currentUserPermission === 'readonly') {
-                return false;
-            }
+            if (window.activeArchiveView) return false;
+            if (currentUserPermission === 'readonly') return false;
             return true;
         }
 
@@ -1782,7 +1751,6 @@
             renderDeliverySalaryTable();
         }
 
-        // 운영진 탭 전환 (직업배정 제거)
         function switchTab(tab) {
             ['members', 'vacations', 'notices', 'warnings', 'salary'].forEach(t => {
                 const sec = document.getElementById(`tab-${t}-section`);
@@ -1803,7 +1771,6 @@
             if (tab === 'salary') { renderActivitySalaryTable(); renderDeliverySalaryTable(); }
         }
 
-        // 휴가 관리 테이블 렌더링
         function renderVacationManagementTable() {
             const tbody = document.getElementById('vacation-mgmt-tbody');
             if (!tbody) return;
@@ -1895,7 +1862,6 @@
                 registeredAt: koreaToday
             });
 
-            // 한국 서울 시간 기준 오늘 날짜가 시작일과 종료일 범위 안인 경우에만 active 활성화, 이미 지난 기간이면 비활성화
             const isActive = (koreaToday >= startDate && koreaToday <= endDate);
 
             m.vacation = {
@@ -1935,7 +1901,6 @@
             document.getElementById('modal-vacation-history').classList.remove('hidden');
         }
 
-        // 멤버 관리 테이블 렌더링
         function renderMembersTable() {
             const tbody = document.getElementById('members-table-body');
             if (!tbody) return;
@@ -2026,13 +1991,10 @@
             updateStats();
         }
 
-        // 토요일 정산 및 주간 기록 영구 아카이빙
         function batchApplyAllRankChanges() {
             if (!checkWritePermission()) return;
-
             const today = new Date().toISOString().split('T')[0];
 
-            // 1. 현재 주간의 완전한 스냅샷을 아카이브에 먼저 영구 저장
             const snapshotItems = window.members.map(m => {
                 const weekly = m.weeklyHonor || 0;
                 const isTownStaff = (m.rank === '운영진팀' || (m.jobs && m.jobs.includes('staff')));
@@ -2078,7 +2040,6 @@
             if (!window.weeklyHistories) window.weeklyHistories = [];
             window.weeklyHistories.push(archiveRecord);
 
-            // 2. 직급 승진 및 강등 적용 (운영진 유지 권한 보유자는 변경 제외)
             window.members.forEach(m => {
                 const isTownStaff = (m.rank === '운영진팀' || (m.jobs && m.jobs.includes('staff')));
                 const isOverridden = !!m.overrideKeepRank;
@@ -2086,8 +2047,6 @@
 
                 if (!isTownStaff && !isOverridden) {
                     const currentIdx = getRankIndex(m.rank);
-
-                    // 1,000점 미만 강등 (휴가자도 강등 대상이지만 overrideKeepRank는 제외)
                     if (weekly < 1000) {
                         m.rank = getDemotedRank(m.rank);
                     } else {
@@ -2099,7 +2058,6 @@
                     }
                 }
 
-                // 주간 활동 점수를 누적 점수에 합산 후 주간 점수 초기화
                 m.cumHonor = (m.cumHonor || 0) + weekly;
                 m.weeklyHonor = 0;
             });
@@ -2107,7 +2065,6 @@
             saveData();
         }
 
-        // 주간 기록 보관소 모달 및 조회 기능
         function openWeeklyArchivesModal() {
             const container = document.getElementById('weekly-archives-list');
             if (!container) return;
@@ -2149,12 +2106,9 @@
             if (!h) return;
 
             window.activeArchiveView = h;
-            
-            // 배너 활성화
             document.getElementById('history-view-banner').classList.remove('hidden');
             document.getElementById('history-view-date-title').textContent = `${h.date}`;
             
-            // 상단 뱃지 갱신
             document.getElementById('archive-status-text').textContent = `과거 주간 기록 (${h.date})`;
             document.getElementById('archive-status-badge').className = "text-xs font-black bg-indigo-50 px-3.5 py-1.5 rounded-xl border border-indigo-300 shadow-xs flex items-center gap-2 text-indigo-800";
 
@@ -2167,8 +2121,8 @@
             window.activeArchiveView = null;
             document.getElementById('history-view-banner').classList.add('hidden');
             
-            document.getElementById('archive-status-text').textContent = "실시간 최신 상태";
-            document.getElementById('archive-status-badge').className = "text-xs font-bold bg-white/80 px-3.5 py-1.5 rounded-xl border border-slate-300 shadow-xs flex items-center gap-2 text-slate-700";
+            document.getElementById('archive-status-text').textContent = "실시간 전원 동기화 중";
+            document.getElementById('archive-status-badge').className = "text-xs font-bold bg-white/90 px-3.5 py-1.5 rounded-xl border border-emerald-300 shadow-xs flex items-center gap-2 text-slate-800";
 
             applyPermissionRestrictions();
             closeModal('modal-weekly-archives');
@@ -2186,7 +2140,6 @@
             }
         }
 
-        // 전달사항 관련
         function openAdminNoticeModal(author, editId = null) {
             if (!checkWritePermission()) return;
             document.getElementById('notice-author').value = author;
@@ -2251,7 +2204,6 @@
             });
         }
 
-        // 경고 관리
         function renderWarningMembersTable() {
             const tbody = document.getElementById('warning-members-table-body');
             if (!tbody) return;
@@ -2340,7 +2292,6 @@
             container.innerHTML = window.warningLogs.length === 0 ? '<p class="text-center text-slate-400 text-xs py-4">경고 내역이 없습니다.</p>' : window.warningLogs.slice().reverse().map(l => `<div class="p-3 rounded-xl border ${l.type === '부여' ? 'bg-rose-50/70 border-rose-200' : 'bg-emerald-50/70 border-emerald-200'} flex justify-between items-center text-xs"><div><span class="font-bold">[#${l.gobun}] ${l.memberName} 경고 ${l.type} (${l.date})</span><p class="text-slate-600 mt-0.5">사유: ${l.reason}</p></div><span class="font-bold">총 경고: ${l.total}회</span></div>`).join('');
         }
 
-        // 주급 정산 테이블
         function renderActivitySalaryTable() {
             const tbody = document.getElementById('activity-salary-table-body');
             if (!tbody) return;
@@ -2390,7 +2341,6 @@
             saveData();
         }
 
-        // 홈 직업 배정 현황 렌더링
         function renderHomeJobAllocation() {
             const container = document.getElementById('home-job-allocation-container');
             if (!container) return;
@@ -2418,7 +2368,6 @@
             }).join('');
         }
 
-        // 전체 화면 일괄 렌더링 함수
         function renderAll() {
             checkAndExpireVacations();
             renderHomeJobAllocation();
@@ -2434,7 +2383,6 @@
             updateStats();
         }
 
-        // 메인 상단 탭 전환 함수
         function switchMainTab(tab) {
             ['home', 'rank', 'salary', 'admin'].forEach(t => {
                 const sec = document.getElementById(`section-${t}`);
@@ -2463,8 +2411,6 @@
             }
         }
 
-        // 운영진 주급 납품 수당 테이블 (100개 이상만 노출)
-        // 운영진 주급 납품 수당 테이블 (운영진 채널: 전체 멤버 모두 표시)
         function renderDeliverySalaryTable() {
             const tbody = document.getElementById('delivery-salary-table-body');
             if (!tbody) return;
@@ -2472,7 +2418,6 @@
             const search = (document.getElementById('salary-search-input')?.value || '').toLowerCase();
             
             const activeList = getWorkingMembers();
-            // 운영진 채널에서는 전체 멤버를 납품 개수 순으로 모두 표시하여 입력 및 관리 가능
             const sortedList = [...activeList].sort((a, b) => {
                 const diff = (b.deliveryCount || 0) - (a.deliveryCount || 0);
                 if (diff !== 0) return diff;
@@ -2621,7 +2566,6 @@
             closeModal('modal-vacation');
         }
 
-        // 통계 지표 및 카운트 정확성 갱신
         function updateStats() {
             const activeList = getWorkingMembers();
             const totalMembers = activeList.length;
@@ -2640,7 +2584,6 @@
                 const expectedTotal = m.cumHonor + weekly;
                 const targetRank = getAppropriateRank(expectedTotal);
 
-                // 운영진 유지 권한이 활성화된 경우 승진 및 강등 카운트에서 제외
                 if (!isTownStaff && !isOverridden) {
                     if (weekly < 1000) {
                         demotion++;
@@ -2650,7 +2593,6 @@
                 }
             });
 
-            // 관리자 탭 통계
             const statTotal = document.getElementById('stat-total-members');
             const statPromo = document.getElementById('stat-promotion-pending');
             const statVac = document.getElementById('stat-vacation-count');
@@ -2661,7 +2603,6 @@
             if (statVac) statVac.textContent = `${vacation}명`;
             if (statDemo) statDemo.textContent = `${demotion}명`;
 
-            // 메인 홈 통계
             const homeMem = document.getElementById('home-member-count');
             const homeVac = document.getElementById('home-vacation-count');
             const homePromo = document.getElementById('home-promo-count');
