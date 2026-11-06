@@ -110,12 +110,8 @@
                 </div>
             </div>
 
-            <!-- 상단 주간 아카이브 상태 인디케이터 -->
+            <!-- 우측 보관소 버튼 (오프라인 모드 문구 완전 제거) -->
             <div class="flex items-center gap-2">
-                <div id="archive-status-badge" class="text-xs font-bold bg-white/80 px-3.5 py-1.5 rounded-xl border border-slate-300 shadow-xs flex items-center gap-2 text-slate-700">
-                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse"></span>
-                    <span id="archive-status-text">서버 연결 중...</span>
-                </div>
                 <button onclick="openWeeklyArchivesModal()" class="silver-btn px-3 py-1.5 text-xs font-bold text-slate-700 flex items-center gap-1.5">
                     <i class="fa-solid fa-clock-rotate-left text-indigo-600"></i>
                     <span>주간 기록 보관소</span>
@@ -123,7 +119,7 @@
             </div>
         </div>
 
-        <!-- 주간 기록 보관소 조회 배너 (과거 기록 열람 시 표시) -->
+        <!-- 주간 기록 보관소 조회 배너 -->
         <div id="history-view-banner" class="hidden bg-indigo-600 text-white text-xs font-black py-2 px-4 shadow-inner">
             <div class="max-w-7xl mx-auto flex items-center justify-between">
                 <span class="flex items-center gap-2">
@@ -157,9 +153,8 @@
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
-        <!-- ================= 1. 메인 홈 (HOME) ================= -->
+        <!-- ================= 1. 메인 홈 ================= -->
         <div id="section-home" class="space-y-8 max-w-6xl mx-auto">
-            <!-- 현황 요약 카드 -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div class="silver-card p-4 flex items-center justify-between border-l-4 border-l-slate-700">
                     <div>
@@ -222,7 +217,7 @@
             </div>
         </div>
 
-        <!-- ================= 2. 직급채널 (RANK) ================= -->
+        <!-- ================= 2. 직급채널 ================= -->
         <div id="section-rank" class="silver-card p-6 sm:p-8 space-y-8 hidden max-w-6xl mx-auto">
             <div class="border-b border-slate-200 pb-5">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -274,7 +269,7 @@
                 <div id="rank-promo-container" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
             </div>
 
-            <!-- 2. 직급 강등 대상자 (1,000점 미만) -->
+            <!-- 2. 강등 대상자 -->
             <div class="space-y-3 pt-6 border-t border-slate-200">
                 <div class="flex items-center justify-between">
                     <h3 class="text-sm font-black text-rose-600 flex items-center gap-2">
@@ -286,7 +281,7 @@
                 <div id="rank-demo-container" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
             </div>
 
-            <!-- 3. 주간 필수참여 미달 경고 대상자 -->
+            <!-- 3. 경고 검토 대상자 -->
             <div class="space-y-3 pt-6 border-t border-slate-200">
                 <div class="flex items-center justify-between">
                     <h3 class="text-sm font-black text-amber-600 flex items-center gap-2">
@@ -298,7 +293,7 @@
                 <div id="rank-warning-target-container" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
             </div>
 
-            <!-- 4. 직급 유지 현황 -->
+            <!-- 4. 직급 정상 유지 인원 -->
             <div class="space-y-3 pt-6 border-t border-slate-200">
                 <h3 class="text-sm font-black text-slate-700 flex items-center gap-2">
                     <span class="w-2.5 h-2.5 rounded-full bg-slate-400"></span>
@@ -308,7 +303,7 @@
             </div>
         </div>
 
-        <!-- ================= 3. 주급채널 (SALARY) ================= -->
+        <!-- ================= 3. 주급채널 ================= -->
         <div id="section-salary" class="silver-card p-6 sm:p-8 space-y-8 hidden max-w-6xl mx-auto">
             <div class="space-y-4">
                 <div class="border-b border-slate-200 pb-3 flex items-center justify-between">
@@ -371,10 +366,9 @@
             </div>
         </div>
 
-        <!-- ================= 4. 운영진 채널 (ADMIN) ================= -->
+        <!-- ================= 4. 운영진 채널 ================= -->
         <div id="section-admin" class="space-y-6 hidden max-w-6xl mx-auto">
             
-            <!-- 비밀번호 미인증 게이트웨이 -->
             <div id="admin-auth-gateway" class="silver-card p-8 sm:p-12 max-w-md mx-auto my-12 text-center space-y-6">
                 <div class="w-16 h-16 bg-gradient-to-tr from-slate-700 to-slate-900 rounded-3xl mx-auto flex items-center justify-center text-white text-3xl shadow-lg border border-slate-500">
                     <i class="fa-solid fa-lock"></i>
@@ -395,7 +389,6 @@
                 <p id="auth-error-msg" class="text-xs font-bold text-rose-500 hidden"></p>
             </div>
 
-            <!-- 인증 성공 시 대시보드 -->
             <div id="admin-dashboard-content" class="space-y-6 hidden">
                 <div class="silver-glass rounded-2xl p-4 flex flex-col lg:flex-row items-center justify-between gap-4">
                     <div class="flex items-center gap-3">
@@ -589,7 +582,6 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <!-- 찡긋 -->
                         <div class="silver-card p-5 flex flex-col justify-between space-y-4 border-t-4 border-t-slate-700">
                             <div>
                                 <div class="flex items-center justify-between pb-3 border-b border-slate-200">
@@ -602,7 +594,6 @@
                             </div>
                         </div>
 
-                        <!-- 캐럿 -->
                         <div class="silver-card p-5 flex flex-col justify-between space-y-4 border-t-4 border-t-amber-600">
                             <div>
                                 <div class="flex items-center justify-between pb-3 border-b border-slate-200">
@@ -615,7 +606,6 @@
                             </div>
                         </div>
 
-                        <!-- 한나 -->
                         <div class="silver-card p-5 flex flex-col justify-between space-y-4 border-t-4 border-t-indigo-600">
                             <div>
                                 <div class="flex items-center justify-between pb-3 border-b border-slate-200">
@@ -670,7 +660,6 @@
 
                 <!-- TAB 5: SALARY -->
                 <div id="tab-salary-section" class="space-y-8 hidden">
-                    <!-- 활동 정산 관리 -->
                     <div class="silver-card p-6 space-y-4">
                         <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-3 border-b border-slate-200">
                             <div>
@@ -708,7 +697,6 @@
                         </div>
                     </div>
 
-                    <!-- 납품 정산 관리 -->
                     <div class="silver-card p-6 space-y-4">
                         <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-3 border-b border-slate-200">
                             <div>
@@ -905,7 +893,6 @@
                 <input type="checkbox" id="input-vacation-active" class="w-5 h-5 text-amber-600 rounded">
             </div>
 
-            <!-- 운영진 판단 직급 변동/경고 면제(직급 유지) 권한 체크박스 -->
             <div class="flex items-center justify-between p-3.5 rounded-xl bg-indigo-50/90 border border-indigo-200">
                 <div>
                     <span class="font-extrabold text-indigo-900 block flex items-center gap-1.5">
@@ -1070,7 +1057,7 @@
         </div>
     </div>
 
-    <!-- ================= Firebase Real-time Multi-User Sync Module ================= -->
+    <!-- ================= Firebase 실시간 클라우드 동기화 모듈 ================= -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -1088,68 +1075,53 @@
         let db = null;
         let auth = null;
         let sharedDocRef = null;
-        let isWritingToCloud = false;
+        let isLocalSaving = false;
 
-        function updateSyncStatusIndicator(isOnline, message) {
-            const badge = document.getElementById('archive-status-badge');
-            const text = document.getElementById('archive-status-text');
-            if (!badge || !text) return;
-            if (window.activeArchiveView) return;
-
-            if (isOnline) {
-                badge.className = "text-xs font-bold bg-white/90 px-3.5 py-1.5 rounded-xl border border-emerald-300 shadow-xs flex items-center gap-2 text-slate-800";
-                text.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span> 실시간 전원 동기화 중`;
-            } else {
-                badge.className = "text-xs font-bold bg-amber-50 px-3.5 py-1.5 rounded-xl border border-amber-300 shadow-xs flex items-center gap-2 text-amber-800";
-                text.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> ${message || '로컬 모드'}`;
-            }
-        }
-
-        async function initFirebaseSync() {
+        async function initRealtimeDatabase() {
             try {
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
 
-                // 익명 인증 로그인
-                await signInAnonymously(auth);
-
-                // Firestore 표준 2단 경로(컬렉션: silvertown, 문서: portal_state)
-                sharedDocRef = doc(db, 'silvertown', 'portal_state');
-
-                // 초기 데이터 확인: 데이터가 없으면 기본 멤버 데이터 업로드
-                const initialSnap = await getDoc(sharedDocRef);
-                if (!initialSnap.exists()) {
-                    await setDoc(sharedDocRef, {
-                        members: window.members,
-                        warningLogs: window.warningLogs || [],
-                        notices: window.notices || { 찡긋: [], 캐럿: [], 한나: [] },
-                        weeklyHistories: window.weeklyHistories || [],
-                        deliveryRatePerUnit: window.deliveryRatePerUnit || 1,
-                        updatedAt: new Date().toISOString()
-                    });
+                // 익명 인증 진행
+                try {
+                    await signInAnonymously(auth);
+                } catch (authErr) {
+                    console.warn("Auth warning (Firestore rules if open will still proceed):", authErr);
                 }
 
-                // 실시간 동기화 리스너 등록
-                onSnapshot(sharedDocRef, (docSnap) => {
-                    if (isWritingToCloud) return; // 내가 전송한 직후의 에코 무시
+                sharedDocRef = doc(db, 'silvertown', 'portal_state');
 
-                    if (docSnap.exists()) {
-                        const data = docSnap.data();
-                        if (Array.isArray(data.members)) {
-                            window.members = data.members;
-                        }
-                        if (Array.isArray(data.warningLogs)) {
-                            window.warningLogs = data.warningLogs;
-                        }
-                        if (data.notices) {
-                            window.notices = data.notices;
-                        }
-                        if (Array.isArray(data.weeklyHistories)) {
-                            window.weeklyHistories = data.weeklyHistories;
-                        }
-                        if (typeof data.deliveryRatePerUnit === 'number') {
-                            window.deliveryRatePerUnit = data.deliveryRatePerUnit;
+                // 초기 데이터 확인 및 비어있을 시 클라우드 생성
+                try {
+                    const snap = await getDoc(sharedDocRef);
+                    if (!snap.exists()) {
+                        const initData = JSON.parse(JSON.stringify({
+                            members: window.members,
+                            warningLogs: window.warningLogs || [],
+                            notices: window.notices || { 찡긋: [], 캐럿: [], 한나: [] },
+                            weeklyHistories: window.weeklyHistories || [],
+                            deliveryRatePerUnit: window.deliveryRatePerUnit || 1,
+                            updatedAt: Date.now()
+                        }));
+                        await setDoc(sharedDocRef, initData);
+                    }
+                } catch (readErr) {
+                    console.error("초기 데이터 읽기/생성 에러:", readErr);
+                }
+
+                // 실시간 리스너 연결 (모든 운영진 화면에 실시간 브로드캐스트)
+                onSnapshot(sharedDocRef, (snapshot) => {
+                    if (isLocalSaving) return; // 내가 저장하면서 발생한 자체 피드백은 스킵
+
+                    if (snapshot.exists()) {
+                        const remoteData = snapshot.data();
+                        if (Array.isArray(remoteData.members)) window.members = remoteData.members;
+                        if (Array.isArray(remoteData.warningLogs)) window.warningLogs = remoteData.warningLogs;
+                        if (remoteData.notices) window.notices = remoteData.notices;
+                        if (Array.isArray(remoteData.weeklyHistories)) window.weeklyHistories = remoteData.weeklyHistories;
+                        if (typeof remoteData.deliveryRatePerUnit === 'number') {
+                            window.deliveryRatePerUnit = remoteData.deliveryRatePerUnit;
                         }
 
                         // 로컬 캐시 동기화
@@ -1164,45 +1136,41 @@
                             }));
                         } catch (e) {}
 
-                        // 전원 화면 즉각 재렌더링
+                        // 화면 즉시 자동 재계산 및 렌더링
                         renderAll();
-                        updateSyncStatusIndicator(true);
                     }
                 }, (error) => {
-                    console.warn("실시간 리스너 오류:", error);
-                    updateSyncStatusIndicator(false, "연결 재시도 중");
+                    console.error("Firestore 실시간 리스너 에러:", error);
                 });
-
-                updateSyncStatusIndicator(true);
 
             } catch (err) {
                 console.error("Firebase 초기화 에러:", err);
-                updateSyncStatusIndicator(false, "오프라인 모드");
             }
         }
 
-        // 운영진(캐럿, 찡긋, 한나)이 수정 시 Firestore에 즉각 브로드캐스팅
+        // 운영진이 저장/수정/삭제 시 Firebase 클라우드로 전송
         window.syncToCloud = async function() {
             if (!sharedDocRef || !db) return;
 
             try {
-                isWritingToCloud = true;
-                await setDoc(sharedDocRef, {
+                isLocalSaving = true;
+                const payload = JSON.parse(JSON.stringify({
                     members: window.members,
                     warningLogs: window.warningLogs,
                     notices: window.notices,
                     weeklyHistories: window.weeklyHistories,
                     deliveryRatePerUnit: window.deliveryRatePerUnit,
-                    updatedAt: new Date().toISOString()
-                });
+                    updatedAt: Date.now()
+                }));
+                await setDoc(sharedDocRef, payload);
             } catch (err) {
-                console.error("클라우드 전송 실패:", err);
+                console.error("클라우드 실시간 전송 실패:", err);
             } finally {
-                setTimeout(() => { isWritingToCloud = false; }, 300);
+                setTimeout(() => { isLocalSaving = false; }, 300);
             }
         };
 
-        initFirebaseSync();
+        initRealtimeDatabase();
     </script>
 
     <!-- Application Script -->
@@ -1239,7 +1207,6 @@
 
         // 기본 멤버 50명 전체 데이터베이스
         const DEFAULT_MEMBERS = [
-            // 운영진팀
             { id: 44, gobun: '44', discord: '지호', rank: '운영진팀', cumHonor: 38586, weeklyHonor: 0, warnings: 0, jobs: ['staff'], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
             { id: 226, gobun: '226', discord: '댕이', rank: '운영진팀', cumHonor: 36450, weeklyHonor: 0, warnings: 0, jobs: ['staff'], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
             { id: 262, gobun: '262', discord: '봉긋', rank: '운영진팀', cumHonor: 47593, weeklyHonor: 0, warnings: 0, jobs: ['staff'], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
@@ -1250,8 +1217,6 @@
             { id: 2865, gobun: '2865', discord: '유도리', rank: '운영진팀', cumHonor: 40184, weeklyHonor: 0, warnings: 0, jobs: ['staff'], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
             { id: 4499, gobun: '4499', discord: '한나', rank: '운영진팀', cumHonor: 81103, weeklyHonor: 0, warnings: 0, jobs: ['staff'], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
             { id: 66499, gobun: '66499', discord: '캐럿', rank: '운영진팀', cumHonor: 161464, weeklyHonor: 0, warnings: 0, jobs: ['staff'], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
-            
-            // 본부장
             { id: 47, gobun: '47', discord: '돌쇠', rank: '본부장', cumHonor: 132769, weeklyHonor: 0, warnings: 0, jobs: [], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
             { id: 1085, gobun: '1085', discord: '밤이', rank: '본부장', cumHonor: 156838, weeklyHonor: 0, warnings: 0, jobs: [], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
             { id: 1121, gobun: '1121', discord: '추추', rank: '본부장', cumHonor: 116361, weeklyHonor: 0, warnings: 0, jobs: [], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
@@ -1261,22 +1226,14 @@
             { id: 3434, gobun: '3434', discord: '케츠', rank: '본부장', cumHonor: 108383, weeklyHonor: 0, warnings: 0, jobs: [], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
             { id: 66599, gobun: '66599', discord: '송히나', rank: '본부장', cumHonor: 175757, weeklyHonor: 0, warnings: 0, jobs: [], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
             { id: 66736, gobun: '66736', discord: '두철', rank: '본부장', cumHonor: 134539, weeklyHonor: 0, warnings: 0, jobs: [], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
-            
-            // 차장
             { id: 125, gobun: '125', discord: '금쪽', rank: '차장', cumHonor: 74839, weeklyHonor: 0, warnings: 0, jobs: [], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
             { id: 3030, gobun: '3030', discord: '어프', rank: '차장', cumHonor: 69355, weeklyHonor: 0, warnings: 0, jobs: [], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
             { id: 6291, gobun: '6291', discord: '주냉', rank: '차장', cumHonor: 70306, weeklyHonor: 0, warnings: 0, jobs: [], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
             { id: 36472, gobun: '36472', discord: '하현민', rank: '차장', cumHonor: 127342, weeklyHonor: 0, warnings: 0, jobs: [], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
             { id: 67011, gobun: '67011', discord: '이메롱', rank: '차장', cumHonor: 71322, weeklyHonor: 0, warnings: 0, jobs: [], vacation: { active: true, reason: '10/17~11/18 휴가', startDate: '2026-10-17', endDate: '2026-11-18' }, vacationRecords: [{ id: 1, startDate: '2026-10-17', endDate: '2026-11-18', reason: '휴가', registeredAt: '2026-10-17' }] },
-            
-            // 과장
             { id: 1961, gobun: '1961', discord: '예지', rank: '과장', cumHonor: 40600, weeklyHonor: 0, warnings: 0, jobs: [], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
-            
-            // 대리
             { id: 1129, gobun: '1129', discord: '세봄', rank: '대리', cumHonor: 25333, weeklyHonor: 0, warnings: 0, jobs: [], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
             { id: 67593, gobun: '67593', discord: '차시안', rank: '대리', cumHonor: 31937, weeklyHonor: 0, warnings: 0, jobs: [], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
-            
-            // 주임
             { id: 66, gobun: '66', discord: '요한', rank: '주임', cumHonor: 14485, weeklyHonor: 0, warnings: 0, jobs: [], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
             { id: 426, gobun: '426', discord: '희원', rank: '주임', cumHonor: 13605, weeklyHonor: 0, warnings: 0, jobs: [], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
             { id: 991, gobun: '991', discord: '밀로', rank: '주임', cumHonor: 52626, weeklyHonor: 0, warnings: 0, jobs: [], vacation: { active: true, reason: '11/5~3/31 휴가', startDate: '2026-11-05', endDate: '2027-03-31' }, vacationRecords: [{ id: 2, startDate: '2026-11-05', endDate: '2027-03-31', reason: '휴가', registeredAt: '2026-11-05' }] },
@@ -1288,13 +1245,9 @@
             { id: 64287, gobun: '64287', discord: '요이', rank: '주임', cumHonor: 21244, weeklyHonor: 0, warnings: 0, jobs: [], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
             { id: 66924, gobun: '66924', discord: '희제', rank: '주임', cumHonor: 14462, weeklyHonor: 0, warnings: 1, jobs: [], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
             { id: 67470, gobun: '67470', discord: '솔레', rank: '주임', cumHonor: 20291, weeklyHonor: 0, warnings: 0, jobs: [], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
-            
-            // 사원
             { id: 212, gobun: '212', discord: '내다철이', rank: '사원', cumHonor: 7595, weeklyHonor: 0, warnings: 0, jobs: [], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
             { id: 2212, gobun: '2212', discord: '친절한쑤롱', rank: '사원', cumHonor: 6571, weeklyHonor: 0, warnings: 0, jobs: [], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
             { id: 1861, gobun: '1861', discord: '무식', rank: '사원', cumHonor: 24373, weeklyHonor: 0, warnings: 2, jobs: [], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
-            
-            // 인턴
             { id: 98, gobun: '98', discord: '부', rank: '인턴', cumHonor: 0, weeklyHonor: 0, warnings: 0, jobs: [], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
             { id: 120, gobun: '120', discord: '크라켄', rank: '인턴', cumHonor: 3233, weeklyHonor: 0, warnings: 1, jobs: [], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
             { id: 161, gobun: '161', discord: '정팔', rank: '인턴', cumHonor: 684, weeklyHonor: 0, warnings: 0, jobs: [], vacation: { active: false, reason: '', startDate: '', endDate: '' }, vacationRecords: [] },
@@ -2108,9 +2061,6 @@
             window.activeArchiveView = h;
             document.getElementById('history-view-banner').classList.remove('hidden');
             document.getElementById('history-view-date-title').textContent = `${h.date}`;
-            
-            document.getElementById('archive-status-text').textContent = `과거 주간 기록 (${h.date})`;
-            document.getElementById('archive-status-badge').className = "text-xs font-black bg-indigo-50 px-3.5 py-1.5 rounded-xl border border-indigo-300 shadow-xs flex items-center gap-2 text-indigo-800";
 
             applyPermissionRestrictions();
             closeModal('modal-weekly-archives');
@@ -2120,9 +2070,6 @@
         function resetToLiveState() {
             window.activeArchiveView = null;
             document.getElementById('history-view-banner').classList.add('hidden');
-            
-            document.getElementById('archive-status-text').textContent = "실시간 전원 동기화 중";
-            document.getElementById('archive-status-badge').className = "text-xs font-bold bg-white/90 px-3.5 py-1.5 rounded-xl border border-emerald-300 shadow-xs flex items-center gap-2 text-slate-800";
 
             applyPermissionRestrictions();
             closeModal('modal-weekly-archives');
