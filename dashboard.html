@@ -1061,22 +1061,140 @@
         </div>
     </div>
 
-    <!-- 개인별 전체 휴가 이력 모달 -->
-    <div id="modal-vacation-history" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="silver-card bg-white rounded-2xl border w-full max-w-lg p-6 space-y-4 text-xs shadow-2xl">
-            <div class="flex items-center justify-between pb-2 border-b border-slate-200">
-                <h3 class="font-black text-slate-800 text-sm flex items-center gap-2 text-slate-800">
-                    <i class="fa-solid fa-clock-rotate-left text-amber-600"></i> 개인 휴가 등록 히스토리
-                </h3>
-                <button onclick="closeModal('modal-vacation-history')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-base"></i></button>
-            </div>
-            <div id="vac-history-target-info" class="font-black text-slate-800 text-sm bg-slate-50 p-3 rounded-xl border border-slate-200">-</div>
-            <div id="vac-history-list-container" class="space-y-2.5 max-h-72 overflow-y-auto pr-1"></div>
-            <div class="flex justify-end pt-3 border-t border-slate-200">
-                <button onclick="closeModal('modal-vacation-history')" class="silver-btn px-4 py-2 font-bold">닫기</button>
-            </div>
-        </div>
-    </div>
+    <!-- Firebase Real-time Multi-User Sync Module -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // 환경 변수 설정 감지 및 안정적인 기본 구성
+        const firebaseConfig = typeof __firebase_config !== 'undefined' 
+            ? JSON.parse(__firebase_config) 
+            : {
+                apiKey: "AIzaSyB4aPOvTyYqol54X7eMiLBc-zjJZttCkE",
+                authDomain: "silvertown-staff.firebaseapp.com",
+                projectId: "silvertown-staff",
+                storageBucket: "silvertown-staff.firebasestorage.app",
+                messagingSenderId: "1082861297946",
+                appId: "1:1082861297946:web:a0191ae4c9e0c1ac46cca3"
+            };
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'silvertown-portal-main';
+
+        let db = null;
+        let auth = null;
+        let sharedDocRef = null;
+
+        // 클라우드 동기화 상태 표시 인디케이터 갱신 함수
+        function updateSyncStatusIndicator(isOnline, message) {
+            const badge = document.getElementById('archive-status-badge');
+            const text = document.getElementById('archive-status-text');
+            if (!badge || !text) return;
+
+            if (window.activeArchiveView) return; // 과거 기록 조회 중일 땐 별도 표시 유지
+
+            if (isOnline) {
+                badge.className = "text-xs font-bold bg-white/90 px-3.5 py-1.5 rounded-xl border border-emerald-300 shadow-xs flex items-center gap-2 text-slate-800";
+                text.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span> 실시간 전원 동기화 중`;
+            } else {
+                badge.className = "text-xs font-bold bg-amber-50 px-3.5 py-1.5 rounded-xl border border-amber-300 shadow-xs flex items-center gap-2 text-amber-800";
+                text.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> ${message || '로컬 모드'}`;
+            }
+        }
+
+        try {
+            const app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+
+            // 익명 인증 후 공용 데이터 문서 구독 (실시간 웹소켓 연결)
+            signInAnonymously(auth).then(() => {
+                sharedDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'shared_state');
+
+                // 원격 데이터가 변경될 때마다 캐럿, 찡긋, 한나 모든 화면에 자동 반영
+                onSnapshot(sharedDocRef, (docSnap) => {
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        if (Array.isArray(data.members) && data.members.length > 0) {
+                            window.members = data.members;
+                        }
+                        if (Array.isArray(data.warningLogs)) {
+                            window.warningLogs = data.warningLogs;
+                        }
+                        if (data.notices) {
+                            window.notices = data.notices;
+                        }
+                        if (Array.isArray(data.weeklyHistories)) {
+                            window.weeklyHistories = data.weeklyHistories;
+                        }
+                        if (typeof data.deliveryRatePerUnit === 'number') {
+                            window.deliveryRatePerUnit = data.deliveryRatePerUnit;
+                        }
+
+                        // 로컬 캐시 동기화 백업
+                        try {
+                            localStorage.setItem('silvertown_local_state_v2', JSON.stringify({
+                                members: window.members,
+                                warningLogs: window.warningLogs,
+                                notices: window.notices,
+                                weeklyHistories: window.weeklyHistories,
+                                deliveryRatePerUnit: window.deliveryRatePerUnit,
+                                lastUpdated: new Date().toISOString()
+                            }));
+                        } catch (e) {}
+
+                        // 화면 즉시 자동 리렌더링
+                        renderAll();
+                        updateSyncStatusIndicator(true);
+                    } else {
+                        // 최초 문서 생성 시 현재 기본 멤버 데이터로 원격 초기화
+                        window.syncToCloud();
+                    }
+                }, (error) => {
+                    console.warn("실시간 리스너 오류 (로컬 모드로 전환):", error);
+                    updateSyncStatusIndicator(false, "동기화 재시도 중");
+                });
+            }).catch((err) => {
+                console.warn("인증 실패 (로컬 모드 유지):", err);
+                updateSyncStatusIndicator(false, "오프라인 모드");
+            });
+        } catch (e) {
+            console.warn("Firebase 초기화 에러:", e);
+            updateSyncStatusIndicator(false, "오프라인 로컬");
+        }
+
+        // 운영진이 저장/수정/삭제/정산할 때마다 클라우드로 즉시 브로드캐스트
+        window.syncToCloud = async function() {
+            // 로컬스토리지 즉각 백업
+            try {
+                const payload = {
+                    members: window.members,
+                    warningLogs: window.warningLogs,
+                    notices: window.notices,
+                    weeklyHistories: window.weeklyHistories,
+                    deliveryRatePerUnit: window.deliveryRatePerUnit,
+                    lastUpdated: new Date().toISOString()
+                };
+                localStorage.setItem('silvertown_local_state_v2', JSON.stringify(payload));
+            } catch (e) {}
+
+            // Firebase 클라우드로 전송 -> 구독 중인 다른 모든 운영진 화면이 실시간 갱신됨
+            if (sharedDocRef && db && auth?.currentUser) {
+                try {
+                    await setDoc(sharedDocRef, {
+                        members: window.members,
+                        warningLogs: window.warningLogs,
+                        notices: window.notices,
+                        weeklyHistories: window.weeklyHistories,
+                        deliveryRatePerUnit: window.deliveryRatePerUnit,
+                        lastUpdated: new Date().toISOString()
+                    });
+                } catch (err) {
+                    console.error("클라우드 전송 실패:", err);
+                }
+            }
+        };
+    </script>
 
     <!-- Application Script -->
     <script>
@@ -1267,6 +1385,11 @@
                 console.error("Local save error:", e);
             }
             renderAll();
+
+            // 클라우드 실시간 전송 트리거 호출 (다른 운영진 화면에 즉시 브로드캐스팅)
+            if (typeof window.syncToCloud === 'function') {
+                window.syncToCloud();
+            }
         }
 
         // 현재 조회 대상 데이터 소스 (실시간 or 주간 보관소 스냅샷)
